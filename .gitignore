@@ -36,3 +36,11 @@ out/
 ### VS Code ###
 .vscode/
 
+### src, build.gradle만 나오게 할 것임!
+gradle
+gradlew
+gradlew.bat
+settings.gradle
+
+### 키 값 저장되어 있는 파일 노출되면 안 됨!
+env.properties
