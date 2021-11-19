@@ -1,0 +1,84 @@
+#container-box {
+    margin: -45px -60px;
+    width: 120px;
+    height: 90px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+#dot {
+    background: #878FB5;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 30px;
+    left: 27px;
+    transform-origin: center bottom;
+    animation: dot .6s ease-in-out infinite;
+}
+
+@-webkit-keyframes dot {
+    0% {
+        transform: scale(1, .7)
+    }
+    20% {
+        transform: scale(.7, 1.2)
+    }
+    40% {
+        transform: scale(1, 1)
+    }
+    50% {
+        bottom: 100px;
+    }
+    46% {
+        transform: scale(1, 1)
+    }
+    80% {
+        transform: scale(.7, 1.2)
+    }
+    90% {
+        transform: scale(.7, 1.2)
+    }
+    100% {
+        transform: scale(1, .7)
+    }
+}
+
+.step {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-top: 2px solid #878FB5;
+    top: 0;
+    right: 0;
+}
+
+@-webkit-keyframes anim {
+    0% {
+        opacity: 0;
+        top: 0;
+        right: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        top: 90px;
+        right: 90px;
+        opacity: 0;
+    }
+}
+
+#s1 {
+    animation: anim 1.8s linear infinite;
+}
+
+#s2 {
+    animation: anim 1.8s linear infinite -.6s;
+}
+
+#s3 {
+    animation: anim 1.8s linear infinite -1.2s;
+}
