@@ -1,0 +1,45 @@
+body {
+    min-height: 100vh;
+    background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ) ,url(https://dk9q1cr2zzfmc.cloudfront.net/img/trips-background.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.section {
+    padding: 1rem 1.5rem;
+    max-width: 750px;
+    margin: auto;
+}
+
+.title {
+    margin-top: 50px;
+    font-family: 'Jua', sans-serif;
+    font-weight: 800;
+    font-size: 5rem;
+    color: #2d1f1f;
+}
+
+.subtitle {
+    font-family: 'Jua', sans-serif;
+    font-size: 1.2rem;
+    color: #2d1f1f;
+    margin-bottom: 40px;
+}
+
+.button.is-trips {
+    background-color: #2d1f1f;
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.button.is-trips.is-outlined {
+    background-color: transparent;
+    border-color: #2d1f1f;
+    background-color: #2d1f1f;
+}
+
+.help {
+    color: #675d5d;
+}

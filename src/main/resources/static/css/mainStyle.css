@@ -1,0 +1,288 @@
+.input-group-mb-3 {
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
+.wrap3 {
+    margin-top: 90px;
+}
+
+:root {
+    /* html에서 :root는 html 선택자랑 같다 */
+    /* 변수처럼 사용 가능. 예시) color: var(--surface-color) */
+    --surface-color: #fff;
+    --curve: 40;
+}
+
+.near-cards {
+    position: relative;
+    margin-top: 80px;
+}
+
+.trip-cards {
+    position: relative;
+    margin-top: 80px;
+    margin-bottom: 70px;
+}
+
+.wrap {
+    width: 80%;
+    margin: auto;
+}
+
+.slide-title {
+    font-family: 'yg-jalnan', verdana, tahoma;
+    margin-bottom: 20px;
+}
+
+.slide-title a {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    color: #073A96;
+    text-decoration: none;
+}
+
+.slide-title a:hover {
+    color: #6E85B2;
+}
+
+.before-render {
+    position: relative;
+    width: 95%;
+    height: 300px;
+    margin: auto;
+    background-color: #EEEEEE;
+    border-radius: calc(var(--curve) * 1px);
+}
+
+#btn_prev {
+    position: absolute;
+    top: 50%;
+    left: 4%;
+    background-color: transparent;
+    color: #A69F99;
+    font-size: 30px;
+    border: none;
+}
+
+#btn_next {
+    position: absolute;
+    top: 50%;
+    right: 4%;
+    background-color: transparent;
+    color: #A69F99;
+    font-size: 30px;
+    border: none;
+}
+
+#btn_prev:hover {
+    color: #073A96;
+}
+
+#btn_next:hover {
+    color: #073A96;
+}
+
+#btn_prev2 {
+    position: absolute;
+    top: 50%;
+    left: 4%;
+    background-color: transparent;
+    color: #A69F99;
+    font-size: 30px;
+    border: none;
+}
+
+#btn_next2 {
+    position: absolute;
+    top: 50%;
+    right: 4%;
+    background-color: transparent;
+    color: #A69F99;
+    font-size: 30px;
+    border: none;
+}
+
+#btn_prev2:hover {
+    color: #073A96;
+}
+
+#btn_next2:hover {
+    color: #073A96;
+}
+
+.cards {
+    width: 100%;
+    height: 300px;
+    margin: auto;
+    padding: 0;
+    list-style-type: none;
+}
+
+#container-box {
+    margin: -45px -60px;
+    width: 120px;
+    height: 90px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+#dot {
+    background: #878FB5;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 30px;
+    left: 27px;
+    transform-origin: center bottom;
+    animation: dot .6s ease-in-out infinite;
+}
+
+.step {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-top: 2px solid #878FB5;
+    top: 0;
+    right: 0;
+}
+
+.card {
+    position: relative;
+    display: block;
+    height: 100%;
+    border-radius: calc(var(--curve) * 1px);
+    overflow: hidden;
+    text-decoration: none;
+
+    box-shadow: 1px 0 3px #bbb;
+}
+
+.card__image {
+    width: 100%;
+    height: 300px;
+
+    /*대체 콘텐츠의 가로세로비를 유지하면서, 요소 콘텐츠 박스를 가득 채운다. 서로의 가로세로비가 일치하지 않으면 객체 일부가 잘려나간다.*/
+    object-fit: cover;
+}
+
+.card__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    border-radius: calc(var(--curve) * 1px);
+    background-color: var(--surface-color);
+    transform: translateY(100%);
+    transition: .2s ease-in-out;
+}
+
+.card:hover .card__overlay {
+    transform: translateY(0);
+}
+
+.card__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    padding: 1em;
+    border-radius: calc(var(--curve) * 1px) 0 0 0;
+    background-color: var(--surface-color);
+    transform: translateY(-100%);
+    transition: .2s ease-in-out;
+}
+
+.card__arc {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    z-index: 1;
+}
+
+.card__arc path {
+    fill: var(--surface-color);
+    d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
+}
+
+.card:hover .card__header {
+    transform: translateY(0);
+}
+
+.card__thumb {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.card__title {
+    font-size: 1em;
+    margin: 0 0 .3em;
+    color: #1B3A6A;
+}
+
+.card__status {
+    font-size: .8em;
+    color: #528BC6;
+}
+
+.card__description {
+    padding: 0 2em 2em;
+    margin: 0;
+    color: #1B3A6A;
+    font-family: "MockFlowFont";
+    font-size: 0.9em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
+#btn_prev3 {
+    position: absolute;
+    top: 50%;
+    left: 4%;
+    background-color: transparent;
+    color: #A69F99;
+    font-size: 30px;
+    border: none;
+}
+
+#btn_next3 {
+    position: absolute;
+    top: 50%;
+    right: 4%;
+    background-color: transparent;
+    color: #A69F99;
+    font-size: 30px;
+    border: none;
+}
+
+#btn_prev3:hover {
+    color: #073A96;
+}
+
+#btn_next3:hover {
+    color: #073A96;
+}
+
+.card__thumb2 {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.card__thumb2 img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}

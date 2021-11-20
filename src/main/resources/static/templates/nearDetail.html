@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>myTrip</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--https 사이트에서 http 사이트 요청 시 발생하는 보안 문제 해결-->
+    <!--우리 사이트는 https이고 요청을 보내는 한국관광공사api 사이트는 http라서 발생했던 문제 해결-->
+    <!--?    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+
+    <!--메타태그 설정-->
+    <meta property="og:title" content="여행어때"/>
+    <meta property="og:description" content="위치 기반 서비스로 근처의 여행지를 확인해보세요!"/>
+    <meta property="og:image" content="../static/ogImage.png"/>
+
+    <!--파비콘(주소창 아이콘) 적용-->
+    <link rel="shortcut icon" href="../favicon.ico"/>
+
+    <!--bootstrap cdn-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+          crossorigin="anonymous">
+
+    <!--jquery cdn-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <!--slick cdn-->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+    <!--fontawesome cdn-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+          crossorigin="anonymous">
+
+
+    <!-- Bulma CSS -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"> -->
+
+    <!--외부 static 파일 불러오기-->
+    <link rel="stylesheet" href="../css/detail.css"/>
+    <link rel="stylesheet" href="../css/public.css"/>
+    <link rel="stylesheet" href="../css/weather.css"/>
+    <script type="text/javascript" src="../js/nearDetailScript.js"></script>
+    <script type="text/javascript" src="../js/logout.js"></script>
+    <script type="text/javascript" src="../js/modalProfile.js"></script>
+    <script type="text/javascript" src="../js/nav.js"></script>
+    <script type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=00r1clbpdg"></script>
+
+    <style>
+        #map {
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                error: function (jqXHR, exception) {
+                    switch (jqXHR.status) {
+                        case 401:
+                            alert('인증 에러!!');
+                            break;
+                        case 423:
+                            alert('중복된 id!!');
+                            break;
+                    }
+                },
+                beforeSend: function (xhr) {
+                    if (localStorage.getItem('token') != null) {
+                        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+                    }
+                }
+            });
+            navLoginCheck();
+            getDetailIntro();
+            getMap();
+            weather();
+            getBookmark();
+        });
+    </script>
+</head>
+
+<body style="background-color: #fef8f8;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="../index.html" style="color: #073A96">여행어때</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="popularList.html">Popular</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="nearList.html">Near</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="tripsList.html">Trips</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav" id="login-btn" style="display: none;">
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">
+                        로그인
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav d-flex">
+                <li class="nav-item dropdown" id="profile-btn" style="display: none;">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Profile
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                               data-bs-target="#profile_modal"
+                               data-bs-whatever="@mdo">프로필 설정</a></li>
+                        <li><a class="dropdown-item" href="bookmarks.html">즐겨찾기</a></li>
+                        <li><a class="dropdown-item" href="javascript:logout()">로그아웃</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div id="page-wrapper">
+    <section id="main">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-8 col-12-medium">
+
+                    <!-- Content -->
+                    <article class="box post">
+                        <a href="#" class="image featured"><img id="file" alt=""/></a>
+                        <header>
+                            <h2 id="title"></h2>
+                            <p id="address"></p>
+                        </header>
+                        <section>
+                            <header>
+                                <p id="overview"></p>
+                                <p id="homepage" style="word-break:break-all;"></p>
+                            </header>
+                            <div>
+                                <button type="button" class="level-item is-sparta" aria-label="heart"
+                                        onclick="toggle_bookmark(getId())">
+                                        <span class="icon is-small"><i id="bookmark" class="far fa-heart"
+                                                                       aria-hidden="true"></i></span>
+                                    &nbsp;<span>즐겨찾기</span>
+                                </button>
+                            </div>
+                        </section>
+                    </article>
+
+                </div>
+                <div class="col-4 col-12-medium">
+
+                    <!-- Sidebar -->
+                    <section class="box">
+                        <header>
+                            <h3>지도</h3>
+                        </header>
+                        <div id="map"></div>
+                    </section>
+                    <section class="box">
+                        <header>
+                            <h3>날씨</h3>
+                        </header>
+                        <div id="weather_wrapper">
+                            <div class="weatherCard row">
+                                <div class="currentTemp col">
+                                    <span id="temp" class="temp"></span>
+                                    <span id="location" class="location">
+                                        <!-- 로딩 css -->
+                                        <div class="pswp__preloader__icn">
+                                            <div class="pswp__preloader__cut">
+                                                <div class="pswp__preloader__donut"></div>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="currentWeather">
+                                    <div class="part1">
+                                        <img id="icon" class="conditions">
+                                        <span id="weather" class="weather"></span>
+                                    </div>
+                                    <div class="part2">
+                                        <div class="rain">
+                                            <i class="fas fa-tint"></i>
+                                            <div id="rain">-</div>
+                                        </div>
+                                        <div class="wind">
+                                            <i class="fas fa-wind"></i>
+                                            <div id="wind"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- 모달 창 -->
+<div class="modal fade" id="profile_modal" tabindex="-1" aria-labelledby="profile_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profile_modal_label">프로필 설정</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">닉네임:</label>
+                        <input type="text" class="form-control" id="modal_nickname" placeholder="사용하실 닉네임을 입력해주세요">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modal_img" class="col-form-label">프로필 사진:</label>
+                        <input type="file" class="form-control" id="modal_img">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary" onclick="saveProfile()">저장</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Site footer -->
+<footer class="site-footer">
+    <div class="custom-container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <h6>About</h6>
+                <p class="text-justify">myTrip - <i>내일배움캠프 10팀 프로젝트</i><br>
+                    Card 템플릿은 <a href="https://codepen.io/seyedi/details/zYoeLEv">CodePen</a>에서
+                    <a href="https://codepen.io/seyedi">@seyedi</a>가 작성한 코드를 사용했습니다.
+                    Footer 템플릿은 <a href="https://codepen.io/scanfcode/pen/MEZPNd">CodePen</a>에서
+                    <a href="https://codepen.io/scanfcode">@scanfcode</a>가 작성한 코드를 사용했습니다.
+                    CodePen은 MIT 라이센스가 적용되며, 이는 CodePen PRO가 아닌 저작물에 한정됩니다. 라이센스 관련 궁금하신 사항은
+                    <a href="https://blog.codepen.io/documentation/licensing/">Blog.CodePen.io</a>에서 참고하시기 바랍니다.
+                    관광정보는 '출처표시' 외에는 이용제한을 두고 있지 않습니다. 자유 이용 보장의 의미는 활용자가 한국관광공사가 제공한
+                    관광정보의 사실적 내용을 유지하는 범위에서 자유롭게 가공·활용할 수 있다는 것이지, 공공데이터의 사실적인 내용을 위조, 변조, 왜곡하여
+                    사용하는 것까지 보장하는 것은 아닙니다.<br><br>
+                    (Open Api 데이터 제공 : 한국관광공사)
+                </p>
+            </div>
+
+            <div class="col-xs-6 col-md-3">
+                <h6>Members</h6>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/97kim">김경중</a></li>
+                    <li><a href="https://github.com/Woogys">서태욱</a></li>
+                    <li><a href="https://github.com/hyojin-dev">장효진</a></li>
+                </ul>
+                <br>
+                <h6>Open Api FAQ</h6>
+                <ul class="footer-links">
+                    <li><a href="https://api.visitkorea.or.kr/customer/faqList.do">한국관광공사</a></li>
+                </ul>
+            </div>
+
+            <div class="col-xs-6 col-md-3">
+                <h6>Quick Links</h6>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/97kim/myTrip">About Us</a></li>
+                    <li><a href="https://github.com/97kim/myTrip">Contribute</a></li>
+                </ul>
+                <br>
+                <h6>We used</h6>
+                <ul class="footer-links">
+                    <li><a href="https://codepen.io/seyedi/pen/zYoeLEv">Card Template</a></li>
+                    <li><a href="https://codepen.io/scanfcode/pen/MEZPNd">Footer Template</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="custom-container">
+        <div class="row">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+                <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by
+                    <a href="https://github.com/97kim/myTrip">myTrip</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!--bootstrap popper js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+
+<!--bootstrap js-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+
+<!--slick js-->
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+</body>
+
+
+<!-- Card Template
+Copyright (c) 2021 by Mojtaba Seyedi (https://codepen.io/seyedi/pen/zYoeLEv)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+
+<!-- Footer Template
+Copyright (c) 2021 by scanfcode (https://codepen.io/scanfcode/pen/MEZPNd)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+</html>
