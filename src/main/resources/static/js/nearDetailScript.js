@@ -12,23 +12,23 @@ function getDetailIntro() {
         },
         async: false,
         success: function (response) {
-            let detail_intro_list = response['detail_intro_list'];
-            $('#title').text(detail_intro_list['title']);
-            $('#file').attr('src', detail_intro_list['firstimage'])
-            $('#address').text(detail_intro_list['addr1']);
-            $('#overview').html(detail_intro_list['overview']);
-            if (detail_intro_list['homepage']) {
-                $('#homepage').html(detail_intro_list['homepage']);
+            response = JSON.parse(response);
+            $('#title').text(response['title']);
+            $('#file').attr('src', response['firstimage'])
+            $('#address').text(response['addr1']);
+            $('#overview').html(response['overview']);
+            if (response['homepage']) {
+                $('#homepage').html(response['homepage']);
             } else {
                 $('#homepage').text('');
             }
-            if (!detail_intro_list['mapy'] || !detail_intro_list['mapx']) {
-                detail_intro_list['mapy'] = 0;
-                detail_intro_list['mapx'] = 0;
+            if (!response['mapy'] || !response['mapx']) {
+                response['mapy'] = 0;
+                response['mapx'] = 0;
             }
 
-            sessionStorage.setItem('near_place_lat', detail_intro_list['mapy']);
-            sessionStorage.setItem('near_place_lng', detail_intro_list['mapx']);
+            sessionStorage.setItem('near_place_lat', response['mapy']);
+            sessionStorage.setItem('near_place_lng', response['mapx']);
         }
     });
 }
