@@ -138,19 +138,17 @@ function geoInfo() {
                 data: {lat_give: lat, lng_give: lng},
                 success: function (response) {
                     $('#near_card').empty();
+                    response = JSON.parse(response)
 
-                    let near_list = JSON.parse(response);
-
-
-                    for (let i = 0; i < near_list.length; i++) {
-                        let title = near_list[i]['title'];
-                        let address = near_list[i]['addr1'];
-                        let file = near_list[i]['firstimage'];
+                    for (let i = 0; i < response.length; i++) {
+                        let title = response[i]['title'];
+                        let address = response[i]['addr1'];
+                        let file = response[i]['firstimage'];
                         if (!file) {
                             file = "https://dk9q1cr2zzfmc.cloudfront.net/img/noImage.png";
                         }
-                        let distance = near_list[i]['dist'];
-                        let content_id = near_list[i]['contentid'];
+                        let distance = response[i]['dist'];
+                        let content_id = response[i]['contentid'];
 
                         let temp_html = `<li style="margin: 0 10px; height: 300px;">
                                              <a href="javascript:moveNearDetail(${content_id})" class="card">

@@ -84,7 +84,9 @@ function weather() {
             place_lat: place_lat,
             place_lng: place_lng
         },
+        async: false,
         success: function (response) {
+            response = JSON.parse(response);
             let icon = response['weather_info']['weather'][0]['icon'];
             let weather = response['weather_info']['weather'][0]['main'];
             let temp = response['weather_info']['main']['temp'];
