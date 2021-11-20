@@ -139,7 +139,7 @@ function geoInfo() {
                 success: function (response) {
                     console.log(response);
                     $('#near_card').empty();
-                    let near_list = response["response"]["body"]["items"]["item"];
+                    let near_list = JSON.parse(response)["response"]["body"]["items"]["item"];
 
                     for (let i = 0; i < near_list.length; i++) {
                         let title = near_list[i]['title'];
@@ -182,7 +182,7 @@ function geoInfo() {
 }
 
 function moveNearDetail(content_id) {
-    window.location.href = `../templates/nearDetail.html?id=${content_id}`;
+    window.location.href = `../정/nearDetail.html?id=${content_id}`;
 }
 
 function onGeoError() { //위치 정보 공유 거부 시
