@@ -86,16 +86,17 @@ function weather_popular() {
         },
         async: false,
         success: function (response) {
-            let icon = response['weather_info_popular']['weather'][0]['icon'];
-            let weather = response['weather_info_popular']['weather'][0]['main'];
-            let temp = response['weather_info_popular']['main']['temp'];
+            response = JSON.parse(response);
+            let icon = response['weather'][0]['icon'];
+            let weather = response['weather'][0]['main'];
+            let temp = response['main']['temp'];
             temp = Number(temp).toFixed(1); //소수점 둘째자리에서 반올림해 첫째자리까지 표현
-            let location = response['weather_info_popular']['name'];
+            let location = response['name'];
             if (weather == 'Rain') {
-                let rain = response['weather_info_popular']['rain']['1h'];
+                let rain = response['rain']['1h'];
                 $('#rain').text(rain + 'mm/h');
             }
-            let wind = response['weather_info_popular']['wind']['speed'];
+            let wind = response['wind']['speed'];
 
             $('#icon').attr('src', `https://openweathermap.org/img/w/${icon}.png`);
             $('#location').text(location);

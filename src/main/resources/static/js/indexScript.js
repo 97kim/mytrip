@@ -137,9 +137,10 @@ function geoInfo() {
                 url: "/near",
                 data: {lat_give: lat, lng_give: lng},
                 success: function (response) {
-                    console.log(response);
                     $('#near_card').empty();
-                    let near_list = JSON.parse(response)["response"]["body"]["items"]["item"];
+
+                    let near_list = JSON.parse(response);
+
 
                     for (let i = 0; i < near_list.length; i++) {
                         let title = near_list[i]['title'];
@@ -248,6 +249,7 @@ function showPopularTrips() {
         data: {},
         success: function (response) {
             $('#popular_card').empty();
+            response = JSON.parse(response);
             let popular_list = response['popular_list'];
             let trip_theme = response['trip_theme'];
 
@@ -255,7 +257,6 @@ function showPopularTrips() {
             sessionStorage.setItem('cat1', response['cat1']);
             sessionStorage.setItem('cat2', response['cat2']);
             sessionStorage.setItem('cat3', response['cat3']);
-            sessionStorage.setItem('content_type_id', response['content_type_id']);
 
             for (let i = 0; i < popular_list.length; i++) {
                 let content_id = popular_list[i]['contentid'];
