@@ -34,7 +34,7 @@ function geoInfoList(quantity) {
                 success: function (response) {
                     $('.before-render').hide();
                     $('#near_card').empty();
-                    let near_list = response['near_list'];
+                    let near_list = JSON.parse(response)['near_list'];
 
                     for (let i = 0; i < near_list.length; i++) {
                         let title = near_list[i]['title'];
