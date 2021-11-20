@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>myTrip</title>
@@ -13,7 +13,7 @@
     <meta property="og:image" content="../static/ogImage.png"/>
 
     <!--파비콘(주소창 아이콘) 적용-->
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="../favicon.ico"/>
 
     <!--bootstrap cdn-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -34,15 +34,15 @@
 
     <!--fontawesome cdn-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
-          crossorigin="anonymous">
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
     <!--외부 static 파일 불러오기-->
-    <link rel="stylesheet" href="css/public.css"/>
-    <link rel="stylesheet" href="css/mainStyle.css"/>
-    <script type="text/javascript" src="js/logout.js"></script>
-    <script type="text/javascript" src="js/bookmark.js"></script>
-<script type="text/javascript" src="js/nav.js"></script>
+    <link rel="stylesheet" href="../css/public.css"/>
+    <link rel="stylesheet" href="../css/writeStyle.css"/>
+    <script type="text/javascript" src="../js/writeScript.js"></script>
+    <script type="text/javascript" src="../js/logout.js"></script>
+    <script type="text/javascript" src="../js/modalProfile.js"></script>
+    <script type="text/javascript" src="../js/nav.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -63,8 +63,6 @@
                     }
                 }
             });
-            showPopularBookmarks();
-            showNearBookmarks();
             navLoginCheck();
         });
     </script>
@@ -73,7 +71,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.html" style="color: #073A96">여행어때</a>
+        <a class="navbar-brand" href="../index.html" style="color: #073A96">여행어때</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -116,34 +114,43 @@
     </div>
 </nav>
 
-<!-- 여기에 카드 작성 -->
-
-<div class="near-cards" style="margin-bottom: 70px">
-    <div class="wrap">
-        <div class="slide-title">
-            <div class="d-flex justify-content-between align-items-center">
-                <h6 style="margin-bottom: 0">테마별 여행지 즐겨찾기</h6>
+<div class="wrap">
+    <div class="writeTitle">
+        <h6>여행 등록</h6>
+    </div>
+    <form>
+        <div class="file-upload mb-3">
+            <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">
+                사진 선택
+            </button>
+            <div class="image-upload-wrap">
+                <input class="file-upload-input" id="file" type="file" onchange="readURL(this);"
+                       accept="image/*"/>
+                <div class="drag-text">
+                    <h6>드래그 해서 올리거나 사진을 선택하세요!</h6>
+                </div>
+            </div>
+            <div class="file-upload-content">
+                <img class="file-upload-image" src="#" alt="your image"/>
+                <div class="image-title-wrap">
+                    <button type="button" onclick="removeUpload()" class="remove-image">지우기 - <span
+                            class="image-title">Uploaded Image</span></button>
+                </div>
             </div>
         </div>
-        <button type="button" id="btn_prev"><i class="fas fa-chevron-left"></i></button>
-        <button type="button" id="btn_next"><i class="fas fa-chevron-right"></i></button>
-        <ul class="cards slider-li" id="popular_card">
-        </ul>
-    </div>
-</div>
-
-<div class="near-cards" style="margin-bottom: 70px">
-    <div class="wrap">
-        <div class="slide-title">
-            <div class="d-flex justify-content-between align-items-center">
-                <h6 style="margin-bottom: 0">내 주변 여행지 즐겨찾기</h6>
-            </div>
+        <div class="input-text mb-3">
+            <input type="text" class="title" id="title" placeholder="제목 ...">
         </div>
-        <button type="button" id="btn_prev2"><i class="fas fa-chevron-left"></i></button>
-        <button type="button" id="btn_next2"><i class="fas fa-chevron-right"></i></button>
-        <ul class="cards slider-li2" id="near_card">
-        </ul>
-    </div>
+        <div class="input-text mb-3">
+            <input type="text" class="place" id="place" placeholder="장소 ...">
+        </div>
+        <div class="input-textarea mb-3">
+            <textarea class="review" id="review" rows="7" placeholder="리뷰 ..."></textarea>
+        </div>
+        <div class="btn-wrapper">
+            <button class="save-btn" type="button" onclick="save()">글쓰기</button>
+        </div>
+    </form>
 </div>
 
 <!-- 모달 창 -->
@@ -249,6 +256,17 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 </body>
+
+
+<!-- Card Template
+Copyright (c) 2021 by Mojtaba Seyedi (https://codepen.io/seyedi/pen/zYoeLEv)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
 
 <!-- Footer Template
 Copyright (c) 2021 by scanfcode (https://codepen.io/scanfcode/pen/MEZPNd)

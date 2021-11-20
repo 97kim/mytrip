@@ -32,7 +32,7 @@ function sign_in() {
                 localStorage.setItem('token', response['token']);
                 sessionStorage.setItem('username', response['now_username'])
                 alert("로그인 되었습니다!!");
-                window.location.href = '../templates/index.html';
+                window.location.href = '../index.html';
             } else {
                 alert(response['msg'])
             }

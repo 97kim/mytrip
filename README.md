@@ -31,15 +31,15 @@ https://velog.io/@rudwnd33/3%EC%B0%A8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-S.A
 
 ### 📌 기술 선택 이유!
 <p>
-<img src="https://img.shields.io/badge/Flask-000000?style=plastic&logo=Flask&logoColor=white"/>
-<img src="https://img.shields.io/badge/MongoDB-47A248?style=plastic&logo=MongoDB&logoColor=white"/>
+<img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=plastic&logo=Flask&logoColor=white"/>
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=plastic&logo=MongoDB&logoColor=white"/>
 <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=plastic&logo=Bootstrap&logoColor=white"/>
 <img src="https://img.shields.io/badge/CodePen-000000?style=plastic&logo=CodePen&logoColor=white"/>
 <img src="https://img.shields.io/badge/Bulma-00D1B2?style=plastic&logo=CodePen&logoColor=white"/>
 <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=plastic&logo=Amazon%20AWS&logoColor=white"/>
 </p>
 
-- 강의를 보면서 배웠던 기술들이고, 아직 무거운 웹앱을 만드는 것이 아니기 때문에 Flask와 MongoDB가 적합하다고 생각했습니다.
+- 스프링 사용 이유 추가해야함
 - css를 하나하나 조정하며 예쁘게 꾸미고 싶지만, 모두 백엔드 개발 희망자이기도 해서 UI는 부트스트랩, CodePen, Bulma를 참고했습니다.
 - AWS EB와 GitHub Action을 통해 자동배포 환경을 구축했습니다.
 - 이미지를 업로드할 시 AWS S3에 업로드가 되며 해당 이미지를 AWS Cloudfront를 통해 불러오도록 했습니다.

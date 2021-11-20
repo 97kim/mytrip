@@ -28,7 +28,6 @@ function checkTheme(type, quantity) {
     sessionStorage.setItem('cat1', cat1);
     sessionStorage.setItem('cat2', cat2);
     sessionStorage.setItem('cat3', cat3);
-    sessionStorage.setItem('content_type_id', content_type_id);
     popularList(quantity)
 }
 
@@ -39,29 +38,26 @@ function popularList(quantity) {
     let cat1 = sessionStorage.getItem('cat1')
     let cat2 = sessionStorage.getItem('cat2')
     let cat3 = sessionStorage.getItem('cat3')
-    let content_type_id = sessionStorage.getItem('content_type_id')
     $('.before-render').show();
 
 
     $.ajax({
             type: "POST",
             url: "/popular/list",
-            data: {quantity: quantity, cat1: cat1, cat2: cat2, cat3: cat3, content_type_id: content_type_id},
+            data: {quantity: quantity, cat1: cat1, cat2: cat2, cat3: cat3},
             success: function (response) {
                 $('.before-render').hide();
                 $('#popular_card').empty();
+                response = JSON.parse(response);
                 let popular_list = response['popular_list'];
-                console.log('dd')
 
                 let cat1 = response['cat1'];
                 let cat2 = response['cat2'];
                 let cat3 = response['cat3'];
-                let content_type_id = response['content_type_id']
 
                 sessionStorage.setItem('cat1', cat1);
                 sessionStorage.setItem('cat2', cat2);
                 sessionStorage.setItem('cat3', cat3);
-                sessionStorage.setItem('content_type_id', content_type_id);
 
                 for (let i = 0; i < popular_list.length; i++) {
                     let content_id = popular_list[i]['contentid'];

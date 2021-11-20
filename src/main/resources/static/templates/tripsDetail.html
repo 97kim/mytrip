@@ -13,7 +13,7 @@
     <meta property="og:image" content="../static/ogImage.png"/>
 
     <!--파비콘(주소창 아이콘) 적용-->
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="../favicon.ico"/>
 
     <!--bootstrap cdn-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -37,12 +37,16 @@
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
     <!--외부 static 파일 불러오기-->
-    <link rel="stylesheet" href="css/public.css"/>
-    <link rel="stylesheet" href="css/writeStyle.css"/>
-    <script type="text/javascript" src="js/writeScript.js"></script>
-    <script type="text/javascript" src="js/logout.js"></script>
-    <script type="text/javascript" src="js/modalProfile.js"></script>
-    <script type="text/javascript" src="js/nav.js"></script>
+    <link rel="stylesheet" href="../css/public.css"/>
+    <link rel="stylesheet" href="../css/detail.css"/>
+    <script type="text/javascript" src="../js/tripsDetailScript.js"></script>
+    <script type="text/javascript" src="../js/logout.js"></script>
+    <script type="text/javascript" src="../js/modalProfile.js"></script>
+    <script type="text/javascript" src="../js/nav.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+        Kakao.init('a06f77fa2f554f8e1f314819fccabefd');
+    </script>
 
     <script>
         $(document).ready(function () {
@@ -63,15 +67,20 @@
                     }
                 }
             });
+            getItem(); // 제목, 장소, 사진, 리뷰내용, 날짜 출력
+            get_like();
+            showComments(); // 댓글 리스트 출력
+            autoHeight(); // textarea 자동 높이 조절
+            ownCheck();
             navLoginCheck();
         });
     </script>
 </head>
 
-<body>
+<body style="background-color: #fef8f8;">
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.html" style="color: #073A96">여행어때</a>
+        <a class="navbar-brand" href="../index.html" style="color: #073A96">여행어때</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -114,43 +123,82 @@
     </div>
 </nav>
 
-<div class="wrap">
-    <div class="writeTitle">
-        <h6>여행 등록</h6>
-    </div>
-    <form>
-        <div class="file-upload mb-3">
-            <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">
-                사진 선택
-            </button>
-            <div class="image-upload-wrap">
-                <input class="file-upload-input" id="file" type="file" onchange="readURL(this);"
-                       accept="image/*"/>
-                <div class="drag-text">
-                    <h6>드래그 해서 올리거나 사진을 선택하세요!</h6>
+<div id="page-wrapper">
+    <section id="main">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-8 col-12-medium">
+
+                    <!-- Content -->
+                    <article class="box post">
+                        <a href="#" class="image featured"><img id="file" alt=""/></a>
+                        <header class="d-flex align-items-center mb-4">
+                            <div class="card__thumb">
+                                <img id="profile_img" src="" alt="프로필 사진"/>
+                            </div>
+                            <h4 id="nickname" class="me-auto">nickname</h4>
+                            <button class="btn btn-dark btn-sm m-1 " onclick="window.location.href='tripsList.html'">목록
+                            </button>
+                            <div id="own-check">
+                                <button class="btn btn-dark btn-sm m-1" id="update" onclick="updateTrip(getId());">수정
+                                </button>
+                                <button class="btn btn-dark btn-sm m-1" onclick="delTrip(getId())">삭제
+                                </button>
+                            </div>
+                        </header>
+                        <h2 id="title" style="margin: 40px 0 20px 0;"></h2>
+                        <p id="date"></p>
+                        <h3>장소</h3>
+                        <p id="place"></p>
+                        <section>
+                            <h3>내용</h3>
+                            <p id="review"></p>
+                        </section>
+
+                        <div class="d-flex justify-content-between">
+                            <div class="like-box">
+                                <button type="button" class="level-item is-like" aria-label="like"
+                                        onclick="toggle_like(getId())">
+                                        <span class="icon is-small"><i id="like" class="far fa-thumbs-up"
+                                                                       aria-hidden="true"></i></span>
+                                    &nbsp;<span>좋아요</span>
+                                </button>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <button type="button" onclick="kakaoShare()" class="d-flex align-self-center"
+                                        style="text-decoration-line: none;">
+                                    <img class="d-flex align-self-center"
+                                         src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
+                                         width="20px" height="20px"/>
+                                    <span class="d-flex align-self-center"
+                                          style="margin-left: 10px; color: black;">공유</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </article>
+
+                </div>
+                <div class="col-4 col-12-medium">
+
+                    <!-- Sidebar -->
+                    <section class="box">
+                        <header>
+                            <h3>댓글</h3>
+                        </header>
+                        <div id="comment_list"></div>
+                        <textarea id="comment_content" style="width: 100%;" placeholder="댓글을 입력하세요"></textarea>
+
+                        <footer>
+                            <a href="javascript:comment()" class="button alt">댓글달기</a>
+                        </footer>
+
+                    </section>
+
                 </div>
             </div>
-            <div class="file-upload-content">
-                <img class="file-upload-image" src="#" alt="your image"/>
-                <div class="image-title-wrap">
-                    <button type="button" onclick="removeUpload()" class="remove-image">지우기 - <span
-                            class="image-title">Uploaded Image</span></button>
-                </div>
-            </div>
         </div>
-        <div class="input-text mb-3">
-            <input type="text" class="title" id="title" placeholder="제목 ...">
-        </div>
-        <div class="input-text mb-3">
-            <input type="text" class="place" id="place" placeholder="장소 ...">
-        </div>
-        <div class="input-textarea mb-3">
-            <textarea class="review" id="review" rows="7" placeholder="리뷰 ..."></textarea>
-        </div>
-        <div class="btn-wrapper">
-            <button class="save-btn" type="button" onclick="save()">글쓰기</button>
-        </div>
-    </form>
+    </section>
 </div>
 
 <!-- 모달 창 -->
@@ -183,7 +231,7 @@
 
 <!-- Site footer -->
 <footer class="site-footer">
-    <div class="container">
+    <div class="custom-container">
         <div class="row">
             <div class="col-sm-12 col-md-6">
                 <h6>About</h6>
@@ -231,7 +279,7 @@
         </div>
         <hr>
     </div>
-    <div class="container">
+    <div class="custom-container">
         <div class="row">
             <div class="col-md-8 col-sm-6 col-xs-12">
                 <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by

@@ -12,22 +12,22 @@ function getDetailIntro() {
         },
         async: false,
         success: function (response) {
-            let detail_intro_list = response['detail_intro_list'];
-            $('#title').text(detail_intro_list['title']);
-            $('#file').attr('src', detail_intro_list['firstimage'])
-            $('#overview').html(detail_intro_list['overview']);
-            if (detail_intro_list['homepage']) {
-                $('#homepage').html(detail_intro_list['homepage']);
+            response = JSON.parse(response);
+            $('#title').text(response['title']);
+            $('#file').attr('src', response['firstimage'])
+            $('#overview').html(response['overview']);
+            if (response['homepage']) {
+                $('#homepage').html(response['homepage']);
             } else {
                 $('#homepage').text('');
             }
-            if (!detail_intro_list['mapy'] || !detail_intro_list['mapx']) {
-                detail_intro_list['mapy'] = 0;
-                detail_intro_list['mapx'] = 0;
+            if (!response['mapy'] || !response['mapx']) {
+                response['mapy'] = 0;
+                response['mapx'] = 0;
             }
 
-            sessionStorage.setItem('popular_place_lat', detail_intro_list['mapy']);
-            sessionStorage.setItem('popular_place_lng', detail_intro_list['mapx']);
+            sessionStorage.setItem('popular_place_lat', response['mapy']);
+            sessionStorage.setItem('popular_place_lng', response['mapx']);
         }
     });
 }
@@ -86,16 +86,17 @@ function weather_popular() {
         },
         async: false,
         success: function (response) {
-            let icon = response['weather_info_popular']['weather'][0]['icon'];
-            let weather = response['weather_info_popular']['weather'][0]['main'];
-            let temp = response['weather_info_popular']['main']['temp'];
+            response = JSON.parse(response);
+            let icon = response['weather'][0]['icon'];
+            let weather = response['weather'][0]['main'];
+            let temp = response['main']['temp'];
             temp = Number(temp).toFixed(1); //소수점 둘째자리에서 반올림해 첫째자리까지 표현
-            let location = response['weather_info_popular']['name'];
+            let location = response['name'];
             if (weather == 'Rain') {
-                let rain = response['weather_info_popular']['rain']['1h'];
+                let rain = response['rain']['1h'];
                 $('#rain').text(rain + 'mm/h');
             }
-            let wind = response['weather_info_popular']['wind']['speed'];
+            let wind = response['wind']['speed'];
 
             $('#icon').attr('src', `https://openweathermap.org/img/w/${icon}.png`);
             $('#location').text(location);

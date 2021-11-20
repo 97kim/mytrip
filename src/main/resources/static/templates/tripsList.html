@@ -7,17 +7,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!--https 사이트에서 http 사이트 요청 시 발생하는 보안 문제 해결-->
-    <!--우리 사이트는 https이고 요청을 보내는 한국관광공사api 사이트는 http라서 발생했던 문제 해결-->
-    <!--?    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
-
     <!--메타태그 설정-->
     <meta property="og:title" content="여행어때"/>
     <meta property="og:description" content="위치 기반 서비스로 근처의 여행지를 확인해보세요!"/>
     <meta property="og:image" content="../static/ogImage.png"/>
 
     <!--파비콘(주소창 아이콘) 적용-->
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="../favicon.ico"/>
 
     <!--bootstrap cdn-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -41,23 +37,16 @@
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
     <!--외부 static 파일 불러오기-->
-    <link rel="stylesheet" href="css/public.css"/>
-    <link rel="stylesheet" href="css/listStyle.css"/>
-    <link rel="stylesheet" href="css/loading.css"/>
-    <script type="text/javascript" src="js/nearListScript.js"></script>
-    <script type="text/javascript" src="js/logout.js"></script>
-    <script type="text/javascript" src="js/modalProfile.js"></script>
-    <script type="text/javascript" src="js/nav.js"></script>
+    <link rel="stylesheet" href="../css/public.css"/>
+    <link rel="stylesheet" href="../css/listStyle.css"/>
+    <script type="text/javascript" src="../js/tripsListScript.js"></script>
+    <script type="text/javascript" src="../js/logout.js"></script>
+    <script type="text/javascript" src="../js/modalProfile.js"></script>
+    <script type="text/javascript" src="../js/nav.js"></script>
 
     <script>
-        let perPage2 = "15";
-
         $(document).ready(function () {
-            geoInfoList(perPage2);
-            $("#perPagingSelect2").change(function () {
-                perPage2 = $(this).val();
-                geoInfoList(perPage2)
-            })
+            showListSort('date');
             $.ajaxSetup({
                 error: function (jqXHR, exception) {
                     switch (jqXHR.status) {
@@ -75,7 +64,6 @@
                     }
                 }
             });
-            navLoginCheck();
         });
     </script>
 
@@ -84,7 +72,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.html" style="color: #073A96">여행어때</a>
+        <a class="navbar-brand" href="../index.html" style="color: #073A96">여행어때</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -127,36 +115,17 @@
     </div>
 </nav>
 
-<div class="sort">
-    <div>
-        <a id="trip" href="javascript:checkType(12, perPage2)" style="text-decoration: none;">여행지</a>
-        <span> &nbsp; | &nbsp;</span>
-        <a id="food" href="javascript:checkType(39, perPage2)" style="text-decoration: none;">음식점</a>
-        <span> &nbsp; | &nbsp;</span>
-        <a id="accommodation" href="javascript:checkType(32, perPage2)" style="text-decoration: none;">숙박</a>
-        <span> &nbsp; | &nbsp;</span>
-        <a id="festival" href="javascript:checkType(15, perPage2)" style="text-decoration: none;">축제공연행사</a>
-    </div>
-    <select style="width: 70px; margin: 5px 0;" id="perPagingSelect2">
-        <option value="15">15</option>
-        <option value="20">20</option>
-        <option value="25">25</option>
-        <option value="30">30</option>
-    </select>
+<div class="sort d-flex align-items-center mb-3">
+    <a href="javascript:showListSort('date')">최근순</a>
+    <span> &nbsp; | &nbsp;</span>
+    <a href="javascript:showListSort('like')">좋아요순</a>
+    <a href='javascript:writeTrip()' class="ms-auto">작성하기</a>
 </div>
 
-
-<div class="before-render" style="width: 100%; height: 100vh;">
-    <div id="container-box">
-        <div id="dot"></div>
-        <div class="step" id="s1"></div>
-        <div class="step" id="s2"></div>
-        <div class="step" id="s3"></div>
-    </div>
+<div>
+    <ul id="trip_card" class="cards">
+    </ul>
 </div>
-
-<ul id="near_card" class="cards">
-</ul>
 
 <!-- 모달 창 -->
 <div class="modal fade" id="profile_modal" tabindex="-1" aria-labelledby="profile_modal_label" aria-hidden="true">
