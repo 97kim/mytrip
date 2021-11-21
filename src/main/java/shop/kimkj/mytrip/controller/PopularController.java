@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import shop.kimkj.mytrip.dto.ContentIdDto;
+import shop.kimkj.mytrip.dto.LatLngDto;
 import shop.kimkj.mytrip.dto.PopularDto;
 import shop.kimkj.mytrip.service.PopularService;
 
@@ -26,12 +28,12 @@ public class PopularController {
     }
 
     @PostMapping("/popular/place/intro")
-    public String getPopularDetailIntro(@RequestBody PopularDto popularDto) throws IOException {
-        return popularService.getPopularDetailIntro(popularDto);
+    public String getPopularDetailIntro(@RequestBody ContentIdDto contentIdDto) throws IOException {
+        return popularService.getPopularDetailIntro(contentIdDto);
     }
 
     @PostMapping("/popular/place/weather")
-    public String getWeatherPopular(@RequestBody PopularDto popularDto) throws IOException {
-        return popularService.getWeatherPopular(popularDto);
+    public String getWeatherPopular(@RequestBody LatLngDto latLngDto) throws IOException {
+        return popularService.getWeatherPopular(latLngDto);
     }
 }
