@@ -7,9 +7,10 @@ function getDetailIntro() {
     $.ajax({
         type: "POST",
         url: '/popular/place/intro',
-        data: {
+        contentType: "application/json",
+        data: JSON.stringify({
             content_id_give: getId_popular(),
-        },
+        }),
         async: false,
         success: function (response) {
             response = JSON.parse(response);
@@ -80,10 +81,11 @@ function weather_popular() {
     $.ajax({
         type: "POST",
         url: '/popular/place/weather',
-        data: {
+        contentType: "application/json",
+        data: JSON.stringify({
             place_lat: place_lat,
             place_lng: place_lng
-        },
+        }),
         async: false,
         success: function (response) {
             response = JSON.parse(response);

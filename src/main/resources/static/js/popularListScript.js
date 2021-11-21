@@ -44,7 +44,13 @@ function popularList(quantity) {
     $.ajax({
             type: "POST",
             url: "/popular/list",
-            data: {quantity: quantity, cat1: cat1, cat2: cat2, cat3: cat3},
+            contentType: "application/json",
+            data: JSON.stringify({
+                quantity: quantity,
+                cat1: cat1,
+                cat2: cat2,
+                cat3: cat3
+            }),
             success: function (response) {
                 $('.before-render').hide();
                 $('#popular_card').empty();
