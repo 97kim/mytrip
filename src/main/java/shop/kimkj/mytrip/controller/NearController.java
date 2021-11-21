@@ -24,10 +24,13 @@ public class NearController {
     @Value("${TOUR_KEY}")
     private String TOUR_KEY;
 
+    @Value("${WEATHER_KEY}")
+    private String WEATHER_KEY;
+
     @PostMapping("/near")
     public String getNearPlace(@RequestParam String lat_give, @RequestParam String lng_give) throws IOException {
         StringBuffer result = new StringBuffer();
-        String jsonPrintString = null;
+        JSONObject jsonObject = null;
         try {
             String apiUrl = String.format(
                     "http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList?" +
@@ -55,13 +58,13 @@ public class NearController {
                 result.append(returnLine);
             }
 
-            JSONObject jsonObject = XML.toJSONObject(result.toString());
-            jsonPrintString = jsonObject.toString();
+            jsonObject = XML.toJSONObject(result.toString());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(jsonPrintString);
-        return jsonPrintString;
+        JSONArray near = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
+        return near.toString();
     }
 
 
@@ -105,6 +108,36 @@ public class NearController {
         JSONObject nearDetail = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONObject("item");
 
         return nearDetail.toString();
+    }
+    @PostMapping("/near/place/weather")
+    public String getWeatherNear(@RequestParam(name = "place_lat") String placeLat, @RequestParam(name = "place_lng") String placeLng) {
+        StringBuffer result = new StringBuffer();
+        try {
+            String apiUrl = String.format(
+                    "https://api.openweathermap.org/data/2.5/weather?" +
+                    "lat=%s&lon=%s" +
+                    "&appid=%s&units=metric"
+                    , placeLat, placeLng, WEATHER_KEY);
+
+            URL url = new URL(apiUrl);
+
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.connect();
+
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream, "UTF-8"));
+
+            String returnLine;
+
+            while((returnLine = bufferedReader.readLine()) != null) {
+                result.append(returnLine);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result.toString();
     }
 
 
