@@ -6,6 +6,8 @@ import org.json.XML;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import shop.kimkj.mytrip.dto.ContentIdDto;
+import shop.kimkj.mytrip.dto.LatLngDto;
 import shop.kimkj.mytrip.dto.PopularDto;
 
 import java.io.BufferedInputStream;
@@ -165,8 +167,8 @@ public class PopularService {
         return jsonObject2.toString();
     }
 
-    public String getPopularDetailIntro(PopularDto popularDto) {
-        String contentId = popularDto.getContentId();
+    public String getPopularDetailIntro(ContentIdDto contentIdDto) {
+        String contentId = contentIdDto.getContentId();
 
         StringBuffer result = new StringBuffer();
         JSONObject jsonObject = null;
@@ -203,9 +205,9 @@ public class PopularService {
         return popularDetail.toString();
     }
 
-    public String getWeatherPopular(PopularDto popularDto) {
-        String placeLat = popularDto.getPlaceLat();
-        String placeLng = popularDto.getPlaceLng();
+    public String getWeatherPopular(LatLngDto latLngDto) {
+        String placeLat = latLngDto.getPlaceLat();
+        String placeLng = latLngDto.getPlaceLng();
 
         StringBuffer result = new StringBuffer();
         try {
