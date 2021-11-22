@@ -5,10 +5,7 @@ import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import shop.kimkj.mytrip.dto.NearDto;
 
 import java.io.BufferedInputStream;
@@ -117,6 +114,7 @@ public class NearController {
         String lat = nearDto.getLat();
         String lng = nearDto.getLng();
         String type = nearDto.getType();
+
         String code = "";
 
         switch (type) {
