@@ -51,21 +51,9 @@
             geoInfo(); // 위치 좌표 서버로 보내서 api 데이터 얻어온 뒤 화면에 출력
             showTrips(); // 사용자가 올린 데이터 가져오기
             showPopularTrips(); // 랜덤으로 인기있는(검색량기준) 전국 상위 여행지 출력
-            $.ajaxSetup({
-                error: function (jqXHR, exception) {
-                    switch (jqXHR.status) {
-                        case 401:
-                            alert('인증 에러!!');
-                            break;
-                        case 423:
-                            alert('중복된 id!!');
-                            break;
-                    }
-                },
-                beforeSend: function (xhr) {
-                    if (localStorage.getItem('token') != null) {
-                        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-                    }
+            $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+                if(localStorage.getItem('token')) {
+                    jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
                 }
             });
             navLoginCheck();

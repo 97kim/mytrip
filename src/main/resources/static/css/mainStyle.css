@@ -128,27 +128,6 @@
     left: 50%;
 }
 
-#dot {
-    background: #878FB5;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    bottom: 30px;
-    left: 27px;
-    transform-origin: center bottom;
-    animation: dot .6s ease-in-out infinite;
-}
-
-.step {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    border-top: 2px solid #878FB5;
-    top: 0;
-    right: 0;
-}
-
 .card {
     position: relative;
     display: block;

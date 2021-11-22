@@ -20,22 +20,19 @@ function sign_in() {
     $.ajax({
         type: "POST",
         url: "/sign-in",
-        data: {
-            username_give: username,
-            password_give: password
-        },
+        contentType: "application/json",
+        data: JSON.stringify({
+            username: username,
+            password: password
+        }),
         statusCode: {
             401: () => alert('아이디/비밀번호를 확인해주세요.')
         },
         success: function (response) {
-            if (response['result'] == 'success') {
-                localStorage.setItem('token', response['token']);
-                sessionStorage.setItem('username', response['now_username'])
-                alert("로그인 되었습니다!!");
-                window.location.href = '../index.html';
-            } else {
-                alert(response['msg'])
-            }
+            localStorage.setItem('token', response['token']);
+            sessionStorage.setItem('username', response['username'])
+            alert("로그인 되었습니다!!");
+            window.location.href = '/';
         }
     });
 }
@@ -79,15 +76,14 @@ function sign_up() {
     $.ajax({
         type: "POST",
         url: "/sign-up/save",
-        data: {
-            username_give: username,
-            password_give: password
-        },
+        contentType: "application/json",
+        data: JSON.stringify({
+            username: username,
+            password: password
+        }),
         success: function (response) {
-            if (response['result'] == 'success') {
-                alert("회원가입을 축하드립니다!");
-                window.location.href = "../templates/login.html";
-            }
+            alert("회원가입을 축하드립니다!");
+            window.location.href = "../templates/login.html";
         }
     });
 }
@@ -127,12 +123,14 @@ function check_dup() {
     $("#help-id").addClass("is-loading")
     $.ajax({
         type: "POST",
-        url: "/sign-up/check_dup",
-        data: {
-            username_give: username
-        },
+        url: "/sign-up/check-dup",
+        contentType: "application/json",
+        data: JSON.stringify({
+            username: username
+        }),
         success: function (response) {
-            if (response["exists"]) {
+            response = JSON.parse(response);
+            if (response["exists"] === true) {
                 $("#help-id").text("이미 존재하는 아이디입니다.").removeClass("is-safe").addClass("is-danger")
                 $("#input-username").focus()
             } else {
