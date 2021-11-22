@@ -50,21 +50,9 @@
 
     <script>
         $(document).ready(function () {
-            $.ajaxSetup({
-                error: function (jqXHR, exception) {
-                    switch (jqXHR.status) {
-                        case 401:
-                            alert('인증 에러!!');
-                            break;
-                        case 423:
-                            alert('중복된 id!!');
-                            break;
-                    }
-                },
-                beforeSend: function (xhr) {
-                    if (localStorage.getItem('token') != null) {
-                        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-                    }
+            $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+                if(localStorage.getItem('token')) {
+                    jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
                 }
             });
             getItem(); // 제목, 장소, 사진, 리뷰내용, 날짜 출력

@@ -46,4 +46,5 @@ settings.gradle
 env.properties
 
 .DS_Store
-
+mytripdb.lock.db
+mytripdb.mv.db
