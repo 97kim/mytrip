@@ -122,13 +122,14 @@ function toggle_bookmark(content_id) {
             $.ajax({
                 type: "POST",
                 url: "/near/place/bookmark",
-                data: {
+                contentType: "application/json",
+                data: JSON.stringify({
                     content_id_give: content_id,
                     action_give: "uncheck",
                     title_give: title,
                     address_give: address,
                     file_give: file
-                },
+                }),
                 success: function (response) {
                     if (response['result'] == 'success') {
                         $('#bookmark').removeClass("fas").addClass("far")
