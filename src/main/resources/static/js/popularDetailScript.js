@@ -121,32 +121,32 @@ function toggle_bookmark_popular(content_id) {
             $.ajax({
                 type: "POST",
                 url: "/popular/place/bookmark",
-                data: {
-                    content_id_give: content_id,
-                    action_give: "uncheck",
-                    title_give: title,
-                    file_give: file
-                },
+                contentType: "application/json",
+                data: JSON.stringify({
+                    content_id: content_id,
+                    action: "uncheck",
+                    title: title,
+                    file: file,
+                    username: sessionStorage.getItem("username")
+                }),
                 success: function (response) {
-                    if (response['result'] == 'success') {
-                        $('#bookmark').removeClass("fas").addClass("far")
-                    }
+                    $('#bookmark').removeClass("fas").addClass("far")
                 }
             })
         } else {
             $.ajax({
                 type: "POST",
                 url: "/popular/place/bookmark",
-                data: {
-                    content_id_give: content_id,
-                    action_give: "check",
-                    title_give: title,
-                    file_give: file
-                },
+                contentType: "application/json",
+                data: JSON.stringify({
+                    content_id: content_id,
+                    action: "uncheck",
+                    title: title,
+                    file: file,
+                    username: sessionStorage.getItem("username")
+                }),
                 success: function (response) {
-                    if (response['result'] == 'success') {
-                        $('#bookmark').removeClass("far").addClass("fas")
-                    }
+                    $('#bookmark').removeClass("far").addClass("fas")
                 }
             });
 

@@ -30,7 +30,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
 
         http.authorizeRequests()
-                // css 폴더를 login 없이 허용
+                // 인증과정 필요
+                .antMatchers("/templates/write.html").authenticated()
+                .antMatchers("/templates/tripsUpdate.html").authenticated()
+                .antMatchers("/popular/place/bookmark/**").authenticated()
+                .antMatchers("/popular/bookmark").authenticated()
+                .antMatchers("/near/place/bookmark/**").authenticated()
+                .antMatchers("/near/bookmark").authenticated()
+                .antMatchers("/trips/place/**").authenticated()
+                .antMatchers("/profile").authenticated()
+                .antMatchers("/popular/bookmark").authenticated()
+                .antMatchers("/own").authenticated()
+
+                // 인증과정 필요 없이 모두 허용
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
@@ -43,6 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/trips/**").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/").permitAll()
+
                 // 그 외 모든 요청은 인증과정 필요
                 .anyRequest().authenticated()
                 .and()

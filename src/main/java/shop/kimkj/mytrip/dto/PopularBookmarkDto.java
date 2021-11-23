@@ -1,20 +1,23 @@
 package shop.kimkj.mytrip.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
-public class BookmarkDto {
+public class PopularBookmarkDto {
 
-    @JsonProperty(value = "content_id_give")
+    @JsonProperty(value = "content_id")
     private String contentId;
 
-    @JsonProperty(value = "action_give")
     private String action;
 
-    @JsonProperty(value = "title_give")
     private String title;
 
-    @JsonProperty(value = "file_give")
     private String file;
+
+    private String username;
 }
