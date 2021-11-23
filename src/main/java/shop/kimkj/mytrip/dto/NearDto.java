@@ -16,4 +16,5 @@ public class NearDto {
 
     @JsonProperty(value = "quantity_give")
     private String quantity;
+
 }
