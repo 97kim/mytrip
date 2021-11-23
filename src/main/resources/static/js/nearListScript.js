@@ -30,7 +30,13 @@ function geoInfoList(quantity) {
         $.ajax({
                 type: "POST",
                 url: "/near/list",
-                data: {quantity_give: quantity, lat_give: lat, lng_give: lng, type_give: type},
+                contentType: "application/json",
+                data: JSON.stringify({
+                    quantity_give: quantity,
+                    lat_give: lat,
+                    lng_give: lng,
+                    type_give: type
+                }),
                 success: function (response) {
                     $('.before-render').hide();
                     $('#near_card').empty();
