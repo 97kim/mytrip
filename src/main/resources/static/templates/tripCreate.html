@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>myTrip</title>
@@ -38,8 +38,8 @@
 
     <!--외부 static 파일 불러오기-->
     <link rel="stylesheet" href="../css/public.css"/>
-    <link rel="stylesheet" href="../css/listStyle.css"/>
-    <script type="text/javascript" src="../js/tripsListScript.js"></script>
+    <link rel="stylesheet" href="../css/writeStyle.css"/>
+    <script type="text/javascript" src="../js/tripCreateScript.js"></script>
     <script type="text/javascript" src="../js/logoutScript.js"></script>
     <script type="text/javascript" src="../js/modalProfile.js"></script>
     <script type="text/javascript" src="../js/nav.js"></script>
@@ -48,13 +48,11 @@
     <script>
         $(document).ready(function () {
             navLoginCheck();
-            showUserReview('date');
         });
     </script>
-
 </head>
-<body>
 
+<body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="../index.html" style="color: #073A96">여행어때</a>
@@ -100,16 +98,43 @@
     </div>
 </nav>
 
-<div class="sort d-flex align-items-center mb-3">
-    <a href="javascript:showListSort('date')">최근순</a>
-    <span> &nbsp; | &nbsp;</span>
-    <a href="javascript:showListSort('like')">좋아요순</a>
-    <a href='javascript:writeTrip()' class="ms-auto">작성하기</a>
-</div>
-
-<div>
-    <ul id="trip_card" class="cards">
-    </ul>
+<div class="wrap">
+    <div class="writeTitle">
+        <h6>여행 등록</h6>
+    </div>
+    <form>
+        <div class="file-upload mb-3">
+            <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">
+                사진 선택
+            </button>
+            <div class="image-upload-wrap">
+                <input class="file-upload-input" id="file" type="file" onchange="readURL(this);"
+                       accept="image/*"/>
+                <div class="drag-text">
+                    <h6>드래그 해서 올리거나 사진을 선택하세요!</h6>
+                </div>
+            </div>
+            <div class="file-upload-content">
+                <img class="file-upload-image" src="#" alt="your image"/>
+                <div class="image-title-wrap">
+                    <button type="button" onclick="removeUpload()" class="remove-image">지우기 - <span
+                            class="image-title">Uploaded Image</span></button>
+                </div>
+            </div>
+        </div>
+        <div class="input-text mb-3">
+            <input type="text" class="title" id="title" placeholder="제목 ...">
+        </div>
+        <div class="input-text mb-3">
+            <input type="text" class="place" id="place" placeholder="장소 ...">
+        </div>
+        <div class="input-textarea mb-3">
+            <textarea class="review" id="review" rows="7" placeholder="리뷰 ..."></textarea>
+        </div>
+        <div class="btn-wrapper">
+            <button class="save-btn" type="button" onclick="postUserReview()">글쓰기</button>
+        </div>
+    </form>
 </div>
 
 <!-- 모달 창 -->
@@ -215,6 +240,17 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 </body>
+
+
+<!-- Card Template
+Copyright (c) 2021 by Mojtaba Seyedi (https://codepen.io/seyedi/pen/zYoeLEv)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
 
 <!-- Footer Template
 Copyright (c) 2021 by scanfcode (https://codepen.io/scanfcode/pen/MEZPNd)

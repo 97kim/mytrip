@@ -45,9 +45,10 @@
     <link rel="stylesheet" href="../css/listStyle.css"/>
     <link rel="stylesheet" href="../css/loading.css"/>
     <script type="text/javascript" src="../js/nearListScript.js"></script>
-    <script type="text/javascript" src="../js/logout.js"></script>
+    <script type="text/javascript" src="../js/logoutScript.js"></script>
     <script type="text/javascript" src="../js/modalProfile.js"></script>
     <script type="text/javascript" src="../js/nav.js"></script>
+    <script type="text/javascript" src="../js/ajaxPreFilter.js"></script>
 
     <script>
         let perPage2 = "15";
@@ -58,11 +59,6 @@
                 perPage2 = $(this).val();
                 geoInfoList(perPage2)
             })
-            $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-                if(localStorage.getItem('token')) {
-                    jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
-                }
-            });
             navLoginCheck();
         });
     </script>
@@ -107,7 +103,7 @@
                                data-bs-target="#profile_modal"
                                data-bs-whatever="@mdo">프로필 설정</a></li>
                         <li><a class="dropdown-item" href="bookmarks.html">즐겨찾기</a></li>
-                        <li><a class="dropdown-item" href="javascript:logout()">로그아웃</a></li>
+                        <li><a class="dropdown-item" href="javascript:logoutScript()">로그아웃</a></li>
                     </ul>
                 </li>
             </ul>
@@ -157,7 +153,7 @@
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">닉네임:</label>
+                        <label for="modal_nickname" class="col-form-label">닉네임:</label>
                         <input type="text" class="form-control" id="modal_nickname" placeholder="사용하실 닉네임을 입력해주세요">
                     </div>
                     <div class="mb-3">

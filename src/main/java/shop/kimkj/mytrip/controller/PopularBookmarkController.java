@@ -16,4 +16,9 @@ public class PopularBookmarkController {
     public void bookmarkPopular(@RequestBody PopularBookmarkDto popularBookmarkDto) {
         popularBookmarkService.savePopularBookmark(popularBookmarkDto);
     }
+
+//    @PostMapping("/popular/bookmark")
+//    public String sendPopularBookmarks() {
+//        return popularBookmarkService.findAllByUserId()
+//    }
 }
