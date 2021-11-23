@@ -27,8 +27,7 @@ public class UserApiController {
     private final UserDetailsService userDetailsService;
     private final UserService userService;
 
-
-    @RequestMapping(value = "/sign-in", method = RequestMethod.POST)
+    @PostMapping("/sign-in")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody UserDto userDto) throws Exception {
         authenticate(userDto.getUsername(), userDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());

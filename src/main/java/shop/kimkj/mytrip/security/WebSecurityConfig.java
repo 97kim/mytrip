@@ -30,24 +30,44 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
 
         http.authorizeRequests()
-                // css 폴더를 login 없이 허용
-                .antMatchers("/css/**").permitAll()
-                .antMatchers("/js/**").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/sign-in").permitAll()
-                .antMatchers("/sign-up/**").permitAll()
-                .antMatchers("/**.html").permitAll()
-                .antMatchers("/templates/**.html").permitAll()
-                .antMatchers("/near/**").permitAll()
-                .antMatchers("/popular/**").permitAll()
-                .antMatchers("/trips/**").permitAll()
-                .antMatchers("/favicon.ico").permitAll()
-                .antMatchers("/").permitAll()
+                // 인증과정 필요
+//                .antMatchers("/templates/tripCreate.html").authenticated()
+//                .antMatchers("/templates/tripUpdate.html").authenticated()
+//                .antMatchers("/popular/place/bookmark/**").authenticated()
+//                .antMatchers("/popular/bookmark").authenticated()
+//                .antMatchers("/near/place/bookmark/**").authenticated()
+//                .antMatchers("/near/bookmark").authenticated()
+//                .antMatchers("/userReview/place/**").authenticated()
+//                .antMatchers("/profile").authenticated()
+//                .antMatchers("/popular/bookmark").authenticated()
+//                .antMatchers("/own").authenticated()
+//
+//                // 인증과정 필요 없이 모두 허용
+//                .antMatchers("/css/**").permitAll()
+//                .antMatchers("/js/**").permitAll()
+//                .antMatchers("/h2-console/**").permitAll()
+//                .antMatchers("/sign-in").permitAll()
+//                .antMatchers("/sign-up/**").permitAll()
+//                .antMatchers("/**.html").permitAll()
+//                .antMatchers("/templates/**.html").permitAll()
+//                .antMatchers("/near/**").permitAll()
+//                .antMatchers("/popular/**").permitAll()
+//                .antMatchers("/userReview/**").permitAll()
+//                .antMatchers("/userReviews/**").permitAll()
+//                .antMatchers("/favicon.ico").permitAll()
+                .antMatchers("**").permitAll()
+
                 // 그 외 모든 요청은 인증과정 필요
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .formLogin()
+                .loginPage("/templates/login.html").loginProcessingUrl("/templates/login.html").defaultSuccessUrl("/").permitAll()
+                .and()
+                .logout().logoutUrl("/logout");
+
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }

@@ -21,7 +21,7 @@ function save() {
         processData: false,
         success: function (response) {
             alert(response["msg"])
-            window.location.href = '../templates/tripsList.html';
+            window.location.href = '../templates//tripsList.html';
         }
     });
 }
