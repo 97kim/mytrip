@@ -41,21 +41,21 @@
     <link rel="stylesheet" href="css/mainStyle.css"/>
     <link rel="stylesheet" href="css/loading.css">
     <script type="text/javascript" src="js/indexScript.js"></script>
-    <script type="text/javascript" src="js/logout.js"></script>
+    <script type="text/javascript" src="js/logoutScript.js"></script>
     <script type="text/javascript" src="js/modalProfile.js"></script>
     <script type="text/javascript" src="js/nav.js"></script>
 
     <script>
         $(document).ready(function () {
             covid();
-            geoInfo(); // 위치 좌표 서버로 보내서 api 데이터 얻어온 뒤 화면에 출력
-            showTrips(); // 사용자가 올린 데이터 가져오기
-            showPopularTrips(); // 랜덤으로 인기있는(검색량기준) 전국 상위 여행지 출력
-            $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-                if(localStorage.getItem('token')) {
+            $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+                if (localStorage.getItem('token')) {
                     jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
                 }
             });
+            geoInfo(); // 위치 좌표 서버로 보내서 api 데이터 얻어온 뒤 화면에 출력
+            showTripReviews(); // 사용자가 올린 데이터 가져오기
+            showPopularTrips(); // 랜덤으로 인기있는(검색량기준) 전국 상위 여행지 출력
             navLoginCheck();
         });
     </script>
@@ -78,7 +78,7 @@
                     <a class="nav-link" href="templates/nearList.html">Near</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="templates/tripsList.html">Trips</a>
+                    <a class="nav-link" href="templates//tripsList.html">Trips</a>
                 </li>
             </ul>
             <ul class="navbar-nav" id="login-btn" style="display: none;">
@@ -99,7 +99,7 @@
                                data-bs-target="#profile_modal"
                                data-bs-whatever="@mdo">프로필 설정</a></li>
                         <li><a class="dropdown-item" href="templates/bookmarks.html">즐겨찾기</a></li>
-                        <li><a class="dropdown-item" href="javascript:logout()">로그아웃</a></li>
+                        <li><a class="dropdown-item" href="javascript:logoutScript()">로그아웃</a></li>
                     </ul>
                 </li>
             </ul>
@@ -180,7 +180,7 @@
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">닉네임:</label>
+                        <label for="modal_nickname" class="col-form-label">닉네임:</label>
                         <input type="text" class="form-control" id="modal_nickname" placeholder="사용하실 닉네임을 입력해주세요">
                     </div>
                     <div class="mb-3">
