@@ -31,7 +31,6 @@ function geoInfoList(quantity) {
                 type: "POST",
                 url: "/near/list",
                 contentType: "application/json",
-
                 data: JSON.stringify({
                     quantity_give: quantity,
                     lat_give: lat,

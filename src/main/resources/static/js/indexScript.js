@@ -135,7 +135,9 @@ function geoInfo() {
         $.ajax({
                 type: "POST",
                 url: "/near",
-                data: {lat_give: lat, lng_give: lng},
+                contentType: "application/json",
+                data: JSON.stringify(
+                    {place_lat: lat, place_lng: lng}),
                 success: function (response) {
                     $('#near_card').empty();
                     response = JSON.parse(response)
