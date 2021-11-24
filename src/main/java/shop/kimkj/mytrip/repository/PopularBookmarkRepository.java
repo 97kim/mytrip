@@ -6,5 +6,8 @@ import shop.kimkj.mytrip.domain.PopularBookmark;
 import java.util.List;
 
 public interface PopularBookmarkRepository extends JpaRepository<PopularBookmark, Long> {
-    List<PopularBookmark> findAllByUserId(Long userId);
+    List<PopularBookmark> findAllByUsername(String username);
+    void deleteByContentId(String contentId);
+    PopularBookmark findByContentIdAndUsername(String contentId, String username);
 }
+

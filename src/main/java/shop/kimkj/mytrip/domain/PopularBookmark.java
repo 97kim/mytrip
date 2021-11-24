@@ -1,5 +1,6 @@
 package shop.kimkj.mytrip.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +31,7 @@ public class PopularBookmark extends Timestamped {
     @Column(nullable = false)
     private String username;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;

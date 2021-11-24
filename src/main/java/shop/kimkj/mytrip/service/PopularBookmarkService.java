@@ -18,8 +18,13 @@ public class PopularBookmarkService {
     private final PopularBookmarkRepository popularBookmarkRepository;
     private final UserRepository userRepository;
 
-    public List<PopularBookmark> findAllByUserId(Long userId) {
-        return popularBookmarkRepository.findAllByUserId(userId);
+    public List<PopularBookmark> findBookmarks(String username) {
+        return popularBookmarkRepository.findAllByUsername(username);
+    }
+
+    @Transactional
+    public void deletePopularBookmark(String contentId) {
+        popularBookmarkRepository.deleteByContentId(contentId);
     }
 
     @Transactional
@@ -29,6 +34,10 @@ public class PopularBookmarkService {
         );
         PopularBookmark popularBookmark = new PopularBookmark(popularBookmarkDto, user);
         popularBookmarkRepository.save(popularBookmark);
+    }
+
+    public PopularBookmark checkPopularBookmarkStatus(String contentId, String username) {
+        return popularBookmarkRepository.findByContentIdAndUsername(contentId, username);
     }
 
 }
