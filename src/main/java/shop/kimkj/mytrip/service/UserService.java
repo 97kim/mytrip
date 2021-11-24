@@ -7,6 +7,7 @@ import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.dto.UserDto;
 import shop.kimkj.mytrip.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -15,16 +16,16 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public User registerUser(UserDto userDto) {
+    public Long registerUser(UserDto userDto) {
         String username = userDto.getUsername();
 
         // 비밀번호 인코딩
         String password = passwordEncoder.encode(userDto.getPassword());
 
         User user = new User(username, password);
-        userRepository.save(user);
+        User registeredUser = userRepository.save(user);
 
-        return user;
+        return registeredUser.getId();
     }
 
     public void checkExist(UserDto userDto) {
@@ -35,6 +36,11 @@ public class UserService {
         if (found.isPresent()) {
             throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
         }
+    }
+
+    public Long getUserId(UserDto userDto) {
+        User user = userRepository.getByUsername(userDto.getUsername());
+        return user.getId();
     }
 
 }
