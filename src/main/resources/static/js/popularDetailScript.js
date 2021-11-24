@@ -140,7 +140,7 @@ function toggle_bookmark_popular(content_id) {
                 contentType: "application/json",
                 data: JSON.stringify({
                     content_id: content_id,
-                    action: "uncheck",
+                    action: "check",
                     title: title,
                     file: file,
                     username: sessionStorage.getItem("username")
@@ -156,11 +156,14 @@ function toggle_bookmark_popular(content_id) {
 
 function getBookmark_popular() {
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: `/popular/place/bookmark/${getId_popular()}`,
-        data: {},
+        contentType: "application/json",
+        data: JSON.stringify({
+            username: sessionStorage.getItem('username')
+            }),
         success: function (response) {
-            if (response['bookmark_status'] == true) {
+            if (response['bookmarkStatus'] == true) {
                 $('#bookmark').removeClass("far").addClass("fas");
             } else {
                 $('#bookmark').removeClass("fas").addClass("far")

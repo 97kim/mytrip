@@ -90,14 +90,15 @@ function showPopularBookmarks() {
     $.ajax({
         type: "POST",
         url: "/popular/bookmark",
-        data: {},
+        contentType: "application/json",
+        data: JSON.stringify({
+            username: sessionStorage.getItem('username')
+        }),
         success: function (response) {
-            let bookmarks = response["all_bookmarks"]
-
-            for (let i = 0; i < bookmarks.length; i++) {
-                let content_id = bookmarks[i]["content_id"]
-                let title = bookmarks[i]["title"]
-                let file = bookmarks[i]["file"]
+            for (let i = 0; i < response.length; i++) {
+                let content_id = response[i]["contentId"]
+                let title = response[i]["title"]
+                let file = response[i]["file"]
 
 
                 let temp_html = `<li style="margin: 0 10px 20px 10px; height: 300px;">
