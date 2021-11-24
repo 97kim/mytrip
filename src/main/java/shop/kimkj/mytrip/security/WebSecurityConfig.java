@@ -31,8 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // 인증과정 필요
-//                .antMatchers("/templates/tripCreate.html").authenticated()
-//                .antMatchers("/templates/tripUpdate.html").authenticated()
                 .antMatchers("/popular/place/bookmark/**").authenticated()
                 .antMatchers("/popular/bookmark").authenticated()
                 .antMatchers("/near/place/bookmark/**").authenticated()
