@@ -28,9 +28,6 @@ public class PopularBookmark extends Timestamped {
     @Column(nullable = false)
     private String file;
 
-    @Column(nullable = false)
-    private String username;
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
@@ -40,7 +37,6 @@ public class PopularBookmark extends Timestamped {
         this.contentId = popularBookmarkDto.getContentId();
         this.title = popularBookmarkDto.getTitle();
         this.file = popularBookmarkDto.getFile();
-        this.username = popularBookmarkDto.getUsername();
         this.user = user;
     }
 }

@@ -27,13 +27,13 @@ public class PopularBookmarkController {
 
     @PostMapping("/popular/bookmark")
     public List<PopularBookmark> sendPopularBookmarks(@RequestBody NowUserDto nowUserDto) {
-        return popularBookmarkService.findBookmarks(nowUserDto.getUsername());
+        return popularBookmarkService.findBookmarks(nowUserDto.getUserId());
     }
 
     @PostMapping("/popular/place/bookmark/{contentId}")
     public Map<String, Boolean> getPopularBookmarkStatus(@PathVariable String contentId, @RequestBody NowUserDto nowUserDto) {
         Map<String, Boolean> response = new HashMap<>();
-        PopularBookmark popularBookmark = popularBookmarkService.checkPopularBookmarkStatus(contentId, nowUserDto.getUsername());
+        PopularBookmark popularBookmark = popularBookmarkService.checkPopularBookmarkStatus(contentId, nowUserDto.getUserId());
         if (popularBookmark == null) {
             response.put("bookmarkStatus", Boolean.FALSE);
         } else {

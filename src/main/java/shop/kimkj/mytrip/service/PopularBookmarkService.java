@@ -11,6 +11,7 @@ import shop.kimkj.mytrip.repository.PopularBookmarkRepository;
 import shop.kimkj.mytrip.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -18,8 +19,8 @@ public class PopularBookmarkService {
     private final PopularBookmarkRepository popularBookmarkRepository;
     private final UserRepository userRepository;
 
-    public List<PopularBookmark> findBookmarks(String username) {
-        return popularBookmarkRepository.findAllByUsername(username);
+    public List<PopularBookmark> findBookmarks(Long userId) {
+        return popularBookmarkRepository.findAllByUserId(userId);
     }
 
     @Transactional
@@ -29,15 +30,15 @@ public class PopularBookmarkService {
 
     @Transactional
     public void savePopularBookmark(PopularBookmarkDto popularBookmarkDto) {
-        User user = userRepository.findByUsername(popularBookmarkDto.getUsername()).orElseThrow(
+        User user = userRepository.findById(popularBookmarkDto.getUserId()).orElseThrow(
                 () -> new NullPointerException("해당 User 없음")
         );
         PopularBookmark popularBookmark = new PopularBookmark(popularBookmarkDto, user);
         popularBookmarkRepository.save(popularBookmark);
     }
 
-    public PopularBookmark checkPopularBookmarkStatus(String contentId, String username) {
-        return popularBookmarkRepository.findByContentIdAndUsername(contentId, username);
+    public PopularBookmark checkPopularBookmarkStatus(String contentId, Long userId) {
+        return popularBookmarkRepository.findByContentIdAndUserId(contentId, userId);
     }
 
 }
