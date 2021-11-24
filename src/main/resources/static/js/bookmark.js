@@ -92,7 +92,7 @@ function showPopularBookmarks() {
         url: "/popular/bookmark",
         contentType: "application/json",
         data: JSON.stringify({
-            username: sessionStorage.getItem('username')
+            user_id: sessionStorage.getItem('userId')
         }),
         success: function (response) {
             for (let i = 0; i < response.length; i++) {

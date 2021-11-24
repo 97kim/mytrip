@@ -30,7 +30,8 @@ function sign_in() {
         },
         success: function (response) {
             localStorage.setItem('token', response['token']);
-            sessionStorage.setItem('username', response['username'])
+            sessionStorage.setItem('username', response['username']);
+            sessionStorage.setItem('userId', response['userId']);
             alert("로그인 되었습니다!!");
             window.location.href = '/';
         }
