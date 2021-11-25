@@ -1,12 +1,17 @@
 package shop.kimkj.mytrip.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.kimkj.mytrip.domain.PopularBookmark;
 import shop.kimkj.mytrip.domain.User;
+import shop.kimkj.mytrip.dto.PopularBookmarkDto;
+import shop.kimkj.mytrip.repository.PopularBookmarkRepository;
 import shop.kimkj.mytrip.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
