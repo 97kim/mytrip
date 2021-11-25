@@ -31,6 +31,6 @@ public class User extends Timestamped {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<PopularBookmark> popularBookmarks;
+    private List<Bookmark> bookmarks;
 
 }
