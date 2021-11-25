@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import shop.kimkj.mytrip.dto.BookmarkNearDto;
 import shop.kimkj.mytrip.dto.ContentIdDto;
 import shop.kimkj.mytrip.dto.LatLngDto;
 import shop.kimkj.mytrip.dto.NearDto;
@@ -39,11 +38,6 @@ public class NearController {
     @PostMapping("/near/place/weather")
     public String getWeatherNear(@RequestBody LatLngDto latLngDto) throws IOException {
         return nearService.getWeatherNear(latLngDto);
-    }
-
-    @PostMapping("/near/place/bookmark")
-    public String bookmarkNear(@RequestBody BookmarkNearDto bookmarknearDto) throws IOException{
-        return bookmarknearService.bookmarkNear(bookmarknearDto);
     }
 
 }
