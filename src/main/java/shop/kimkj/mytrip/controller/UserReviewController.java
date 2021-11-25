@@ -20,7 +20,7 @@ public class UserReviewController {
     }
 
     @GetMapping("/userReview")
-    public UserReview getUserReview(@RequestParam int id) {
+    public UserReview getUserReview(@RequestParam Long id) {
         return userReviewService.getUserReview(id);
     }
 
@@ -30,7 +30,7 @@ public class UserReviewController {
     }
 
     @DeleteMapping("/userReview/trip/delete")
-    public String deleteUserReview(@RequestParam int id) {
+    public String deleteUserReview(@RequestParam Long id) {
         return userReviewService.deleteUserReview(id);
     }
 

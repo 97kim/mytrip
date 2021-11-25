@@ -10,28 +10,25 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "dtype")
 @Getter
 @Setter
-public class UserReview {
+public class UserReview extends Timestamped {
 
     @Id
     @GeneratedValue
-    @Column(name = "item_id")
-    private Long idx;
+    @Column(name = "REVIEW_ID")
+    private Long id;
     private String title;
     private String place;
     private String review;
-    private LocalDateTime modifiedAt = LocalDateTime.now();
 
 //    @OneToMany(fetch = LAZY)
 //    @JoinColumn(name = "comments_id")
 //    private List<Comment> comments = new ArrayList<>();
 
     public UserReview(UserReviewRequestDto requestDto) {
-        if (requestDto.getIdx() != null) {
-            this.idx = requestDto.getIdx();
+        if (requestDto.getId() != null) {
+            this.id = requestDto.getId();
         }
         this.title = requestDto.getTitle();
         this.place = requestDto.getPlace();
