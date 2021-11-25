@@ -26,7 +26,7 @@ public class PopularBookmark extends Timestamped {
     private String title;
 
     @Column(nullable = false)
-    private String file;
+    private String imgUrl;
 
     @JsonIgnore
     @ManyToOne
@@ -36,7 +36,7 @@ public class PopularBookmark extends Timestamped {
     public PopularBookmark(PopularBookmarkDto popularBookmarkDto, User user) {
         this.contentId = popularBookmarkDto.getContentId();
         this.title = popularBookmarkDto.getTitle();
-        this.file = popularBookmarkDto.getFile();
+        this.imgUrl = popularBookmarkDto.getImgUrl();
         this.user = user;
     }
 }

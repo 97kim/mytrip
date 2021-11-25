@@ -17,7 +17,8 @@ public class PopularBookmarkDto {
 
     private String title;
 
-    private String file;
+    @JsonProperty(value = "img_url")
+    private String imgUrl;
 
     @JsonProperty(value = "user_id")
     private Long userId;
