@@ -23,8 +23,8 @@ public class NearController {
         return nearService.getNearPlace(latLngDto);
     }
 
-    @GetMapping("/near/place/intro")
-    public String getNearDetailIntro(@RequestParam String contentId) throws IOException {
+    @GetMapping("/near/place/intro/{contentId}")
+    public String getNearDetailIntro(@PathVariable String contentId) throws IOException {
         return nearService.getNearDetailIntro(contentId);
     }
 

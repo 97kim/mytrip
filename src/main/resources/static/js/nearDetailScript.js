@@ -6,7 +6,7 @@ function getId() {
 function getDetailIntro() {
     $.ajax({
         type: "GET",
-        url: `/near/place/intro?contentId=${getId()}`,
+        url: `/near/place/intro/${getId()}`,
         data: {},
         async: false,
         success: function (response) {
