@@ -5,12 +5,9 @@ function getId_popular() {
 
 function getDetailIntro() {
     $.ajax({
-        type: "POST",
-        url: '/popular/place/intro',
-        contentType: "application/json",
-        data: JSON.stringify({
-            content_id_give: getId_popular(),
-        }),
+        type: "GET",
+        url: `/popular/place/intro?contentId=${getId_popular()}`,
+        data: {},
         async: false,
         success: function (response) {
             response = JSON.parse(response);

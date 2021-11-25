@@ -167,11 +167,10 @@ public class PopularService {
         return jsonObject2.toString();
     }
 
-    public String getPopularDetailIntro(ContentIdDto contentIdDto) {
-        String contentId = contentIdDto.getContentId();
-
+    public String getPopularDetailIntro(String contentId) {
         StringBuffer result = new StringBuffer();
         JSONObject jsonObject = null;
+
         try {
             String apiUrl = String.format(
                     "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?" +
