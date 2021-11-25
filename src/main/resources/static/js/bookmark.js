@@ -98,7 +98,7 @@ function showPopularBookmarks() {
             for (let i = 0; i < response.length; i++) {
                 let content_id = response[i]["contentId"]
                 let title = response[i]["title"]
-                let file = response[i]["file"]
+                let file = response[i]["imgUrl"]
 
 
                 let temp_html = `<li style="margin: 0 10px 20px 10px; height: 300px;">
@@ -140,9 +140,9 @@ function showNearBookmarks() {
         success: function (response) {
 
             for (let i = 0; i < response.length; i++) {
-                let content_id = response[i]["content_id"]
+                let content_id = response[i]["contentId"]
                 let title = response[i]["title"]
-                let file = response[i]["file"]
+                let file = response[i]["imgUrl"]
                 let address = response[i]["address"]
 
                 let temp_html = `<li style="margin: 0 10px 20px 10px; height: 300px;">
