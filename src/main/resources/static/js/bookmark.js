@@ -92,7 +92,7 @@ function showPopularBookmarks() {
         url: "/popular/bookmark",
         contentType: "application/json",
         data: JSON.stringify({
-            user_id: sessionStorage.getItem('userId'),
+            user_id: localStorage.getItem('userId'),
             type: 'popular'
         }),
         success: function (response) {
@@ -135,7 +135,7 @@ function showNearBookmarks() {
         url: "/near/bookmark",
         contentType: "application/json",
         data: JSON.stringify({
-            user_id: sessionStorage.getItem('userId'),
+            user_id: localStorage.getItem('userId'),
             type: 'near'
         }),
         success: function (response) {
