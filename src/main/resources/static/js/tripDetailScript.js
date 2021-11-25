@@ -39,11 +39,11 @@ function postUserReview(id) {
     }
 }
 
-// 리뷰 수정
+// 리뷰 수정시 보이는 화면
 function updateUserReview(id) {
     $.ajax({
         type: "GET",
-        url: `/userReview/?id=${id}`,
+        url: `/userReview?id=${id}`,
         success: function (response) {
             console.log(response)
             sessionStorage.setItem('title', response['title']);
