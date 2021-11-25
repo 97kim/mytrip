@@ -5,17 +5,18 @@ function getId() {
 
 function getDetailIntro() {
     $.ajax({
-        type: "POST",
-        url: '/near/place/intro',
-        contentType: "application/json",
-        data: JSON.stringify({
-            content_id_give: getId(),
-        }),
+        type: "GET",
+        url: `/near/place/intro?contentId=${getId()}`,
+        data: {},
         async: false,
         success: function (response) {
             response = JSON.parse(response);
             $('#title').text(response['title']);
-            $('#file').attr('src', response['firstimage'])
+            if (response['firstimage']) {
+                $('#file').attr('src', response['firstimage']);
+            } else {
+                $('#file').attr('src', "https://dk9q1cr2zzfmc.cloudfront.net/img/noImage.png");
+            }
             $('#address').text(response['addr1']);
             $('#overview').html(response['overview']);
             if (response['homepage']) {

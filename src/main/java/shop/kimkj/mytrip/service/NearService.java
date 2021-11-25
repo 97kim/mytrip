@@ -69,9 +69,7 @@ public class NearService {
         return near.toString();
     }
 
-    public String getNearDetailIntro(ContentIdDto contentIdDto) throws IOException {
-        String contentId = contentIdDto.getContentId();
-
+    public String getNearDetailIntro(String contentId) throws IOException {
         StringBuffer result = new StringBuffer();
         JSONObject jsonObject = null;
         try {

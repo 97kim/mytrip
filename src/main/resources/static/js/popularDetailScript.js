@@ -5,17 +5,18 @@ function getId_popular() {
 
 function getDetailIntro() {
     $.ajax({
-        type: "POST",
-        url: '/popular/place/intro',
-        contentType: "application/json",
-        data: JSON.stringify({
-            content_id_give: getId_popular(),
-        }),
+        type: "GET",
+        url: `/popular/place/intro?contentId=${getId_popular()}`,
+        data: {},
         async: false,
         success: function (response) {
             response = JSON.parse(response);
             $('#title').text(response['title']);
-            $('#file').attr('src', response['firstimage'])
+            if (response['firstimage']) {
+                $('#file').attr('src', response['firstimage']);
+            } else {
+                $('#file').attr('src', "https://dk9q1cr2zzfmc.cloudfront.net/img/noImage.png");
+            }
             $('#overview').html(response['overview']);
             if (response['homepage']) {
                 $('#homepage').html(response['homepage']);

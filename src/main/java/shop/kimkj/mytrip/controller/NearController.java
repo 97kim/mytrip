@@ -2,9 +2,7 @@ package shop.kimkj.mytrip.controller;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import shop.kimkj.mytrip.dto.ContentIdDto;
 import shop.kimkj.mytrip.dto.LatLngDto;
 import shop.kimkj.mytrip.dto.NearDto;
@@ -25,9 +23,9 @@ public class NearController {
         return nearService.getNearPlace(latLngDto);
     }
 
-    @PostMapping("/near/place/intro")
-    public String getNearDetailIntro(@RequestBody ContentIdDto contentIdDto) throws IOException {
-        return nearService.getNearDetailIntro(contentIdDto);
+    @GetMapping("/near/place/intro")
+    public String getNearDetailIntro(@RequestParam String contentId) throws IOException {
+        return nearService.getNearDetailIntro(contentId);
     }
 
     @PostMapping("/near/list")
