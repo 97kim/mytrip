@@ -6,7 +6,7 @@ function getId() {
 // 사용자 여행 리뷰 수정
 function update() {
     let userReview = {
-        "idx": getId(),
+        "id": getId(),
         "title": $('#title').val(),
         "place": $('#place').val(),
         "review": $('#review').val()
