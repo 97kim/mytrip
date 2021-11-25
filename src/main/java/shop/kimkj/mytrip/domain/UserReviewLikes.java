@@ -7,7 +7,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("L")
 @Getter
 @Setter
 public class UserReviewLikes extends UserReview {

@@ -6,7 +6,7 @@ function getId() {
 function getUserReview(id) {
     $.ajax({
         type: "GET",
-        url: `/userReview/?id=${id}`,
+        url: `/userReview?id=${id}`,
         success: function (response) {
             $('#title').text(response['title']);
             $('#place').text(response['place']);

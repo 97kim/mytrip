@@ -3,6 +3,7 @@ package shop.kimkj.mytrip.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shop.kimkj.mytrip.domain.UserReview;
 import shop.kimkj.mytrip.dto.UserReviewRequestDto;
 import shop.kimkj.mytrip.repository.UserReviewRepository;
@@ -16,14 +17,15 @@ public class UserReviewService {
 
     private final UserReviewRepository userReviewRepository;
 
+    @Transactional
     public UserReview postUserReview(UserReviewRequestDto userReviewRequestDto) {
         UserReview userReview = new UserReview(userReviewRequestDto);
         userReviewRepository.save(userReview);
         return userReview;
     }
 
-    public UserReview getUserReview(int id) {
-        return userReviewRepository.findById((long) id).orElseThrow(
+    public UserReview getUserReview(Long reviewId) {
+        return userReviewRepository.findById(reviewId).orElseThrow(
                 () -> new NullPointerException("해당 리뷰가 존재하지 않습니다.")
         );
     }
@@ -32,8 +34,9 @@ public class UserReviewService {
         return userReviewRepository.findAll();
     }
 
-    public String deleteUserReview(int id) {
-        userReviewRepository.deleteById((long) id);
+    @Transactional
+    public String deleteUserReview(Long reviewId) {
+        userReviewRepository.deleteById(reviewId);
         return "삭제를 완료했습니다.";
     }
 
