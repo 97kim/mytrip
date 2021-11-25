@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class UserReviewRequestDto {
-    private Long idx;
+    private Long id;
     private String title;
     private String place;
     private String review;

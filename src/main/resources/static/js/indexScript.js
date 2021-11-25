@@ -200,7 +200,7 @@ function showTripReviews() {
             let userReviews = response;
 
             for (let i = 0; i < userReviews.length; i++) {
-                let tripId = userReviews[i]['idx'];
+                let tripId = userReviews[i]['id'];
                 let tripTitle = userReviews[i]['title'];
                 let tripPlace = userReviews[i]['place'];
                 let tripFile = "tripFile";
