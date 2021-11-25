@@ -8,7 +8,6 @@ import shop.kimkj.mytrip.dto.UserReviewRequestDto;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Entity
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

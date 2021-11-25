@@ -6,7 +6,7 @@ function showUserReview(type) {
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
             for (let i = 0; i < response.length; i++) {
-                let userReviewIdx = response[i]['idx'];
+                let userReviewIdx = response[i]['id'];
                 let userReviewTitle = response[i]['title'];
                 let userReviewPlace = response[i]['place'];
                 let userReviewFile = response[i]['file'];
