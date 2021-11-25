@@ -122,34 +122,35 @@ function toggle_bookmark(content_id) {
             $.ajax({
                 type: "POST",
                 url: "/near/place/bookmark",
-                data: {
-                    content_id_give: content_id,
-                    action_give: "uncheck",
-                    title_give: title,
-                    address_give: address,
-                    file_give: file
-                },
+                contentType: "application/json",
+                data: JSON.stringify({
+                    content_id: content_id,
+                    action: "uncheck",
+                    title: title,
+                    address: address,
+                    img_url: file,
+                    user_id: sessionStorage.getItem("userId")
+                }),
                 success: function (response) {
-                    if (response['result'] == 'success') {
-                        $('#bookmark').removeClass("fas").addClass("far")
-                    }
+                    $('#bookmark').removeClass("fas").addClass("far")
                 }
+
             });
         } else {
             $.ajax({
                 type: "POST",
                 url: "/near/place/bookmark",
-                data: {
-                    content_id_give: content_id,
-                    action_give: "check",
-                    title_give: title,
-                    address_give: address,
-                    file_give: file
-                },
+                contentType: "application/json",
+                data: JSON.stringify({
+                    content_id: content_id,
+                    action: "check",
+                    title: title,
+                    address: address,
+                    img_url: file,
+                    user_id: sessionStorage.getItem("userId")
+                }),
                 success: function (response) {
-                    if (response['result'] == 'success') {
-                        $('#bookmark').removeClass("far").addClass("fas")
-                    }
+                    $('#bookmark').removeClass("far").addClass("fas")
                 }
             });
 
@@ -159,11 +160,14 @@ function toggle_bookmark(content_id) {
 
 function getBookmark() {
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: `/near/place/bookmark/${getId()}`,
-        data: {},
+        contentType: "application/json",
+        data: JSON.stringify({
+            user_id: sessionStorage.getItem('userId')
+        }),
         success: function (response) {
-            if (response['bookmark_status'] == true) {
+            if (response['bookmarkStatus'] == true) {
                 $('#bookmark').removeClass("far").addClass("fas");
             } else {
                 $('#bookmark').removeClass("fas").addClass("far")

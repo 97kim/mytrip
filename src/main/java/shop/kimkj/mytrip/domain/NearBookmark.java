@@ -4,17 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import shop.kimkj.mytrip.dto.PopularBookmarkDto;
+import shop.kimkj.mytrip.dto.NearBookmarkDto;
 
 import javax.persistence.*;
 
 @Setter
 @Getter
-@NoArgsConstructor // 기본 생성자를 만들어줍니다.
-@Entity // DB 테이블 역할을 합니다.
-public class PopularBookmark extends Timestamped {
-
-    // ID가 자동으로 생성 및 증가합니다.
+@NoArgsConstructor
+@Entity
+public class NearBookmark extends Timestamped {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
@@ -26,6 +24,9 @@ public class PopularBookmark extends Timestamped {
     private String title;
 
     @Column(nullable = false)
+    private String address;
+
+    @Column(nullable = false)
     private String imgUrl;
 
     @JsonIgnore
@@ -33,10 +34,11 @@ public class PopularBookmark extends Timestamped {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-    public PopularBookmark(PopularBookmarkDto popularBookmarkDto, User user) {
-        this.contentId = popularBookmarkDto.getContentId();
-        this.title = popularBookmarkDto.getTitle();
-        this.imgUrl = popularBookmarkDto.getImgUrl();
+    public NearBookmark(NearBookmarkDto nearBookmarkDto, User user) {
+        this.contentId = nearBookmarkDto.getContentId();
+        this.title = nearBookmarkDto.getTitle();
+        this.address = nearBookmarkDto.getAddress();
+        this.imgUrl = nearBookmarkDto.getImgUrl();
         this.user = user;
     }
 }
