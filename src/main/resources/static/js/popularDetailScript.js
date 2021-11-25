@@ -126,7 +126,7 @@ function toggle_bookmark_popular(content_id) {
                     content_id: content_id,
                     action: "uncheck",
                     title: title,
-                    file: file,
+                    img_url: file,
                     user_id: sessionStorage.getItem("userId")
                 }),
                 success: function (response) {
@@ -142,7 +142,7 @@ function toggle_bookmark_popular(content_id) {
                     content_id: content_id,
                     action: "check",
                     title: title,
-                    file: file,
+                    img_url: file,
                     user_id: sessionStorage.getItem("userId")
                 }),
                 success: function (response) {

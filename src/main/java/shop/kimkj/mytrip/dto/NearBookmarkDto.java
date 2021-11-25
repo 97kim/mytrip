@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class PopularBookmarkDto {
+public class NearBookmarkDto {
 
     @JsonProperty(value = "content_id")
     private String contentId;
@@ -17,9 +17,12 @@ public class PopularBookmarkDto {
 
     private String title;
 
+    private String address;
+
     @JsonProperty(value = "img_url")
     private String imgUrl;
 
     @JsonProperty(value = "user_id")
     private Long userId;
+
 }

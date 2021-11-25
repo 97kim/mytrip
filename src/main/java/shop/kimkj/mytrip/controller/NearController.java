@@ -39,4 +39,5 @@ public class NearController {
     public String getWeatherNear(@RequestBody LatLngDto latLngDto) throws IOException {
         return nearService.getWeatherNear(latLngDto);
     }
+
 }
