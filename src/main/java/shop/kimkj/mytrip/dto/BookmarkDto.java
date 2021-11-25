@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class NearBookmarkDto {
+public class BookmarkDto {
 
     @JsonProperty(value = "content_id")
     private String contentId;
+
+    private String type;
 
     private String action;
 
@@ -24,5 +26,4 @@ public class NearBookmarkDto {
 
     @JsonProperty(value = "user_id")
     private Long userId;
-
 }
