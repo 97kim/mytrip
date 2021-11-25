@@ -12,7 +12,11 @@ function getDetailIntro() {
         success: function (response) {
             response = JSON.parse(response);
             $('#title').text(response['title']);
-            $('#file').attr('src', response['firstimage'])
+            if (response['firstimage']) {
+                $('#file').attr('src', response['firstimage']);
+            } else {
+                $('#file').attr('src', "https://dk9q1cr2zzfmc.cloudfront.net/img/noImage.png");
+            }
             $('#address').text(response['addr1']);
             $('#overview').html(response['overview']);
             if (response['homepage']) {
