@@ -5,12 +5,9 @@ function getId() {
 
 function getDetailIntro() {
     $.ajax({
-        type: "POST",
-        url: '/near/place/intro',
-        contentType: "application/json",
-        data: JSON.stringify({
-            content_id_give: getId(),
-        }),
+        type: "GET",
+        url: `/near/place/intro?contentId=${getId()}`,
+        data: {},
         async: false,
         success: function (response) {
             response = JSON.parse(response);
