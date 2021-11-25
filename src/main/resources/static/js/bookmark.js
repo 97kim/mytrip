@@ -133,15 +133,17 @@ function showNearBookmarks() {
     $.ajax({
         type: "POST",
         url: "/near/bookmark",
-        data: {},
+        contentType: "application/json",
+        data: JSON.stringify({
+            user_id: sessionStorage.getItem('userId')
+        }),
         success: function (response) {
-            let bookmarks = response["all_bookmarks"]
 
-            for (let i = 0; i < bookmarks.length; i++) {
-                let content_id = bookmarks[i]["content_id"]
-                let title = bookmarks[i]["title"]
-                let file = bookmarks[i]["file"]
-                let address = bookmarks[i]["address"]
+            for (let i = 0; i < response.length; i++) {
+                let content_id = response[i]["content_id"]
+                let title = response[i]["title"]
+                let file = response[i]["file"]
+                let address = response[i]["address"]
 
                 let temp_html = `<li style="margin: 0 10px 20px 10px; height: 300px;">
                                      <a href="javascript:moveNearDetail(${content_id})" class="card">

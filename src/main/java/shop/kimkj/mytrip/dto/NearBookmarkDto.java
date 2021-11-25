@@ -17,7 +17,10 @@ public class NearBookmarkDto {
 
     private String title;
 
-    private String file;
+    private String address;
+
+    @JsonProperty(value = "img_url")
+    private String imgUrl;
 
     @JsonProperty(value = "user_id")
     private Long userId;

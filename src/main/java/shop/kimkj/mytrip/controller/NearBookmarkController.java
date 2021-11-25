@@ -18,7 +18,7 @@ public class NearBookmarkController {
 
     @PostMapping("/near/place/bookmark")
     public void bookmarkNear(@RequestBody NearBookmarkDto nearBookmarkDto){
-       nearBookmarkService.saveNearBookmark(nearBookmarkDto);
+
       if (nearBookmarkDto.getAction().equals("uncheck")) {
           nearBookmarkService.deleteNearBookmark(nearBookmarkDto.getContentId());
       }

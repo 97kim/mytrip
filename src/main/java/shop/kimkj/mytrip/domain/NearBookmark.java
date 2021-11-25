@@ -24,7 +24,10 @@ public class NearBookmark extends Timestamped {
     private String title;
 
     @Column(nullable = false)
-    private String file;
+    private String address;
+
+    @Column(nullable = false)
+    private String imgUrl;
 
     @JsonIgnore
     @ManyToOne
@@ -34,7 +37,8 @@ public class NearBookmark extends Timestamped {
     public NearBookmark(NearBookmarkDto nearBookmarkDto, User user) {
         this.contentId = nearBookmarkDto.getContentId();
         this.title = nearBookmarkDto.getTitle();
-        this.file = nearBookmarkDto.getFile();
+        this.address = nearBookmarkDto.getAddress();
+        this.imgUrl = nearBookmarkDto.getImgUrl();
         this.user = user;
     }
 }

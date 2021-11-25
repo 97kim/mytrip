@@ -128,7 +128,7 @@ function toggle_bookmark(content_id) {
                     action: "uncheck",
                     title: title,
                     address: address,
-                    file: file,
+                    img_url: file,
                     user_id: sessionStorage.getItem("userId")
                 }),
                 success: function (response) {
@@ -146,7 +146,7 @@ function toggle_bookmark(content_id) {
                     action: "check",
                     title: title,
                     address: address,
-                    file: file,
+                    img_url: file,
                     user_id: sessionStorage.getItem("userId")
                 }),
                 success: function (response) {
@@ -160,14 +160,14 @@ function toggle_bookmark(content_id) {
 
 function getBookmark() {
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: `/near/place/bookmark/${getId()}`,
         contentType: "application/json",
         data: JSON.stringify({
             user_id: sessionStorage.getItem('userId')
         }),
         success: function (response) {
-            if (response['bookmark_status'] == true) {
+            if (response['bookmarkStatus'] == true) {
                 $('#bookmark').removeClass("far").addClass("fas");
             } else {
                 $('#bookmark').removeClass("fas").addClass("far")
