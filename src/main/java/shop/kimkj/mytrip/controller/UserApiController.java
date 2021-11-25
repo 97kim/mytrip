@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.dto.JwtResponse;
 import shop.kimkj.mytrip.dto.UserDto;
 import shop.kimkj.mytrip.service.UserService;
@@ -17,6 +18,7 @@ import shop.kimkj.mytrip.util.JwtTokenUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,16 +34,17 @@ public class UserApiController {
         authenticate(userDto.getUsername(), userDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
+        Long userId = userService.getUserId(userDto);
+        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername(), userId));
     }
 
     @PostMapping(value = "/sign-up/save")
     public ResponseEntity<?> createUser(@RequestBody UserDto userDto) throws Exception {
-        userService.registerUser(userDto);
+        Long userId = userService.registerUser(userDto); // 사용자 등록하고 userId 반환
         authenticate(userDto.getUsername(), userDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
+        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername(), userId));
     }
 
 //    @PostMapping("/sign-up/check-dup")
