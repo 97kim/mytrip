@@ -1,5 +1,6 @@
 package shop.kimkj.mytrip.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,9 +26,7 @@ public class NearBookmark extends Timestamped {
     @Column(nullable = false)
     private String file;
 
-    @Column(nullable = false)
-    private String username;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
@@ -36,7 +35,6 @@ public class NearBookmark extends Timestamped {
         this.contentId = nearBookmarkDto.getContentId();
         this.title = nearBookmarkDto.getTitle();
         this.file = nearBookmarkDto.getFile();
-        this.username = nearBookmarkDto.getUsername();
         this.user = user;
     }
 }

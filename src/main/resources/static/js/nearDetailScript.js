@@ -129,7 +129,7 @@ function toggle_bookmark(content_id) {
                     title: title,
                     address: address,
                     file: file,
-                    username: sessionStorage.getItem("username")
+                    user_id: sessionStorage.getItem("userId")
                 }),
                 success: function (response) {
                     $('#bookmark').removeClass("fas").addClass("far")
@@ -147,7 +147,7 @@ function toggle_bookmark(content_id) {
                     title: title,
                     address: address,
                     file: file,
-                    username: sessionStorage.getItem("username")
+                    user_id: sessionStorage.getItem("userId")
                 }),
                 success: function (response) {
                     $('#bookmark').removeClass("far").addClass("fas")
@@ -162,7 +162,10 @@ function getBookmark() {
     $.ajax({
         type: "GET",
         url: `/near/place/bookmark/${getId()}`,
-        data: {},
+        contentType: "application/json",
+        data: JSON.stringify({
+            user_id: sessionStorage.getItem('userId')
+        }),
         success: function (response) {
             if (response['bookmark_status'] == true) {
                 $('#bookmark').removeClass("far").addClass("fas");

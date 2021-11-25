@@ -17,17 +17,26 @@ public class NearBookmarkService {
     private final NearBookmarkRepository nearBookmarkRepository;
     private final UserRepository userRepository;
 
-    public List<NearBookmark> findAllByUserId(Long userId) {
+    public List<NearBookmark> findBookmarks(Long userId) {
         return nearBookmarkRepository.findAllByUserId(userId);
     }
 
     @Transactional
+    public void deleteNearBookmark(String contentId) {
+        nearBookmarkRepository.deleteByContentId(contentId);
+    }
+
+    @Transactional
     public void saveNearBookmark(NearBookmarkDto nearBookmarkDto) {
-        User user = userRepository.findByUsername(nearBookmarkDto.getUsername()).orElseThrow(
+        User user = userRepository.findById(nearBookmarkDto.getUserId()).orElseThrow(
                 () -> new NullPointerException("해당 User 없음")
         );
         NearBookmark nearBookmark = new NearBookmark(nearBookmarkDto, user);
         nearBookmarkRepository.save(nearBookmark);
+    }
+
+    public NearBookmark checkNearBookmarkStatus(String contentId, Long userId) {
+        return nearBookmarkRepository.findByContentIdAndUserId(contentId, userId);
     }
 
 }

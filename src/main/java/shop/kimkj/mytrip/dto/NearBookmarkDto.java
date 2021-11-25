@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class NearBookmarkDto {
+
     @JsonProperty(value = "content_id")
     private String contentId;
 
@@ -18,6 +19,7 @@ public class NearBookmarkDto {
 
     private String file;
 
-    private String username;
+    @JsonProperty(value = "user_id")
+    private Long userId;
 
 }
