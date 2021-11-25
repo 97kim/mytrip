@@ -1,5 +1,6 @@
 package shop.kimkj.mytrip.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,9 +28,7 @@ public class PopularBookmark extends Timestamped {
     @Column(nullable = false)
     private String file;
 
-    @Column(nullable = false)
-    private String username;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
@@ -38,7 +37,6 @@ public class PopularBookmark extends Timestamped {
         this.contentId = popularBookmarkDto.getContentId();
         this.title = popularBookmarkDto.getTitle();
         this.file = popularBookmarkDto.getFile();
-        this.username = popularBookmarkDto.getUsername();
         this.user = user;
     }
 }

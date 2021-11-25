@@ -19,5 +19,6 @@ public class PopularBookmarkDto {
 
     private String file;
 
-    private String username;
+    @JsonProperty(value = "user_id")
+    private Long userId;
 }

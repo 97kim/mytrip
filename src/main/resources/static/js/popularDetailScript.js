@@ -127,7 +127,7 @@ function toggle_bookmark_popular(content_id) {
                     action: "uncheck",
                     title: title,
                     file: file,
-                    username: sessionStorage.getItem("username")
+                    user_id: sessionStorage.getItem("userId")
                 }),
                 success: function (response) {
                     $('#bookmark').removeClass("fas").addClass("far")
@@ -140,10 +140,10 @@ function toggle_bookmark_popular(content_id) {
                 contentType: "application/json",
                 data: JSON.stringify({
                     content_id: content_id,
-                    action: "uncheck",
+                    action: "check",
                     title: title,
                     file: file,
-                    username: sessionStorage.getItem("username")
+                    user_id: sessionStorage.getItem("userId")
                 }),
                 success: function (response) {
                     $('#bookmark').removeClass("far").addClass("fas")
@@ -156,11 +156,14 @@ function toggle_bookmark_popular(content_id) {
 
 function getBookmark_popular() {
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: `/popular/place/bookmark/${getId_popular()}`,
-        data: {},
+        contentType: "application/json",
+        data: JSON.stringify({
+            user_id: sessionStorage.getItem('userId')
+            }),
         success: function (response) {
-            if (response['bookmark_status'] == true) {
+            if (response['bookmarkStatus'] == true) {
                 $('#bookmark').removeClass("far").addClass("fas");
             } else {
                 $('#bookmark').removeClass("fas").addClass("far")
