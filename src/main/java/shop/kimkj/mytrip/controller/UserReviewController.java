@@ -20,8 +20,8 @@ public class UserReviewController {
     }
 
     @GetMapping("/userReview")
-    public UserReview getUserReview(@RequestParam Long id) {
-        return userReviewService.getUserReview(id);
+    public UserReview getUserReview(@RequestParam(name = "id") int reviewId) {
+        return userReviewService.getUserReview(reviewId);
     }
 
     @GetMapping("/userReviews")
@@ -30,8 +30,8 @@ public class UserReviewController {
     }
 
     @DeleteMapping("/userReview/trip/delete")
-    public String deleteUserReview(@RequestParam Long id) {
-        return userReviewService.deleteUserReview(id);
+    public String deleteUserReview(@RequestParam(name = "id") int reviewId) {
+        return userReviewService.deleteUserReview(reviewId);
     }
 
 //    @PostMapping("/userReview/{id}")
