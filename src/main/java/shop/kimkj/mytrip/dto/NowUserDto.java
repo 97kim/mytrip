@@ -7,4 +7,6 @@ import lombok.Getter;
 public class NowUserDto {
     @JsonProperty(value = "user_id")
     Long userId;
+
+    String type;
 }

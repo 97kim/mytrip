@@ -27,7 +27,7 @@ public class PopularService {
     private String WEATHER_KEY;
 
     public String getRandomType() {
-        int info = (int) (Math.random() * 7);
+        int info = (int) (Math.random() * 6) + 1;
         String cat1 = "C01";
         String cat2 = "";
         String cat3 = "";
