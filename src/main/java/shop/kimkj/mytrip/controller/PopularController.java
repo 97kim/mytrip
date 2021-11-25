@@ -25,8 +25,8 @@ public class PopularController {
         return popularService.getPopularPlaceList(popularDto);
     }
 
-    @GetMapping("/popular/place/intro")
-    public String getPopularDetailIntro(@RequestParam String contentId) throws IOException {
+    @GetMapping("/popular/place/intro/{contentId}")
+    public String getPopularDetailIntro(@PathVariable String contentId) throws IOException {
         return popularService.getPopularDetailIntro(contentId);
     }
 

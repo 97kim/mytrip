@@ -6,7 +6,7 @@ function getId_popular() {
 function getDetailIntro() {
     $.ajax({
         type: "GET",
-        url: `/popular/place/intro?contentId=${getId_popular()}`,
+        url: `/popular/place/intro/${getId_popular()}`,
         data: {},
         async: false,
         success: function (response) {
