@@ -27,8 +27,8 @@ public class UserReviewService {
         return userReview;
     }
 
-    public UserReview getUserReview(int reviewId) {
-        return userReviewRepository.findById((long)reviewId).orElseThrow(
+    public UserReview getUserReview(Long reviewId) {
+        return userReviewRepository.findById(reviewId).orElseThrow(
                 () -> new NullPointerException("해당 리뷰가 존재하지 않습니다.")
         );
     }
@@ -38,8 +38,8 @@ public class UserReviewService {
     }
 
     @Transactional
-    public String deleteUserReview(int reviewId) {
-        userReviewRepository.deleteById((long)reviewId);
+    public String deleteUserReview(Long reviewId) {
+        userReviewRepository.deleteById(reviewId);
         return "삭제를 완료했습니다.";
     }
 
