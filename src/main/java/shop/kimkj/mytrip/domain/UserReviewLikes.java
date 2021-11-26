@@ -1,17 +1,32 @@
 package shop.kimkj.mytrip.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 @Getter
 @Setter
-public class UserReviewLikes extends UserReview {
+public class UserReviewLikes extends Timestamped {
 
-//    좋아요 숫자 확인 기능 구현 예정(HJ 11.22)
-    private int likes;
+    // ID가 자동으로 생성 및 증가합니다.
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @Column(name = "USER_REVIEW_LIKES_ID")
+    private Long id;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "USER_REVIEW_ID", nullable = false)
+    private UserReview userReview;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private User user;
 
 }
