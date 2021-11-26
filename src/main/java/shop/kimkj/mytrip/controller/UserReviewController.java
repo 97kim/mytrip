@@ -2,11 +2,14 @@ package shop.kimkj.mytrip.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import shop.kimkj.mytrip.domain.UserReview;
 import shop.kimkj.mytrip.dto.UserReviewRequestDto;
 import shop.kimkj.mytrip.service.UserReviewService;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -15,8 +18,9 @@ public class UserReviewController {
     private final UserReviewService userReviewService;
 
     @PostMapping("/userReview")
-    public UserReview postUserReview(@RequestBody UserReviewRequestDto userReviewRequestDto) {
-        return userReviewService.postUserReview(userReviewRequestDto);
+    public UserReview postUserReview(@RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
+                                     @RequestPart(name = "review_img", required = false) MultipartFile multipartFile) throws IOException {
+        return userReviewService.postUserReview(userReviewRequestDto, multipartFile);
     }
 
     @GetMapping("/userReview/{reviewId}")
