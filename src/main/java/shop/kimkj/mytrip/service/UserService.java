@@ -22,7 +22,12 @@ public class UserService {
         // 비밀번호 인코딩
         String password = passwordEncoder.encode(userDto.getPassword());
 
-        User user = new User(username, password);
+        // 회원가입 시 nickname은 username으로 설정
+        String nickname = username;
+
+        String profileImgUrl = "https://dk9q1cr2zzfmc.cloudfront.net/profile/default_img.png";
+
+        User user = new User(username, password, nickname, profileImgUrl);
         User registeredUser = userRepository.save(user);
 
         return registeredUser.getId();
