@@ -1,18 +1,26 @@
 // 사용자 여행 리뷰 작성
 function postUserReview() {
-    let userReview = {
-        "title": $('#title').val(),
-        "place": $('#place').val(),
-        "review": $('#review').val(),
-        // "photoFile": $('#file')[0].files[0].val()
+    let data = {
+        title: $('#title').val(),
+        place: $('#place').val(),
+        review: $('#review').val(),
+        user_id: localStorage.getItem('userId')
     }
+    let review_img = $('#file')[0].files[0];
+    let userReview = new FormData();
+
+    userReview.append("review_data", new Blob([JSON.stringify(data)], {type: "application/json"}))
+    userReview.append("review_img", review_img);
+
     $.ajax({
         type: "POST",
         url: "/userReview",
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(userReview),
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: userReview,
         success: function (response) {
-            alert("업데이트 성공!");
+            alert("완료!");
             window.location.href = '../templates/tripsList.html';
         }
     });

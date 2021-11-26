@@ -197,28 +197,26 @@ function showTripReviews() {
         url: "/userReviews",
         data: {},
         success: function (response) {
-            let userReviews = response;
-
-            for (let i = 0; i < userReviews.length; i++) {
-                let tripId = userReviews[i]['id'];
-                let tripTitle = userReviews[i]['title'];
-                let tripPlace = userReviews[i]['place'];
-                let tripFile = "tripFile";
-                let tripDate = "tripDate";
+            for (let i = 0; i < response.length; i++) {
+                let tripId = response[i]['id'];
+                let tripTitle = response[i]['title'];
+                let tripPlace = response[i]['place'];
+                let tripFile = response[i]['reviewImgUrl'];
+                let tripDate = response[i]['createdAt'];
                 let tripLike = "tripLike";
-                let tripProfileImg = "tripProfileImg";
-                let tripNickname = "tripNickname";
+                let tripProfileImg = response[i]['user']['profileImgUrl'];
+                let tripNickname = response[i]['user']['nickname'];
 
                 let temp_html = `<li style="margin: 0 10px; height: 300px;">
                                         <a onclick="moveTripDetail(${tripId})" class="card">
-                                            <img src="https://dk9q1cr2zzfmc.cloudfront.net/trips/${tripFile}" class="card__image" alt="사용자가 올린 여행지 사진"/>
+                                            <img src="${tripFile}" class="card__image" alt="사용자가 올린 여행지 사진"/>
                                             <div class="card__overlay">
                                                 <div class="card__header">
                                                     <svg class="card__arc" xmlns="https://www.w3.org/TR/2018/CR-SVG2-20181004/">
                                                         <path/>
                                                     </svg>
                                                     <div class="card__thumb2">
-                                                        <img src="https://dk9q1cr2zzfmc.cloudfront.net/profile/${tripProfileImg}" alt="프로필 사진"/>
+                                                        <img src="${tripProfileImg}" alt="프로필 사진"/>
                                                     </div>
                                                     <div class="card__header-text">
                                                         <h3 class="card__title">${tripTitle}</h3>
