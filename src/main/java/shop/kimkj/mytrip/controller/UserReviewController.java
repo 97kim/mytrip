@@ -19,8 +19,8 @@ public class UserReviewController {
         return userReviewService.postUserReview(userReviewRequestDto);
     }
 
-    @GetMapping("/userReview")
-    public UserReview getUserReview(@RequestParam(name = "id") int reviewId) {
+    @GetMapping("/userReview/{reviewId}")
+    public UserReview getUserReview(@PathVariable Long reviewId) {
         return userReviewService.getUserReview(reviewId);
     }
 
@@ -29,8 +29,8 @@ public class UserReviewController {
         return userReviewService.getUserReviews();
     }
 
-    @DeleteMapping("/userReview/trip/delete")
-    public String deleteUserReview(@RequestParam(name = "id") int reviewId) {
+    @DeleteMapping("/userReview/trip/delete/{reviewId}")
+    public String deleteUserReview(@PathVariable Long reviewId) {
         return userReviewService.deleteUserReview(reviewId);
     }
 

@@ -6,7 +6,7 @@ function getId() {
 function getUserReview(id) {
     $.ajax({
         type: "GET",
-        url: `/userReview?id=${id}`,
+        url: `/userReview/${id}`,
         success: function (response) {
             $('#title').text(response['title']);
             $('#place').text(response['place']);
@@ -39,11 +39,11 @@ function postUserReview(id) {
     }
 }
 
-// 리뷰 수정시 보이는 화면
+// 리뷰 수정 시 보이는 화면
 function updateUserReview(id) {
     $.ajax({
         type: "GET",
-        url: `/userReview?id=${id}`,
+        url: `/userReview/${id}`,
         success: function (response) {
             console.log(response)
             sessionStorage.setItem('title', response['title']);
@@ -103,7 +103,7 @@ function deleteUserReview(id) {
     console.log("삭제 실행")
     $.ajax({
         type: "DELETE",
-        url: `/userReview/trip/delete?id=${id}`,
+        url: `/userReview/trip/delete/${id}`,
         contentType: 'application/json; charset=utf-8',
         data: {},
         success: function (response) {
