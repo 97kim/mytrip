@@ -21,7 +21,6 @@ function update() {
     $.ajax({
         type: "POST",
         url: "/userReview",
-        cache: false,
         contentType: false,
         processData: false,
         data: userReview,
