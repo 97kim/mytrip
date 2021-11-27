@@ -14,8 +14,15 @@ function getUserReview(id) {
             $('#nickname').text(response['user']['nickname']);
             $('#profile_img').attr('src', response['user']['profileImgUrl']);
             $('#file').attr('src', response['reviewImgUrl']);
-            $('#date').text(response['trip']['date']);
+            $('#date').text(response['createdAt']);
             // $('#like').text(response['trip']['like']);
+
+            // 자신이 작성한 리뷰에만 수정/삭제 버튼 뜨게 한다
+            if (response['user']['id'] == localStorage.getItem('userId')) {
+                $('#own-check').show();
+            } else {
+                $('#own-check').hide();
+            }
         }
     });
 }
@@ -241,20 +248,4 @@ function autoHeight() {
         $(this).css('height', 'auto');
         $(this).height(this.scrollHeight);
     });
-}
-
-function ownCheck() {
-    $.ajax({
-        type: "POST",
-        url: '/own',
-        data: {trip_id: getId()},
-        success: function (response) {
-            if (response['owner']['username'] == response['now_user']) {
-                $('#own-check').show();
-            } else {
-                $('#own-check').hide();
-            }
-        }
-    });
-
 }
