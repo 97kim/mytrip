@@ -14,7 +14,7 @@ function getUserReview(id) {
             $('#nickname').text(response['user']['nickname']);
             $('#profile_img').attr('src', response['user']['profileImgUrl']);
             $('#file').attr('src', response['reviewImgUrl']);
-            // $('#date').text(response['trip']['date']);
+            $('#date').text(response['trip']['date']);
             // $('#like').text(response['trip']['like']);
         }
     });
