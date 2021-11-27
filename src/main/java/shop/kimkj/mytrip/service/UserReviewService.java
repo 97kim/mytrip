@@ -31,7 +31,8 @@ public class UserReviewService {
         UserReview userReview = new UserReview(userReviewRequestDto, user);
         Long reviewId = userReviewRequestDto.getId();
         if (reviewId != null && multipartFile == null) { // 수정할 때 사진 선택하지 않으면 기존에 등록했던 이미지 적용
-            UserReview originReview = userReviewRepository.getById(reviewId);
+            UserReview originReview = userReviewRepository.findById(reviewId).orElseThrow(
+                    () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
             userReview.setReviewImgUrl(originReview.getReviewImgUrl());
             userReviewRepository.save(userReview);
             return userReview;
@@ -58,7 +59,8 @@ public class UserReviewService {
 
     @Transactional
     public String deleteUserReview(Long reviewId) {
-        UserReview userReview = userReviewRepository.getById(reviewId);
+        UserReview userReview = userReviewRepository.findById(reviewId).orElseThrow(
+                () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
         String reviewImgUrl = userReview.getReviewImgUrl(); // userReview에서 이미지 url 가져옴
         s3Manager.delete(reviewImgUrl); // s3에 해당 이미지 있으면 삭제
         userReviewRepository.deleteById(reviewId); // DB에서 리뷰 삭제

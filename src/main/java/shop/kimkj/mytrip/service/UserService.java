@@ -34,17 +34,16 @@ public class UserService {
     }
 
     public void checkExist(UserDto userDto) {
-        String username = userDto.getUsername();
-
         // 회원 ID 중복 확인
-        Optional<User> found = userRepository.findByUsername(username);
+        Optional<User> found = userRepository.findByUsername(userDto.getUsername());
         if (found.isPresent()) {
             throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
         }
     }
 
     public Long getUserId(UserDto userDto) {
-        User user = userRepository.getByUsername(userDto.getUsername());
+        User user = userRepository.findByUsername(userDto.getUsername()).orElseThrow(
+                () -> new NullPointerException("해당 사용자가 존재하지 않습니다."));
         return user.getId();
     }
 
