@@ -15,7 +15,7 @@ function getDetailIntro() {
             if (response['firstimage']) {
                 $('#file').attr('src', response['firstimage']);
             } else {
-                $('#file').attr('src', "https://dk9q1cr2zzfmc.cloudfront.net/img/noImage.png");
+                $('#file').attr('src', "https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg");
             }
             $('#address').text(response['addr1']);
             $('#overview').html(response['overview']);

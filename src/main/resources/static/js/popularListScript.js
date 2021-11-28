@@ -70,7 +70,7 @@ function popularList(quantity) {
                     let title = popular_list[i]['title'];
                     let file = popular_list[i]['firstimage'];
                     if (!file)
-                        file = "https://dk9q1cr2zzfmc.cloudfront.net/img/noImage.png";
+                        file = "https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg";
                     let areacode = parseInt(popular_list[i]['areacode']);
                     let address = check_address(areacode);
                     let mapx = popular_list[i]['mapx'];

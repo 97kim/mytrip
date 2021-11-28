@@ -147,7 +147,7 @@ function geoInfo() {
                         let address = response[i]['addr1'];
                         let file = response[i]['firstimage'];
                         if (!file) {
-                            file = "https://dk9q1cr2zzfmc.cloudfront.net/img/noImage.png";
+                            file = "https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg";
                         }
                         let distance = response[i]['dist'];
                         let content_id = response[i]['contentid'];

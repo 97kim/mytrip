@@ -38,7 +38,7 @@ public class UserReviewService {
             return userReview;
         }
         if (multipartFile == null) { // 처음 등록할 때 사진 선택하지 않으면 기본 이미지 저장
-            userReview.setReviewImgUrl("https://dk9q1cr2zzfmc.cloudfront.net/img/noImage.png");
+            userReview.setReviewImgUrl("https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg");
         } else { // 사진 선택하면 S3에 저장 + DB에 클라우드 프론트 url 저장
             String reviewImgUrl = s3Manager.upload(multipartFile, "reviewImg"); // 클라우드 프론트 url
             userReview.setReviewImgUrl(reviewImgUrl);
@@ -62,7 +62,9 @@ public class UserReviewService {
         UserReview userReview = userReviewRepository.findById(reviewId).orElseThrow(
                 () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
         String reviewImgUrl = userReview.getReviewImgUrl(); // userReview에서 이미지 url 가져옴
-        s3Manager.delete(reviewImgUrl); // s3에 해당 이미지 있으면 삭제
+        if (!reviewImgUrl.equals("https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg")) { // 기본 이미지가 아닐 때만 S3에서 삭제
+            s3Manager.delete(reviewImgUrl); // s3에 해당 이미지 있으면 삭제
+        }
         userReviewRepository.deleteById(reviewId); // DB에서 리뷰 삭제
         return "삭제를 완료했습니다.";
     }
