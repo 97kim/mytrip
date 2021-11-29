@@ -76,12 +76,12 @@ https://velog.io/@rudwnd33/3%EC%B0%A8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-S.A
 <br>
 
 ### 📌 문제를 이렇게 해결했어요!
-<a href="https://github.com/97kim/myTrip/wiki/4.-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85">트러블슈팅</a>
+<a href="https://github.com/97kim/myTrip-spring-BE/wiki/4.-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85">트러블슈팅</a>
 
 <br>
 
 ### 📌 WIKI
-<a href="https://github.com/97kim/myTrip/wiki">WIKI로 이동</a>
+<a href="https://github.com/97kim/myTrip-spring-BE/wiki">WIKI로 이동</a>
 
 <br>
 

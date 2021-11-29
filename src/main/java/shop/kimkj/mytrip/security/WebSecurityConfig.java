@@ -3,6 +3,7 @@ package shop.kimkj.mytrip.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,10 +36,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/popular/bookmark").authenticated()
                 .antMatchers("/near/bookmark/**").authenticated()
                 .antMatchers("/near/bookmark").authenticated()
-                .antMatchers("/userReview").authenticated()
                 .antMatchers("/userReview/delete/**").authenticated()
                 .antMatchers("/userReview/like/**").authenticated()
-                .antMatchers("/userReview/comment/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/userReview/comment/**").authenticated()
                 .antMatchers("/profile").authenticated()
                 .antMatchers("/own").authenticated()
 
@@ -52,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/templates/**.html").permitAll()
                 .antMatchers("/near/**").permitAll()
                 .antMatchers("/popular/**").permitAll()
+                .antMatchers("/userReview/**").permitAll()
                 .antMatchers("/userReviews").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/").permitAll()
@@ -83,5 +84,3 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
-
-
