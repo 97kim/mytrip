@@ -4,18 +4,17 @@ function saveProfile() {
 
     let form_data = new FormData();
 
-    form_data.append("nickname_give", modal_nickname);
-    form_data.append("img_give", modal_img);
+    form_data.append("nickname", modal_nickname);
+    form_data.append("profileImgUrl", modal_img);
 
     $.ajax({
         type: "POST",
         url: "/profile",
         data: form_data,
-        cache: false,
         contentType: false,
         processData: false,
         success: function (response) {
-            alert(response["msg"])
+            alert('프로필 업데이트 완료!');
             window.location.reload();
         }
     });

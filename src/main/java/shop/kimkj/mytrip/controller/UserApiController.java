@@ -7,18 +7,19 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.dto.JwtResponse;
 import shop.kimkj.mytrip.dto.UserDto;
+import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.service.UserService;
 import shop.kimkj.mytrip.util.JwtTokenUtil;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
@@ -70,6 +71,13 @@ public class UserApiController {
         }
         response.put("exists", Boolean.FALSE);
         return response.toString();
+    }
+
+    @PostMapping("/profile")
+    public User updateProfile(@RequestPart(required = false) String nickname,
+                              @RequestPart(name = "profileImgUrl", required = false) MultipartFile multipartFile,
+                              @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
+        return userService.updateProfile(nickname, multipartFile, nowUser);
     }
 
     private void authenticate(String username, String password) throws Exception {
