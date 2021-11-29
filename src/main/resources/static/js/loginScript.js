@@ -31,7 +31,6 @@ function sign_in() {
         success: function (response) {
             localStorage.setItem('token', response['token']);
             localStorage.setItem('username', response['username']);
-            localStorage.setItem('userId', response['userId']);
             alert("로그인 되었습니다!!");
             window.location.href = '/';
         }

@@ -6,25 +6,25 @@ function showUserReview(type) {
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
             for (let i = 0; i < response.length; i++) {
-                let userReviewIdx = response[i]['id'];
+                let userReviewId = response[i]['id'];
                 let userReviewTitle = response[i]['title'];
                 let userReviewPlace = response[i]['place'];
-                let userReviewFile = response[i]['file'];
-                let userReviewDate = response[i]['date'];
+                let userReviewFile = response[i]['reviewImgUrl'];
+                let userReviewDate = response[i]['createdAt'];
                 let userReviewLikes = response[i]['like'];
-                let userReviewProfile_img = response[i]['profile_img'];
-                let userReviewNickname = response[i]['nickname'];
+                let userReviewProfile_img = response[i]['user']['profileImgUrl'];
+                let userReviewNickname = response[i]['user']['nickname'];
 
                 let temp_html = `<li style="margin: 0 10px; height: 300px;">
-                                        <a onclick="moveTripDetail(${userReviewIdx})" class="card">
-                                            <img src="https://dk9q1cr2zzfmc.cloudfront.net/trips/${userReviewFile}" class="card__image" alt="사용자가 올린 여행지 사진"/>
+                                        <a onclick="moveTripDetail(${userReviewId})" class="card">
+                                            <img src="${userReviewFile}" class="card__image" alt="사용자가 올린 여행지 사진"/>
                                             <div class="card__overlay">
                                                 <div class="card__header">
                                                     <svg class="card__arc" xmlns="https://www.w3.org/TR/2018/CR-SVG2-20181004/">
                                                         <path/>
                                                     </svg>
                                                     <div class="card__thumb2">
-                                                        <img src="https://dk9q1cr2zzfmc.cloudfront.net/profile/${userReviewProfile_img}" alt="프로필 사진"/>
+                                                        <img src="${userReviewProfile_img}" alt="프로필 사진"/>
                                                     </div>
                                                     <div class="card__header-text">
                                                         <h3 class="card__title">${userReviewTitle}</h3>

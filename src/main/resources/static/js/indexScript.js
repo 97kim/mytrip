@@ -147,7 +147,7 @@ function geoInfo() {
                         let address = response[i]['addr1'];
                         let file = response[i]['firstimage'];
                         if (!file) {
-                            file = "https://dk9q1cr2zzfmc.cloudfront.net/img/noImage.png";
+                            file = "https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg";
                         }
                         let distance = response[i]['dist'];
                         let content_id = response[i]['contentid'];
@@ -197,28 +197,26 @@ function showTripReviews() {
         url: "/userReviews",
         data: {},
         success: function (response) {
-            let userReviews = response;
-
-            for (let i = 0; i < userReviews.length; i++) {
-                let tripId = userReviews[i]['id'];
-                let tripTitle = userReviews[i]['title'];
-                let tripPlace = userReviews[i]['place'];
-                let tripFile = "tripFile";
-                let tripDate = "tripDate";
+            for (let i = 0; i < response.length; i++) {
+                let tripId = response[i]['id'];
+                let tripTitle = response[i]['title'];
+                let tripPlace = response[i]['place'];
+                let tripFile = response[i]['reviewImgUrl'];
+                let tripDate = response[i]['createdAt'];
                 let tripLike = "tripLike";
-                let tripProfileImg = "tripProfileImg";
-                let tripNickname = "tripNickname";
+                let tripProfileImg = response[i]['user']['profileImgUrl'];
+                let tripNickname = response[i]['user']['nickname'];
 
                 let temp_html = `<li style="margin: 0 10px; height: 300px;">
                                         <a onclick="moveTripDetail(${tripId})" class="card">
-                                            <img src="https://dk9q1cr2zzfmc.cloudfront.net/trips/${tripFile}" class="card__image" alt="사용자가 올린 여행지 사진"/>
+                                            <img src="${tripFile}" class="card__image" alt="사용자가 올린 여행지 사진"/>
                                             <div class="card__overlay">
                                                 <div class="card__header">
                                                     <svg class="card__arc" xmlns="https://www.w3.org/TR/2018/CR-SVG2-20181004/">
                                                         <path/>
                                                     </svg>
                                                     <div class="card__thumb2">
-                                                        <img src="https://dk9q1cr2zzfmc.cloudfront.net/profile/${tripProfileImg}" alt="프로필 사진"/>
+                                                        <img src="${tripProfileImg}" alt="프로필 사진"/>
                                                     </div>
                                                     <div class="card__header-text">
                                                         <h3 class="card__title">${tripTitle}</h3>
@@ -244,8 +242,8 @@ function moveTripDetail(trip_id) {
 
 function showPopularTrips() {
     $.ajax({
-        type: 'POST',
-        url: '/popular/trips',
+        type: 'GET',
+        url: '/popular',
         data: {},
         success: function (response) {
             $('#popular_card').empty();
@@ -263,7 +261,7 @@ function showPopularTrips() {
                 let title = popular_list[i]['title'];
                 let file = popular_list[i]['firstimage'];
                 if (!file)
-                    file = "https://dk9q1cr2zzfmc.cloudfront.net/img/noImage.png";
+                    file = "https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg";
                 let areacode = parseInt(popular_list[i]['areacode']);
                 let address = checkAddress(areacode);
 
