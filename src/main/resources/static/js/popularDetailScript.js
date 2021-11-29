@@ -6,7 +6,7 @@ function getId_popular() {
 function getDetailIntro() {
     $.ajax({
         type: "GET",
-        url: `/popular/place/${getId_popular()}`,
+        url: `/popular/${getId_popular()}`,
         data: {},
         async: false,
         success: function (response) {
@@ -77,7 +77,7 @@ function weather_popular() {
 
     $.ajax({
         type: "POST",
-        url: '/popular/place/weather',
+        url: '/popular/weather',
         contentType: "application/json",
         data: JSON.stringify({
             place_lat: place_lat,
@@ -117,7 +117,7 @@ function toggle_bookmark_popular(content_id) {
         if ($('#bookmark').hasClass("fas")) {
             $.ajax({
                 type: "POST",
-                url: "/popular/place/bookmark",
+                url: "/popular/bookmark",
                 contentType: "application/json",
                 data: JSON.stringify({
                     content_id: content_id,
@@ -133,7 +133,7 @@ function toggle_bookmark_popular(content_id) {
         } else {
             $.ajax({
                 type: "POST",
-                url: "/popular/place/bookmark",
+                url: "/popular/bookmark",
                 contentType: "application/json",
                 data: JSON.stringify({
                     content_id: content_id,
@@ -154,7 +154,7 @@ function toggle_bookmark_popular(content_id) {
 function getBookmark_popular() {
     $.ajax({
         type: "GET",
-        url: `/popular/place/bookmark/${getId_popular()}`,
+        url: `/popular/bookmark/${getId_popular()}`,
         data: {},
         success: function (response) {
             if (response['bookmarkStatus'] == true) {

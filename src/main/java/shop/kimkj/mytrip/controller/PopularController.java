@@ -25,12 +25,12 @@ public class PopularController {
         return popularService.getPopularPlaceList(popularDto);
     }
 
-    @GetMapping("/popular/place/{contentId}")
+    @GetMapping("/popular/{contentId}")
     public String getPopularDetailIntro(@PathVariable Long contentId) throws IOException {
         return popularService.getPopularDetailIntro(contentId);
     }
 
-    @PostMapping("/popular/place/weather")
+    @PostMapping("/popular/weather")
     public String getWeatherPopular(@RequestBody LatLngDto latLngDto) throws IOException {
         return popularService.getWeatherPopular(latLngDto);
     }

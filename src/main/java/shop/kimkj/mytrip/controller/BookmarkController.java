@@ -17,7 +17,7 @@ import java.util.Map;
 public class BookmarkController {
     private final BookmarkService bookmarkService;
 
-    @PostMapping("/popular/place/bookmark")
+    @PostMapping("/popular/bookmark")
     public void bookmarkPopular(@RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         if (bookmarkDto.getAction().equals("uncheck")) {
             bookmarkService.deleteBookmark(bookmarkDto.getContentId());
@@ -31,7 +31,7 @@ public class BookmarkController {
         return bookmarkService.findBookmarks(nowUser.getId(), type);
     }
 
-    @GetMapping("/popular/place/bookmark/{contentId}")
+    @GetMapping("/popular/bookmark/{contentId}")
     public Map<String, Boolean> getPopularBookmarkStatus(@PathVariable String contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         Map<String, Boolean> response = new HashMap<>();
         Bookmark bookmark = bookmarkService.checkBookmarkStatus(contentId, nowUser.getId());
@@ -43,7 +43,7 @@ public class BookmarkController {
         return response;
     }
 
-    @PostMapping("/near/place/bookmark")
+    @PostMapping("/near/bookmark")
     public void bookmarkNear(@RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         if (bookmarkDto.getAction().equals("uncheck")) {
             bookmarkService.deleteBookmark(bookmarkDto.getContentId());
@@ -57,7 +57,7 @@ public class BookmarkController {
         return bookmarkService.findBookmarks(nowUser.getId(), type);
     }
 
-    @GetMapping("/near/place/bookmark/{contentId}")
+    @GetMapping("/near/bookmark/{contentId}")
     public Map<String, Boolean> getNearBookmarkStatus(@PathVariable String contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         Map<String, Boolean> response = new HashMap<>();
         Bookmark bookmark = bookmarkService.checkBookmarkStatus(contentId, nowUser.getId());
