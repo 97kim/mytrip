@@ -36,8 +36,13 @@ function postUserReview(id) {
             url: `/userReview/comment/${id}`,
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify({comment: UserReviewComment}),
+            statusCode: {
+                401: () => { // 로그인 안 하고 댓글 작성 시
+                    alert('로그인이 필요한 서비스입니다.');
+                    window.location.href = "../templates/login.html";
+                }
+            },
             success: function (response) {
-                alert(response);
                 window.location.reload();
             }
         });
@@ -62,7 +67,6 @@ function updateUserReview(id) {
     });
 }
 
-
 function showComments() {
     $('#comment_list').empty();
     $.ajax({
@@ -70,19 +74,18 @@ function showComments() {
         url: `/userReview/comment/${getId()}`,
         data: {},
         success: function (response) {
-            let all_comments = response['all_comments'];
-            for (let i = 0; i < all_comments.length; i++) {
-                let comment_id = all_comments[i]['_id'];
-                let profile_img = all_comments[i]['profile_img'];
-                let nickname = all_comments[i]['nickname'];
-                let comment = all_comments[i]['comment'];
-                let date = new Date(all_comments[i]['date']);
+            for (let i = 0; i < response.length; i++) {
+                let comment_id = response[i]['id'];
+                let profile_img = response[i]['user']['profileImgUrl'];
+                let nickname = response[i]['user']['nickname'];
+                let comment = response[i]['comment'];
+                let date = new Date(response[i]['createdAt']);
                 let date_before = time2str(date);
 
                 let html_temp = `<div class="mb-3">
                                     <div class="d-flex justify-content-between">
                                         <div class="d-flex align-items-center">
-                                            <img src="https://dk9q1cr2zzfmc.cloudfront.net/profile/${profile_img}" width="35px" height="35px" style="object-fit: cover; border-radius: 50%;" />
+                                            <img src="${profile_img}" width="35px" height="35px" style="object-fit: cover; border-radius: 50%;" />
                                             <span style="margin-left: 5px; font-size: 15px; font-weight: 700;">${nickname}</span>
                                             <span style="margin-left: 5px; font-size: 13px;">${date_before}</span>
                                         </div>
@@ -93,7 +96,7 @@ function showComments() {
                 $('#comment_list').append(html_temp);
 
                 // 로그인한 유저와 댓글을 쓴 유저가 같으면 삭제 아이콘이 뜸
-                if (response['now_user'] == all_comments[i]['username']) {
+                if (response[i]['user']['username'] === localStorage.getItem('username')) {
                     $(`#${comment_id}`).css('display', 'block');
                 } else {
                     $(`#${comment_id}`).css('display', 'none');
@@ -102,6 +105,21 @@ function showComments() {
         }
     });
 }
+
+// // 댓글 삭제
+// function deleteComment(comment_id) {
+//     $.ajax({
+//         type: "DELETE",
+//         url: `/userReview/comment/${comment_id}/${}`,
+//         data: {comment_id: comment_id},
+//         success: function (response) {
+//             if (response['result'] == 'success') {
+//                 alert('댓글 삭제 완료!');
+//                 showComments();
+//             }
+//         }
+//     });
+// }
 
 // 리뷰 삭제
 function deleteUserReview(id) {
