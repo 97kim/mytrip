@@ -82,4 +82,3 @@ public class UserReviewService {
         return new ResponseEntity<>(HttpStatus.OK); // 200 성공
     }
 }
-z
