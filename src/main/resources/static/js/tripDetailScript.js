@@ -186,8 +186,8 @@ function kakaoShare() {
             let share_title = response['title'];
             let share_place = response['place'];
             let share_img = response['reviewImgUrl'];
-            // let share_like = response['likeCnt'];
-            // let share_comment_count = response['comment_count'];
+            let share_like = 0; // 좋아요 기능 완료되면 수정
+            let share_comment_count = 0; // 댓글 기능 완료되면 수정
 
             Kakao.Link.sendDefault({
                 objectType: 'feed',
