@@ -15,7 +15,7 @@ function saveProfile() {
         contentType: false,
         processData: false,
         success: function (response) {
-            alert(response["msg"])
+            alert('프로필 업데이트 완료!');
             window.location.reload();
         }
     });
