@@ -27,7 +27,7 @@ public class NearService {
     @Value("${WEATHER_KEY}")
     private String WEATHER_KEY;
 
-    public String getNearPlace(LatLngDto latLngDto) throws IOException {
+    public String getNearPlace(LatLngDto latLngDto) {
         String lng = latLngDto.getPlaceLng();
         String lat = latLngDto.getPlaceLat();
 
@@ -69,7 +69,7 @@ public class NearService {
         return near.toString();
     }
 
-    public String getNearDetailIntro(String contentId) throws IOException {
+    public String getNearDetailIntro(Long contentId) {
         StringBuffer result = new StringBuffer();
         JSONObject jsonObject = null;
 

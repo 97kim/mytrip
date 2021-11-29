@@ -1,6 +1,6 @@
 function getId() {
     const URLSearch = new URLSearchParams(location.search);
-    return parseInt(URLSearch.get('id'));
+    return URLSearch.get('id');
 }
 
 function getUserReview(id) {
@@ -11,11 +11,18 @@ function getUserReview(id) {
             $('#title').text(response['title']);
             $('#place').text(response['place']);
             $('#review').text(response['review']);
-            // $('#nickname').text(response['trip']['nickname']);
-            // $('#file').attr('src', `https://dk9q1cr2zzfmc.cloudfront.net/trips/${response['trip']['file']}`);
-            // $('#date').text(response['trip']['date']);
+            $('#nickname').text(response['user']['nickname']);
+            $('#profile_img').attr('src', response['user']['profileImgUrl']);
+            $('#file').attr('src', response['reviewImgUrl']);
+            $('#date').text(response['createdAt']);
             // $('#like').text(response['trip']['like']);
-            // $('#profile_img').attr('src', `https://dk9q1cr2zzfmc.cloudfront.net/profile/${response['trip']['profile_img']}`);
+
+            // 자신이 작성한 리뷰에만 수정/삭제 버튼 뜨게 한다
+            if (response['user']['username'] == localStorage.getItem('username')) {
+                $('#own-check').show();
+            } else {
+                $('#own-check').hide();
+            }
         }
     });
 }
@@ -26,7 +33,7 @@ function postUserReview(id) {
     if (UserReviewComment != null) {
         $.ajax({
             type: "POST",
-            url: `/userReview/place/comment/${id}`,
+            url: `/userReview/comment/${id}`,
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify({comment: UserReviewComment}),
             success: function (response) {
@@ -39,17 +46,16 @@ function postUserReview(id) {
     }
 }
 
-// 리뷰 수정 시 보이는 화면
+// 리뷰 수정 화면에서 input 창에 이전 데이터 값 보이게 함
 function updateUserReview(id) {
     $.ajax({
         type: "GET",
         url: `/userReview/${id}`,
         success: function (response) {
-            console.log(response)
             sessionStorage.setItem('title', response['title']);
             sessionStorage.setItem('place', response['place']);
             sessionStorage.setItem('review', response['review']);
-            // sessionStorage.setItem('file', response['file']);
+            sessionStorage.setItem('file', response['reviewImgUrl']);
 
             window.location.href = `../templates/tripUpdate.html?id=${id}`;
         }
@@ -99,15 +105,12 @@ function showComments() {
 
 // 리뷰 삭제
 function deleteUserReview(id) {
-    console.log(id)
-    console.log("삭제 실행")
     $.ajax({
         type: "DELETE",
-        url: `/userReview/trip/delete/${id}`,
-        contentType: 'application/json; charset=utf-8',
+        url: `/userReview/delete/${id}`,
         data: {},
         success: function (response) {
-            alert(response);
+            alert('삭제 완료');
             window.location.href = "../templates/tripsList.html";
         }
     });
@@ -244,20 +247,4 @@ function autoHeight() {
         $(this).css('height', 'auto');
         $(this).height(this.scrollHeight);
     });
-}
-
-function ownCheck() {
-    $.ajax({
-        type: "POST",
-        url: '/own',
-        data: {trip_id: getId()},
-        success: function (response) {
-            if (response['owner']['username'] == response['now_user']) {
-                $('#own-check').show();
-            } else {
-                $('#own-check').hide();
-            }
-        }
-    });
-
 }

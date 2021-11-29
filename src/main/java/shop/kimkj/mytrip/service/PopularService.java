@@ -71,16 +71,16 @@ public class PopularService {
         try {
             String apiUrl = String.format(
                     "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?" +
-                    "serviceKey=%s" +
-                    "&contentTypeId=25" +
-                    "&listYN=Y" +
-                    "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide" +
-                    "&arrange=P" +
-                    "&numOfRows=13" +
-                    "&pageNo=1" +
-                    "&cat1=%s" +
-                    "&cat2=%s" +
-                    "&cat3=%s"
+                            "serviceKey=%s" +
+                            "&contentTypeId=25" +
+                            "&listYN=Y" +
+                            "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide" +
+                            "&arrange=P" +
+                            "&numOfRows=13" +
+                            "&pageNo=1" +
+                            "&cat1=%s" +
+                            "&cat2=%s" +
+                            "&cat3=%s"
                     , TOUR_KEY, cat1, cat2, cat3);
 
             URL url = new URL(apiUrl);
@@ -93,7 +93,7 @@ public class PopularService {
 
             String returnLine;
 
-            while((returnLine = bufferedReader.readLine()) != null) {
+            while ((returnLine = bufferedReader.readLine()) != null) {
                 result.append(returnLine);
             }
 
@@ -125,16 +125,16 @@ public class PopularService {
         try {
             String apiUrl = String.format(
                     "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?" +
-                    "serviceKey=%s" +
-                    "&contentTypeId=25" +
-                    "&listYN=Y" +
-                    "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide" +
-                    "&arrange=P" +
-                    "&numOfRows=%s" +
-                    "&pageNo=1" +
-                    "&cat1=%s" +
-                    "&cat2=%s" +
-                    "&cat3=%s"
+                            "serviceKey=%s" +
+                            "&contentTypeId=25" +
+                            "&listYN=Y" +
+                            "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide" +
+                            "&arrange=P" +
+                            "&numOfRows=%s" +
+                            "&pageNo=1" +
+                            "&cat1=%s" +
+                            "&cat2=%s" +
+                            "&cat3=%s"
                     , TOUR_KEY, quantity, cat1, cat2, cat3);
 
             URL url = new URL(apiUrl);
@@ -147,7 +147,7 @@ public class PopularService {
 
             String returnLine;
 
-            while((returnLine = bufferedReader.readLine()) != null) {
+            while ((returnLine = bufferedReader.readLine()) != null) {
                 result.append(returnLine);
             }
 
@@ -167,17 +167,17 @@ public class PopularService {
         return jsonObject2.toString();
     }
 
-    public String getPopularDetailIntro(String contentId) {
+    public String getPopularDetailIntro(Long contentId) {
         StringBuffer result = new StringBuffer();
         JSONObject jsonObject = null;
 
         try {
             String apiUrl = String.format(
                     "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?" +
-                    "ServiceKey=%s&contentId=%s" +
-                    "&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y" +
-                    "&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y" +
-                    "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide"
+                            "ServiceKey=%s&contentId=%s" +
+                            "&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y" +
+                            "&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y" +
+                            "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide"
                     , TOUR_KEY, contentId);
 
             URL url = new URL(apiUrl);
@@ -190,7 +190,7 @@ public class PopularService {
 
             String returnLine;
 
-            while((returnLine = bufferedReader.readLine()) != null) {
+            while ((returnLine = bufferedReader.readLine()) != null) {
                 result.append(returnLine);
             }
 
@@ -212,8 +212,8 @@ public class PopularService {
         try {
             String apiUrl = String.format(
                     "https://api.openweathermap.org/data/2.5/weather?" +
-                    "lat=%s&lon=%s" +
-                    "&appid=%s&units=metric"
+                            "lat=%s&lon=%s" +
+                            "&appid=%s&units=metric"
                     , placeLat, placeLng, WEATHER_KEY);
 
             URL url = new URL(apiUrl);
@@ -226,7 +226,7 @@ public class PopularService {
 
             String returnLine;
 
-            while((returnLine = bufferedReader.readLine()) != null) {
+            while ((returnLine = bufferedReader.readLine()) != null) {
                 result.append(returnLine);
             }
 

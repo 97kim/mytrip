@@ -1,13 +1,11 @@
 package shop.kimkj.mytrip.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 import shop.kimkj.mytrip.domain.Bookmark;
 import shop.kimkj.mytrip.dto.BookmarkDto;
-import shop.kimkj.mytrip.dto.NowUserDto;
+import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.service.BookmarkService;
 
 import java.util.HashMap;
@@ -20,23 +18,23 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     @PostMapping("/popular/place/bookmark")
-    public void bookmarkPopular(@RequestBody BookmarkDto bookmarkDto) {
+    public void bookmarkPopular(@RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         if (bookmarkDto.getAction().equals("uncheck")) {
             bookmarkService.deleteBookmark(bookmarkDto.getContentId());
         } else {
-            bookmarkService.saveBookmark(bookmarkDto);
+            bookmarkService.saveBookmark(bookmarkDto, nowUser);
         }
     }
 
-    @PostMapping("/popular/bookmark")
-    public List<Bookmark> sendPopularBookmarks(@RequestBody NowUserDto nowUserDto) {
-        return bookmarkService.findBookmarks(nowUserDto.getUserId(), nowUserDto.getType());
+    @GetMapping("/popular/bookmark")
+    public List<Bookmark> sendPopularBookmarks(@RequestParam String type, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        return bookmarkService.findBookmarks(nowUser.getId(), type);
     }
 
-    @PostMapping("/popular/place/bookmark/{contentId}")
-    public Map<String, Boolean> getPopularBookmarkStatus(@PathVariable String contentId, @RequestBody NowUserDto nowUserDto) {
+    @GetMapping("/popular/place/bookmark/{contentId}")
+    public Map<String, Boolean> getPopularBookmarkStatus(@PathVariable String contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         Map<String, Boolean> response = new HashMap<>();
-        Bookmark bookmark = bookmarkService.checkBookmarkStatus(contentId, nowUserDto.getUserId());
+        Bookmark bookmark = bookmarkService.checkBookmarkStatus(contentId, nowUser.getId());
         if (bookmark == null) {
             response.put("bookmarkStatus", Boolean.FALSE);
         } else {
@@ -46,23 +44,23 @@ public class BookmarkController {
     }
 
     @PostMapping("/near/place/bookmark")
-    public void bookmarkNear(@RequestBody BookmarkDto bookmarkDto) {
+    public void bookmarkNear(@RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         if (bookmarkDto.getAction().equals("uncheck")) {
             bookmarkService.deleteBookmark(bookmarkDto.getContentId());
         } else {
-            bookmarkService.saveBookmark(bookmarkDto);
+            bookmarkService.saveBookmark(bookmarkDto, nowUser);
         }
     }
 
-    @PostMapping("/near/bookmark")
-    public List<Bookmark> sendNearBookmarks(@RequestBody NowUserDto nowUserDto) {
-        return bookmarkService.findBookmarks(nowUserDto.getUserId(), nowUserDto.getType());
+    @GetMapping("/near/bookmark")
+    public List<Bookmark> sendNearBookmarks(@RequestParam String type, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        return bookmarkService.findBookmarks(nowUser.getId(), type);
     }
 
-    @PostMapping("/near/place/bookmark/{contentId}")
-    public Map<String, Boolean> getNearBookmarkStatus(@PathVariable String contentId, @RequestBody NowUserDto nowUserDto) {
+    @GetMapping("/near/place/bookmark/{contentId}")
+    public Map<String, Boolean> getNearBookmarkStatus(@PathVariable String contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         Map<String, Boolean> response = new HashMap<>();
-        Bookmark bookmark = bookmarkService.checkBookmarkStatus(contentId, nowUserDto.getUserId());
+        Bookmark bookmark = bookmarkService.checkBookmarkStatus(contentId, nowUser.getId());
         if (bookmark == null) {
             response.put("bookmarkStatus", Boolean.FALSE);
         } else {
