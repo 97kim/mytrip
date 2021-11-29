@@ -67,7 +67,7 @@ function showComments() {
     $('#comment_list').empty();
     $.ajax({
         type: "GET",
-        url: `/trips/place/comment/${getId()}`,
+        url: `/userReview/comment/${getId()}`,
         data: {},
         success: function (response) {
             let all_comments = response['all_comments'];
@@ -129,7 +129,7 @@ function toggle_like(trip_id) {
 
             $.ajax({
                 type: "POST",
-                url: "/trips/place/like",
+                url: "/trips/like",
                 data: {
                     trip_id_give: trip_id,
                     action_give: "uncheck"
@@ -144,7 +144,7 @@ function toggle_like(trip_id) {
         } else {
             $.ajax({
                 type: "POST",
-                url: "/trips/place/like",
+                url: "/trips/like",
                 data: {
                     trip_id_give: trip_id,
                     action_give: "check"
@@ -163,7 +163,7 @@ function toggle_like(trip_id) {
 function get_like(id) {
     $.ajax({
         type: "GET",
-        url: `/trips/place/like/${id}`,
+        url: `/trips/like/${id}`,
         data: {},
         success: function (response) {
             if (response['like_status'] == true) {
@@ -179,15 +179,15 @@ function get_like(id) {
 // 카카오톡 공유하기
 function kakaoShare() {
     $.ajax({
-        type: "POST",
-        url: `/trips/place/render`,
-        data: {trip_id_give: getId()},
+        type: "GET",
+        url: `/userReview/${getId()}`,
+        data: {},
         success: function (response) {
-            let share_title = response['trip']['title'];
-            let share_place = response['trip']['place'];
-            let share_img = `https://dk9q1cr2zzfmc.cloudfront.net/trips/${response['trip']['file']}`;
-            let share_like = response['trip']['like'];
-            let share_comment_count = response['comment_count'];
+            let share_title = response['title'];
+            let share_place = response['place'];
+            let share_img = response['reviewImgUrl'];
+            // let share_like = response['likeCnt'];
+            // let share_comment_count = response['comment_count'];
 
             Kakao.Link.sendDefault({
                 objectType: 'feed',
@@ -248,3 +248,4 @@ function autoHeight() {
         $(this).height(this.scrollHeight);
     });
 }
+

@@ -31,11 +31,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // 인증과정 필요
-                .antMatchers("/popular/place/bookmark/**").authenticated()
+                .antMatchers("/popular/bookmark/**").authenticated()
                 .antMatchers("/popular/bookmark").authenticated()
-                .antMatchers("/near/place/bookmark/**").authenticated()
+                .antMatchers("/near/bookmark/**").authenticated()
                 .antMatchers("/near/bookmark").authenticated()
-                .antMatchers("/userReview/place/**").authenticated()
+                .antMatchers("/userReview").authenticated()
+                .antMatchers("/userReview/delete/**").authenticated()
+                .antMatchers("/userReview/like/**").authenticated()
+                .antMatchers("/userReview/comment/**").authenticated()
                 .antMatchers("/profile").authenticated()
                 .antMatchers("/own").authenticated()
 
@@ -49,8 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/templates/**.html").permitAll()
                 .antMatchers("/near/**").permitAll()
                 .antMatchers("/popular/**").permitAll()
-                .antMatchers("/userReview/**").permitAll()
-                .antMatchers("/userReviews/**").permitAll()
+                .antMatchers("/userReviews").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/").permitAll()
 
@@ -81,3 +83,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
+
+
