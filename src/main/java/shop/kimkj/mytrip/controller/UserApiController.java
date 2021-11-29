@@ -74,8 +74,8 @@ public class UserApiController {
     }
 
     @PostMapping("/profile")
-    public User updateProfile(@RequestPart String nickname,
-                              @RequestPart(name = "profileImgUrl") MultipartFile multipartFile,
+    public User updateProfile(@RequestPart(required = false) String nickname,
+                              @RequestPart(name = "profileImgUrl", required = false) MultipartFile multipartFile,
                               @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
         return userService.updateProfile(nickname, multipartFile, nowUser);
     }
