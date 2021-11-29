@@ -6,7 +6,7 @@ function getId() {
 function getDetailIntro() {
     $.ajax({
         type: "GET",
-        url: `/near/place/${getId()}`,
+        url: `/near/${getId()}`,
         data: {},
         async: false,
         success: function (response) {
@@ -77,7 +77,7 @@ function weather() {
 
     $.ajax({
         type: "POST",
-        url: '/near/place/weather',
+        url: '/near/weather',
         contentType: "application/json",
         data: JSON.stringify({
             place_lat: place_lat,
@@ -118,7 +118,7 @@ function toggle_bookmark(content_id) {
         if ($('#bookmark').hasClass("fas")) {
             $.ajax({
                 type: "POST",
-                url: "/near/place/bookmark",
+                url: "/near/bookmark",
                 contentType: "application/json",
                 data: JSON.stringify({
                     content_id: content_id,
@@ -135,7 +135,7 @@ function toggle_bookmark(content_id) {
         } else {
             $.ajax({
                 type: "POST",
-                url: "/near/place/bookmark",
+                url: "/near/bookmark",
                 contentType: "application/json",
                 data: JSON.stringify({
                     content_id: content_id,
@@ -157,7 +157,7 @@ function toggle_bookmark(content_id) {
 function getBookmark() {
     $.ajax({
         type: "GET",
-        url: `/near/place/bookmark/${getId()}`,
+        url: `/near/bookmark/${getId()}`,
         data: {},
         success: function (response) {
             if (response['bookmarkStatus'] == true) {
@@ -168,3 +168,4 @@ function getBookmark() {
         }
     });
 }
+
