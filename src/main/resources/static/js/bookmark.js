@@ -88,13 +88,10 @@ function slide2() {
 
 function showPopularBookmarks() {
     $.ajax({
-        type: "POST",
-        url: "/popular/bookmark",
+        type: "GET",
+        url: "/popular/bookmark?type=popular",
         contentType: "application/json",
-        data: JSON.stringify({
-            user_id: localStorage.getItem('userId'),
-            type: 'popular'
-        }),
+        data: {},
         success: function (response) {
             for (let i = 0; i < response.length; i++) {
                 let content_id = response[i]["contentId"]
@@ -131,13 +128,10 @@ function movePopularDetail(content_id) {
 
 function showNearBookmarks() {
     $.ajax({
-        type: "POST",
-        url: "/near/bookmark",
+        type: "GET",
+        url: "/near/bookmark?type=near",
         contentType: "application/json",
-        data: JSON.stringify({
-            user_id: localStorage.getItem('userId'),
-            type: 'near'
-        }),
+        data: {},
         success: function (response) {
             for (let i = 0; i < response.length; i++) {
                 let content_id = response[i]["contentId"]

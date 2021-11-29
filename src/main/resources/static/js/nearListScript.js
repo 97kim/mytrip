@@ -47,7 +47,7 @@ function geoInfoList(quantity) {
                         let address = near_list[i]['addr1'];
                         let file = near_list[i]['firstimage'];
                         if (!file) {
-                            file = "https://dk9q1cr2zzfmc.cloudfront.net/img/noImage.png";
+                            file = "https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg";
                         }
                         let distance = near_list[i]['dist'];
                         let content_id = near_list[i]['contentid'];

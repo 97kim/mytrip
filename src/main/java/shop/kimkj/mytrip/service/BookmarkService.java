@@ -8,6 +8,7 @@ import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.dto.BookmarkDto;
 import shop.kimkj.mytrip.repository.BookmarkRepository;
 import shop.kimkj.mytrip.repository.UserRepository;
+import shop.kimkj.mytrip.security.UserDetailsImpl;
 
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class BookmarkService {
     }
 
     @Transactional
-    public void saveBookmark(BookmarkDto bookmarkDto) {
-        User user = userRepository.findById(bookmarkDto.getUserId()).orElseThrow(
+    public void saveBookmark(BookmarkDto bookmarkDto, UserDetailsImpl nowUser) {
+        User user = userRepository.findById(nowUser.getId()).orElseThrow(
                 () -> new NullPointerException("해당 User 없음")
         );
         Bookmark bookmark = new Bookmark(bookmarkDto, user);

@@ -5,21 +5,26 @@ function getId() {
 
 // 사용자 여행 리뷰 수정
 function update() {
-    let userReview = {
-        "id": getId(),
-        "title": $('#title').val(),
-        "place": $('#place').val(),
-        "review": $('#review').val()
-        // let file = $('#file')[0].files[0];
+    let data = {
+        id: getId(),
+        title: $('#title').val(),
+        place: $('#place').val(),
+        review: $('#review').val()
     }
+    let review_img = $('#file')[0].files[0];
+    let userReview = new FormData();
+
+    userReview.append("review_data", new Blob([JSON.stringify(data)], {type: "application/json"}))
+    userReview.append("review_img", review_img);
 
     $.ajax({
         type: "POST",
         url: "/userReview",
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(userReview),
+        contentType: false,
+        processData: false,
+        data: userReview,
         success: function (response) {
-            alert("업데이트 성공!");
+            alert("완료!");
             window.location.href = `../templates/tripDetail.html?id=${getId()}`;
         }
     });

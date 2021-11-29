@@ -34,17 +34,16 @@ public class UserApiController {
         authenticate(userDto.getUsername(), userDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        Long userId = userService.getUserId(userDto);
-        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername(), userId));
+        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
     }
 
     @PostMapping(value = "/sign-up/save")
     public ResponseEntity<?> createUser(@RequestBody UserDto userDto) throws Exception {
-        Long userId = userService.registerUser(userDto); // 사용자 등록하고 userId 반환
+        userService.registerUser(userDto); // 사용자 등록하고 userId 반환
         authenticate(userDto.getUsername(), userDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername(), userId));
+        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
     }
 
 //    @PostMapping("/sign-up/check-dup")
@@ -61,7 +60,7 @@ public class UserApiController {
 //    }
 
     @PostMapping("/sign-up/check-dup")
-    public String checkUser(@RequestBody UserDto userDto) {
+    public String checkUser(@RequestBody UserDto userDto) { // UserDto에 password 안 쓰이는 거 고민해보기
         JSONObject response = new JSONObject();
         try {
             userService.checkExist(userDto);
