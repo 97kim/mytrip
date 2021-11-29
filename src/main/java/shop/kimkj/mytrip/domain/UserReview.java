@@ -35,15 +35,18 @@ public class UserReview extends Timestamped {
     @Column
     private String reviewImgUrl;
 
+    @Column
+    private int likeCnt;
+
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-//    @OneToMany(mappedBy = "userReview")
-//    private List<Comment> comments;
+    @OneToMany(mappedBy = "userReview")
+    private List<Comment> comments;
 
-//    @OneToMany(mappedBy = "userReview")
-//    private List<UserReviewLikes> userReviewLikes;
+    @OneToMany(mappedBy = "userReview", cascade = CascadeType.REMOVE)
+    private List<UserReviewLikes> userReviewLikes;
 
     public UserReview(UserReviewRequestDto requestDto, User user) {
         if (requestDto.getId() != null) {
