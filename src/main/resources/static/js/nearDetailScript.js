@@ -6,17 +6,13 @@ function getId() {
 function getDetailIntro() {
     $.ajax({
         type: "GET",
-        url: `/near/place/intro/${getId()}`,
+        url: `/near/place/${getId()}`,
         data: {},
         async: false,
         success: function (response) {
             response = JSON.parse(response);
             $('#title').text(response['title']);
-            if (response['firstimage']) {
-                $('#file').attr('src', response['firstimage']);
-            } else {
-                $('#file').attr('src', "https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg");
-            }
+            $('#file').attr('src', response['firstimage'])
             $('#address').text(response['addr1']);
             $('#overview').html(response['overview']);
             if (response['homepage']) {
@@ -130,8 +126,7 @@ function toggle_bookmark(content_id) {
                     type: "near",
                     title: title,
                     address: address,
-                    img_url: file,
-                    user_id: localStorage.getItem("userId")
+                    img_url: file
                 }),
                 success: function (response) {
                     $('#bookmark').removeClass("fas").addClass("far")
@@ -148,8 +143,7 @@ function toggle_bookmark(content_id) {
                     type: "near",
                     title: title,
                     address: address,
-                    img_url: file,
-                    user_id: localStorage.getItem("userId")
+                    img_url: file
                 }),
                 success: function (response) {
                     $('#bookmark').removeClass("far").addClass("fas")
@@ -162,12 +156,9 @@ function toggle_bookmark(content_id) {
 
 function getBookmark() {
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: `/near/place/bookmark/${getId()}`,
-        contentType: 'application/json',
-        data: JSON.stringify({
-            user_id: localStorage.getItem('userId')
-        }),
+        data: {},
         success: function (response) {
             if (response['bookmarkStatus'] == true) {
                 $('#bookmark').removeClass("far").addClass("fas");

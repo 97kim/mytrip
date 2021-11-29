@@ -16,7 +16,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public Long registerUser(UserDto userDto) {
+    public void registerUser(UserDto userDto) {
         String username = userDto.getUsername();
 
         // 비밀번호 인코딩
@@ -28,9 +28,7 @@ public class UserService {
         String profileImgUrl = "https://dk9q1cr2zzfmc.cloudfront.net/profile/default_img.png";
 
         User user = new User(username, password, nickname, profileImgUrl);
-        User registeredUser = userRepository.save(user);
-
-        return registeredUser.getId();
+        userRepository.save(user);
     }
 
     public void checkExist(UserDto userDto) {

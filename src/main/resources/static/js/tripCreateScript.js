@@ -3,8 +3,7 @@ function postUserReview() {
     let data = {
         title: $('#title').val(),
         place: $('#place').val(),
-        review: $('#review').val(),
-        user_id: localStorage.getItem('userId')
+        review: $('#review').val()
     }
     let review_img = $('#file')[0].files[0];
     let userReview = new FormData();

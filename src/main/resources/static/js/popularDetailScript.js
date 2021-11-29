@@ -6,17 +6,13 @@ function getId_popular() {
 function getDetailIntro() {
     $.ajax({
         type: "GET",
-        url: `/popular/place/intro/${getId_popular()}`,
+        url: `/popular/place/${getId_popular()}`,
         data: {},
         async: false,
         success: function (response) {
             response = JSON.parse(response);
             $('#title').text(response['title']);
-            if (response['firstimage']) {
-                $('#file').attr('src', response['firstimage']);
-            } else {
-                $('#file').attr('src', "https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg");
-            }
+            $('#file').attr('src', response['firstimage'])
             $('#overview').html(response['overview']);
             if (response['homepage']) {
                 $('#homepage').html(response['homepage']);
@@ -128,8 +124,7 @@ function toggle_bookmark_popular(content_id) {
                     type: "popular",
                     action: "uncheck",
                     title: title,
-                    img_url: file,
-                    user_id: localStorage.getItem("userId")
+                    img_url: file
                 }),
                 success: function (response) {
                     $('#bookmark').removeClass("fas").addClass("far")
@@ -145,8 +140,7 @@ function toggle_bookmark_popular(content_id) {
                     action: "check",
                     type: "popular",
                     title: title,
-                    img_url: file,
-                    user_id: localStorage.getItem("userId")
+                    img_url: file
                 }),
                 success: function (response) {
                     $('#bookmark').removeClass("far").addClass("fas")
@@ -159,12 +153,9 @@ function toggle_bookmark_popular(content_id) {
 
 function getBookmark_popular() {
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: `/popular/place/bookmark/${getId_popular()}`,
-        contentType: "application/json",
-        data: JSON.stringify({
-            user_id: localStorage.getItem('userId')
-        }),
+        data: {},
         success: function (response) {
             if (response['bookmarkStatus'] == true) {
                 $('#bookmark').removeClass("far").addClass("fas");

@@ -18,7 +18,7 @@ function getUserReview(id) {
             // $('#like').text(response['trip']['like']);
 
             // 자신이 작성한 리뷰에만 수정/삭제 버튼 뜨게 한다
-            if (response['user']['id'] == localStorage.getItem('userId')) {
+            if (response['user']['username'] == localStorage.getItem('username')) {
                 $('#own-check').show();
             } else {
                 $('#own-check').hide();
@@ -33,7 +33,7 @@ function postUserReview(id) {
     if (UserReviewComment != null) {
         $.ajax({
             type: "POST",
-            url: `/userReview/place/comment/${id}`,
+            url: `/userReview/comment/${id}`,
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify({comment: UserReviewComment}),
             success: function (response) {
@@ -107,11 +107,10 @@ function showComments() {
 function deleteUserReview(id) {
     $.ajax({
         type: "DELETE",
-        url: `/userReview/trip/delete/${id}`,
-        contentType: 'application/json; charset=utf-8',
+        url: `/userReview/delete/${id}`,
         data: {},
         success: function (response) {
-            alert(response);
+            alert('삭제 완료');
             window.location.href = "../templates/tripsList.html";
         }
     });

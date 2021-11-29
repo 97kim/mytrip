@@ -242,8 +242,8 @@ function moveTripDetail(trip_id) {
 
 function showPopularTrips() {
     $.ajax({
-        type: 'POST',
-        url: '/popular/trips',
+        type: 'GET',
+        url: '/popular',
         data: {},
         success: function (response) {
             $('#popular_card').empty();
@@ -261,7 +261,7 @@ function showPopularTrips() {
                 let title = popular_list[i]['title'];
                 let file = popular_list[i]['firstimage'];
                 if (!file)
-                    file = "https://dk9q1cr2zzfmc.cloudfront.net/img/noImage.png";
+                    file = "https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg";
                 let areacode = parseInt(popular_list[i]['areacode']);
                 let address = checkAddress(areacode);
 

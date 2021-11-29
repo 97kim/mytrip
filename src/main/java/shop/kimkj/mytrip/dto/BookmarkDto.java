@@ -23,7 +23,4 @@ public class BookmarkDto {
 
     @JsonProperty(value = "img_url")
     private String imgUrl;
-
-    @JsonProperty(value = "user_id")
-    private Long userId;
 }
