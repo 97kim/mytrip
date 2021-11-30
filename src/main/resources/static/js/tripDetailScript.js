@@ -28,12 +28,12 @@ function getUserReview(id) {
 }
 
 // 댓글 달기
-function postUserReview(id) {
+function postUserReview(reviewId) {
     let UserReviewComment = $('#comment_content').val();
     if (UserReviewComment != null) {
         $.ajax({
             type: "POST",
-            url: `/userReview/comment/${id}`,
+            url: `/userReview/comment/${reviewId}`,
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify({comment: UserReviewComment}),
             statusCode: {
