@@ -53,6 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/userReviews/**").permitAll()
 //                .antMatchers("/favicon.ico").permitAll()
 //                .antMatchers("/").permitAll()
+
+
                 .antMatchers("**").permitAll()
                 // 그 외 모든 요청은 인증과정 필요
                 .anyRequest().authenticated()
@@ -64,7 +66,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/templates/login.html").loginProcessingUrl("/templates/login.html").defaultSuccessUrl("/").permitAll()
                 .and()
                 .logout().logoutUrl("/logout");
-
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }

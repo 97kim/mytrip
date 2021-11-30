@@ -30,6 +30,7 @@ function getUserReview(id) {
 // 댓글 달기
 function postUserReview(reviewId) {
     let UserReviewComment = $('#comment_content').val();
+
     if (UserReviewComment != null) {
         $.ajax({
             type: "POST",
