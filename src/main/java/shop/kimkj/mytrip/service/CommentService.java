@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shop.kimkj.mytrip.domain.Comment;
 import shop.kimkj.mytrip.domain.UserReview;
 import shop.kimkj.mytrip.dto.CommentDto;
@@ -20,6 +21,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final UserReviewRepository userReviewRepository;
 
+    @Transactional
     public Comment postComment(Long reviewId, CommentDto commentDto, UserDetailsImpl nowUser) {
         UserReview userReview = userReviewRepository.findById(reviewId).orElseThrow(
                 () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
@@ -33,8 +35,14 @@ public class CommentService {
         return commentRepository.findAllByUserReviewId(reviewId);
     }
 
-    public String deleteComment(Long CommentId) {
-        commentRepository.deleteById(CommentId);
-        return "삭제를 완료했습니다.";
+    @Transactional
+    public ResponseEntity<?> deleteComment(Long commentId, UserDetailsImpl nowUser) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                () -> new NullPointerException("해당 댓글이 존재하지 않습니다."));
+        if (!nowUser.getId().equals(comment.getUser().getId())) {
+            return new ResponseEntity<>("삭제 권한이 없습니다.", HttpStatus.FORBIDDEN); // 403(FORBIDDEN)에러 - 권한없음
+        }
+        commentRepository.delete(comment);
+        return new ResponseEntity<>(HttpStatus.OK); // 200 성공
     }
 }
