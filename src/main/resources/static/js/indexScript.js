@@ -203,7 +203,7 @@ function showTripReviews() {
                 let tripPlace = response[i]['place'];
                 let tripFile = response[i]['reviewImgUrl'];
                 let tripDate = response[i]['createdAt'];
-                let tripLike = "tripLike";
+                let tripLike = response[i]['likeCnt'];
                 let tripProfileImg = response[i]['user']['profileImgUrl'];
                 let tripNickname = response[i]['user']['nickname'];
 

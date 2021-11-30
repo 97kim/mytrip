@@ -29,4 +29,8 @@ public class UserReviewLikes extends Timestamped {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
+    public UserReviewLikes(UserReview userReview, User user) {
+        this.userReview = userReview;
+        this.user = user;
+    }
 }
