@@ -3,6 +3,7 @@ package shop.kimkj.mytrip.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,29 +32,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // 인증과정 필요
-//                .antMatchers("/popular/place/bookmark/**").authenticated()
-//                .antMatchers("/popular/bookmark").authenticated()
-//                .antMatchers("/near/place/bookmark/**").authenticated()
-//                .antMatchers("/near/bookmark").authenticated()
-//                .antMatchers("/userReview/place/**").authenticated()
-//                .antMatchers("/profile").authenticated()
-//                .antMatchers("/own").authenticated()
-//
-//                // 인증과정 필요 없이 모두 허용
-//                .antMatchers("/css/**").permitAll()
-//                .antMatchers("/js/**").permitAll()
-//                .antMatchers("/h2-console/**").permitAll()
-//                .antMatchers("/sign-in").permitAll()
-//                .antMatchers("/sign-up/**").permitAll()
-//                .antMatchers("/**.html").permitAll()
-//                .antMatchers("/templates/**.html").permitAll()
-//                .antMatchers("/near/**").permitAll()
-//                .antMatchers("/popular/**").permitAll()
-//                .antMatchers("/userReview/**").permitAll()
-//                .antMatchers("/userReviews/**").permitAll()
-//                .antMatchers("/favicon.ico").permitAll()
-//                .antMatchers("/").permitAll()
-                .antMatchers("**").permitAll()
+                .antMatchers("/popular/bookmark/**").authenticated()
+                .antMatchers("/popular/bookmark").authenticated()
+                .antMatchers("/near/bookmark/**").authenticated()
+                .antMatchers("/near/bookmark").authenticated()
+                .antMatchers("/userReview/delete/**").authenticated()
+                .antMatchers("/userReview/like/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/userReview/comment/**").authenticated()
+                .antMatchers("/profile").authenticated()
+                .antMatchers("/own").authenticated()
+
+                // 인증과정 필요 없이 모두 허용
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/sign-in").permitAll()
+                .antMatchers("/sign-up/**").permitAll()
+                .antMatchers("/**.html").permitAll()
+                .antMatchers("/templates/**.html").permitAll()
+                .antMatchers("/near/**").permitAll()
+                .antMatchers("/popular/**").permitAll()
+                .antMatchers("/userReview/**").permitAll()
+                .antMatchers("/userReviews").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
+                .antMatchers("/").permitAll()
+
                 // 그 외 모든 요청은 인증과정 필요
                 .anyRequest().authenticated()
                 .and()
@@ -81,3 +84,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
+
+
