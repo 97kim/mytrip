@@ -1,15 +1,11 @@
 package shop.kimkj.mytrip.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import shop.kimkj.mytrip.dto.UserReviewRequestDto;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -39,11 +35,11 @@ public class UserReview extends Timestamped {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-//    @OneToMany(mappedBy = "userReview")
-//    private List<Comment> comments;
+    @OneToMany(mappedBy = "userReview", cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
 
-//    @OneToMany(mappedBy = "userReview")
-//    private List<UserReviewLikes> userReviewLikes;
+    @OneToMany(mappedBy = "userReview")
+    private List<UserReviewLikes> userReviewLikes;
 
     public UserReview(UserReviewRequestDto requestDto, User user) {
         if (requestDto.getId() != null) {

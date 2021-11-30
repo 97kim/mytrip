@@ -1,6 +1,7 @@
 package shop.kimkj.mytrip.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import shop.kimkj.mytrip.domain.Comment;
@@ -29,8 +30,8 @@ public class CommentController {
 
 
     @DeleteMapping("/userReview/comment/{commentId}") // 댓글 삭제하기
-    public String deleteComment(@PathVariable Long commentId) {
-        return commentService.deleteComment(commentId);
+    public ResponseEntity<?> deleteComment(@PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        return commentService.deleteComment(commentId, nowUser);
     }
 }
 
