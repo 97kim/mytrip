@@ -182,7 +182,7 @@ function get_like(id) {
         url: `/userReview/like/${id}`,
         data: {},
         success: function (response) {
-            if (response['like_status'] == true) {
+            if (response['likeStatus'] == true) {
                 $('#like').removeClass("far").addClass("fas");
             } else {
                 $('#like').removeClass("fas").addClass("far")

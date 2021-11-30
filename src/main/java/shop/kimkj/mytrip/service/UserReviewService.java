@@ -112,9 +112,7 @@ public class UserReviewService {
 
     public UserReviewLikes checkLikeStatus(Long userReviewId, Long userId) {
 
-        return userReviewLikeRepository.findById(userReviewId).orElseThrow(
-                () -> new NullPointerException("해당 좋아요 없음")
-        );
+        return userReviewLikeRepository.findByUserReviewIdAndUserId(userReviewId, userId);
 
     }
 }
