@@ -32,4 +32,9 @@ public class CommentService {
     public List<Comment> getComment(Long reviewId) {
         return commentRepository.findAllByUserReviewId(reviewId);
     }
+
+    public String deleteComment(Long CommentId) {
+        commentRepository.deleteById(CommentId);
+        return "삭제를 완료했습니다.";
+    }
 }

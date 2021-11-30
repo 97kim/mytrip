@@ -26,6 +26,7 @@ public class Comment extends Timestamped {
     @Column(nullable = false)
     private String comment;
 
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "USER_REVIEW_ID", nullable = false)
@@ -36,6 +37,9 @@ public class Comment extends Timestamped {
     private User user;
 
     public Comment(CommentDto commentDto, UserReview userReview, User user) {
+        if (commentDto.getCommentId() != null) {
+            this.id = commentDto.getCommentId();
+        }
         this.comment = commentDto.getComment();
         this.userReview = userReview;
         this.user = user;

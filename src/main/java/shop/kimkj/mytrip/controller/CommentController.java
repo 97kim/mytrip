@@ -22,11 +22,15 @@ public class CommentController {
         return commentService.postComment(reviewId, comment, nowUser);
     }
 
-    @GetMapping("/userReview/comment/{reviewId}")
+    @GetMapping("/userReview/comment/{reviewId}") // 댓글 보여주기
     public List<Comment> getComment(@PathVariable Long reviewId) {
         return commentService.getComment(reviewId);
     }
 
-//    @DeleteMapping("/userReview/comment/${reviewId}")
 
+    @DeleteMapping("/userReview/comment/{commentId}") // 댓글 삭제하기
+    public String deleteComment(@PathVariable Long commentId) {
+        return commentService.deleteComment(commentId);
+    }
 }
+
