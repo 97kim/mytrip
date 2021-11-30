@@ -31,14 +31,18 @@ public class UserReview extends Timestamped {
     @Column
     private String reviewImgUrl;
 
+    @Column
+    private int likeCnt;
+
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
+
     @OneToMany(mappedBy = "userReview", cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "userReview")
+    @OneToMany(mappedBy = "userReview", cascade = CascadeType.REMOVE)
     private List<UserReviewLikes> userReviewLikes;
 
     public UserReview(UserReviewRequestDto requestDto, User user) {
