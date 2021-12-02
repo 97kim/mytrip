@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.domain.UserReview;
 import shop.kimkj.mytrip.domain.UserReviewLikes;
+import shop.kimkj.mytrip.dto.NearDto;
 import shop.kimkj.mytrip.dto.UserReviewRequestDto;
 import shop.kimkj.mytrip.repository.UserRepository;
 import shop.kimkj.mytrip.repository.UserReviewLikeRepository;
@@ -18,7 +19,9 @@ import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.util.S3Manager;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -66,8 +69,18 @@ public class UserReviewService {
         );
     }
 
-    public List<UserReview> getUserReviews() {
-        return userReviewRepository.findAll();
+    public List<UserReview> getUserReviews(String type) throws Exception {
+        if (type.equals("like")) {
+            return userReviewRepository.findAll().stream()
+                    .sorted(Comparator.comparing(UserReview::getLikeCnt).reversed())
+                    .collect(Collectors.toList());
+        } else if (type.equals("date")) {
+            return userReviewRepository.findAll().stream()
+                    .sorted(Comparator.comparing(UserReview::getCreatedAt))
+                    .collect(Collectors.toList());
+        } else {
+            throw new Exception();
+        }
     }
 
     @Transactional

@@ -35,9 +35,9 @@ public class UserReviewController {
         return userReviewService.getUserReview(reviewId);
     }
 
-    @GetMapping("/userReviews")
-    public List<UserReview> getUserReviews() {
-        return userReviewService.getUserReviews();
+    @GetMapping("/userReviews") // 타입 별(최근, 좋아요) 순서대로 받아오기
+    public List<UserReview> getUserReviews(@RequestParam String type) throws Exception {
+        return userReviewService.getUserReviews(type);
     }
 
     @DeleteMapping("/userReview/delete/{reviewId}")
@@ -45,7 +45,7 @@ public class UserReviewController {
         return userReviewService.deleteUserReview(reviewId, nowUser);
     }
 
-    @PostMapping("/userReview/like") // 좋아요 눌러서 언체크면 삭제하고 아니면 save
+    @PostMapping("/userReview/like")
     public void userReviewLike(@RequestBody UserReviewLikeDto userReviewLikeDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         if (userReviewLikeDto.getAction().equals("uncheck")) {
             userReviewService.deleteLike(userReviewLikeDto.getUserReviewId());
