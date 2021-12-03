@@ -39,7 +39,6 @@ public class UserReview extends Timestamped {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-
     @OneToMany(mappedBy = "userReview", cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 

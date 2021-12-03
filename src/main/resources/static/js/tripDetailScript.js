@@ -3,10 +3,10 @@ function getId() {
     return URLSearch.get('id');
 }
 
-function getUserReview(id) {
+function getUserReview(reviewId) {
     $.ajax({
         type: "GET",
-        url: `/userReview/${id}`,
+        url: `/userReview/${reviewId}`,
         success: function (response) {
             $('#title').text(response['title']);
             $('#place').text(response['place']);
@@ -60,7 +60,6 @@ function showComments() {
         url: `/userReview/comment/${getId()}`,
         data: {},
         success: function (response) {
-            console.log(response)
             for (let i = 0; i < response.length; i++) {
                 let commentId = response[i]['id'];
                 let profileImg = response[i]['user']['profileImgUrl'];
@@ -190,7 +189,7 @@ function deleteUserReview(id) {
 
 
 // 좋아요 기능
-function toggle_like(trip_id) {
+function userReviewLike(trip_id) {
     let like = parseInt($('#like').text());
 
     if (!localStorage.getItem('token')) {
@@ -198,8 +197,23 @@ function toggle_like(trip_id) {
         ㄷ
         window.location.href = "../templates/login.html"
     } else {
-        if ($('#like').hasClass("fas")) {
+        if ($('#like').hasClass("far")) {
 
+            $.ajax({
+                type: "POST",
+                url: "/userReview/like",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    user_review_id: trip_id,
+
+                    action: "check"
+                }),
+                success: function (response) {
+                    getUserReview(getId())
+                    $('#like').removeClass("far").addClass("fas")
+                }
+            })
+        } else {
             $.ajax({
                 type: "POST",
                 url: "/userReview/like",
@@ -211,20 +225,6 @@ function toggle_like(trip_id) {
                 success: function (response) {
                     getUserReview(getId())
                     $('#like').removeClass("fas").addClass("far")
-                }
-            })
-        } else {
-            $.ajax({
-                type: "POST",
-                url: "/userReview/like",
-                contentType: "application/json",
-                data: JSON.stringify({
-                    user_review_id: trip_id,
-                    action: "check"
-                }),
-                success: function (response) {
-                    getUserReview(getId())
-                    $('#like').removeClass("far").addClass("fas")
                 }
             });
         }
@@ -319,4 +319,3 @@ function autoHeight() {
         $(this).height(this.scrollHeight);
     });
 }
-
