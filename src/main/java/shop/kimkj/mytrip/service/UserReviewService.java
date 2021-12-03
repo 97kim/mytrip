@@ -2,6 +2,7 @@ package shop.kimkj.mytrip.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -114,13 +115,9 @@ public class UserReviewService {
 
     public List<UserReview> getUserReviews(String type) throws Exception {
         if (type.equals("like")) {
-            return userReviewRepository.findAll().stream()
-                    .sorted(Comparator.comparing(UserReview::getLikeCnt).reversed())
-                    .collect(Collectors.toList());
+            return userReviewRepository.findAll(Sort.by(Sort.Direction.DESC, "likeCnt", "CreatedAt"));
         } else if (type.equals("date")) {
-            return userReviewRepository.findAll().stream()
-                    .sorted(Comparator.comparing(UserReview::getCreatedAt))
-                    .collect(Collectors.toList());
+            return userReviewRepository.findAll(Sort.by(Sort.Direction.DESC, "CreatedAt"));
         } else {
             throw new Exception();
         }
