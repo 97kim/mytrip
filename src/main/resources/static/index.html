@@ -54,7 +54,7 @@
                 }
             });
             geoInfo(); // 위치 좌표 서버로 보내서 api 데이터 얻어온 뒤 화면에 출력
-            showTripReviews(); // 사용자가 올린 데이터 가져오기
+            showTripReviews('date'); // 사용자가 올린 데이터 가져오기
             showPopularTrips(); // 랜덤으로 인기있는(검색량기준) 전국 상위 여행지 출력
             navLoginCheck();
         });
@@ -168,7 +168,7 @@
 
         <button type="button" id="btn_prev2"><i class="fas fa-chevron-left"></i></button>
         <button type="button" id="btn_next2"><i class="fas fa-chevron-right"></i></button>
-        <ul class="cards slider-li2" id="trip_card"></ul>
+        <ul class="cards slider-li2" id="index_trip_card"></ul>
     </div>
 </div>
 

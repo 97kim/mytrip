@@ -1,16 +1,17 @@
-function showUserReview(type) {
+function showListSort(type) {
     $('#trip_card').empty();
     $.ajax({
         type: "GET",
-        url: `/userReviews`,
+        url: `/userReviews/${type}`,
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
+            console.log(response)
             for (let i = 0; i < response.length; i++) {
                 let userReviewId = response[i]['id'];
                 let userReviewTitle = response[i]['title'];
                 let userReviewPlace = response[i]['place'];
                 let userReviewFile = response[i]['reviewImgUrl'];
-                let userReviewDate = response[i]['createdAt'];
+                let userReviewDate = response[i]['createdAt'.substring(0, 19)];
                 let userReviewLikes = response[i]['likeCnt'];
                 let userReviewProfile_img = response[i]['user']['profileImgUrl'];
                 let userReviewNickname = response[i]['user']['nickname'];

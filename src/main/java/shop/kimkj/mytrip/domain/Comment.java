@@ -9,8 +9,6 @@ import shop.kimkj.mytrip.dto.CommentDto;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.LAZY;
-
 @NoArgsConstructor
 @Setter
 @Getter
