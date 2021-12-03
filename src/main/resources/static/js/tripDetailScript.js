@@ -112,8 +112,7 @@ function deleteComment(comment_id) {
                 showComments();
             }
         });
-    }
-    ;
+    };
 }
 
 
@@ -194,7 +193,6 @@ function userReviewLike(trip_id) {
 
     if (!localStorage.getItem('token')) {
         alert('로그인이 필요한 서비스입니다.')
-        ㄷ
         window.location.href = "../templates/login.html"
     } else {
         if ($('#like').hasClass("far")) {
