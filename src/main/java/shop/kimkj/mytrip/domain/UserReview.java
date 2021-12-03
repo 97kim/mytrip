@@ -1,5 +1,6 @@
 package shop.kimkj.mytrip.domain;
 
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,7 +38,6 @@ public class UserReview extends Timestamped {
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
-
 
     @OneToMany(mappedBy = "userReview", cascade = CascadeType.REMOVE)
     private List<Comment> comments;

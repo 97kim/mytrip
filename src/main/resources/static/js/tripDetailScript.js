@@ -3,10 +3,10 @@ function getId() {
     return URLSearch.get('id');
 }
 
-function getUserReview(id) {
+function getUserReview(reviewId) {
     $.ajax({
         type: "GET",
-        url: `/userReview/${id}`,
+        url: `/userReview/${reviewId}`,
         success: function (response) {
             $('#title').text(response['title']);
             $('#place').text(response['place']);
@@ -30,25 +30,26 @@ function getUserReview(id) {
 // 댓글 달기
 function postUserReview(reviewId) {
     let UserReviewComment = $('#comment_content').val();
-    if (UserReviewComment != null) {
-        $.ajax({
-            type: "POST",
-            url: `/userReview/comment/${reviewId}`,
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({comment: UserReviewComment}),
-            statusCode: {
-                401: () => { // 로그인 안 하고 댓글 작성 시
-                    alert('로그인이 필요한 서비스입니다.');
-                    window.location.href = "../templates/login.html";
-                }
-            },
-            success: function (response) {
-                showComments();
-            }
-        });
-    } else {
-        alert('댓글을 입력해주세요!')
+
+    if (UserReviewComment.replaceAll(" ","").replaceAll("　", "") == "") {
+        return alert("댓글을 입력해주세요")
     }
+
+    $.ajax({
+        type: "POST",
+        url: `/userReview/comment/${reviewId}`,
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({comment: UserReviewComment}),
+        statusCode: {
+            401: () => { // 로그인 안 하고 댓글 작성 시
+                alert('로그인이 필요한 서비스입니다.');
+                window.location.href = "../templates/login.html";
+            }
+        },
+        success: function (response) {
+            showComments();
+        }
+    });
 }
 
 // 댓글 보여주기
@@ -59,7 +60,6 @@ function showComments() {
         url: `/userReview/comment/${getId()}`,
         data: {},
         success: function (response) {
-            console.log(response)
             for (let i = 0; i < response.length; i++) {
                 let commentId = response[i]['id'];
                 let profileImg = response[i]['user']['profileImgUrl'];
@@ -128,6 +128,9 @@ function showUpdateCommentModel(commentId) {
 // 댓글 수정하기
 function updateComment(commentId) {
     let comment = $(`#${commentId}_comment_update_input`).val();
+    if (comment == "") {
+        return alert("수정할 댓글을 입력해주세요")
+    }
     let UserReviewComment = {
         commentId: commentId,
         comment: comment
@@ -185,15 +188,30 @@ function deleteUserReview(id) {
 
 
 // 좋아요 기능
-function toggle_like(trip_id) {
+function userReviewLike(trip_id) {
     let like = parseInt($('#like').text());
 
     if (!localStorage.getItem('token')) {
         alert('로그인이 필요한 서비스입니다.')
         window.location.href = "../templates/login.html"
     } else {
-        if ($('#like').hasClass("fas")) {
+        if ($('#like').hasClass("far")) {
 
+            $.ajax({
+                type: "POST",
+                url: "/userReview/like",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    user_review_id: trip_id,
+
+                    action: "check"
+                }),
+                success: function (response) {
+                    getUserReview(getId())
+                    $('#like').removeClass("far").addClass("fas")
+                }
+            })
+        } else {
             $.ajax({
                 type: "POST",
                 url: "/userReview/like",
@@ -205,20 +223,6 @@ function toggle_like(trip_id) {
                 success: function (response) {
                     getUserReview(getId())
                     $('#like').removeClass("fas").addClass("far")
-                }
-            })
-        } else {
-            $.ajax({
-                type: "POST",
-                url: "/userReview/like",
-                contentType: "application/json",
-                data: JSON.stringify({
-                    user_review_id: trip_id,
-                    action: "check"
-                }),
-                success: function (response) {
-                    getUserReview(getId())
-                    $('#like').removeClass("far").addClass("fas")
                 }
             });
         }
@@ -313,4 +317,3 @@ function autoHeight() {
         $(this).height(this.scrollHeight);
     });
 }
-

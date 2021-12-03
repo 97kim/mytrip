@@ -47,19 +47,6 @@ public class UserApiController {
         return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
     }
 
-//    @PostMapping("/sign-up/check-dup")
-//    public Map<String, Boolean> checkUser(@RequestBody UserDto userDto) {
-//        Map<String, Boolean> response = new HashMap<>();
-//        try {
-//            userService.checkExist(userDto);
-//        } catch (IllegalArgumentException e) {
-//            response.put("exists", Boolean.TRUE);
-//            return response;
-//        }
-//        response.put("exists", Boolean.FALSE);
-//        return response;
-//    }
-
     @PostMapping("/sign-up/check-dup")
     public String checkUser(@RequestBody UserDto userDto) { // UserDto에 password 안 쓰이는 거 고민해보기
         JSONObject response = new JSONObject();

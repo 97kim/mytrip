@@ -1,10 +1,19 @@
 // 사용자 여행 리뷰 작성
 function postUserReview() {
-    let data = {
-        title: $('#title').val(),
-        place: $('#place').val(),
-        review: $('#review').val()
+    let title = $('#title').val();
+    let place = $('#place').val();
+    let review = $('#review').val();
+
+    if (title.replaceAll(" ", "").replaceAll("　", "") == "" || place.replaceAll(" ", "").replaceAll("　", "") == "") {
+        return alert("제목과 장소는 필수로 입력해주세요")
     }
+
+    let data = {
+        title: title,
+        place: place,
+        review: review
+    }
+
     let review_img = $('#file')[0].files[0];
     let userReview = new FormData();
 

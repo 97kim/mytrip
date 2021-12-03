@@ -72,7 +72,6 @@ public class NearService {
     public String getNearDetailIntro(Long contentId) {
         StringBuffer result = new StringBuffer();
         JSONObject jsonObject = null;
-
         try {
             String apiUrl = String.format(
                     "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?" +
