@@ -31,6 +31,7 @@ public class UserReviewService {
         User user = userRepository.findById(nowUser.getId()).orElseThrow(
                 () -> new NullPointerException("해당 User 없음")
         );
+
         UserReview userReview = new UserReview(userReviewRequestDto, user);
         Long reviewId = userReviewRequestDto.getId(); // reviewId는 작성된 리뷰의 id다. null인 경우는 리뷰를 처음 생성할 때다.
 
@@ -38,7 +39,6 @@ public class UserReviewService {
         if (reviewId != null && !nowUser.getId().equals(getUserReview(reviewId).getUser().getId())) {
             return new ResponseEntity<>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN); // 403(FORBIDDEN)에러 - 권한없음
         }
-
         // 작성자인 경우
         if (reviewId != null && multipartFile == null) { // 수정할 때 사진 선택하지 않으면 기존에 등록했던 이미지 적용
             UserReview originReview = userReviewRepository.findById(reviewId).orElseThrow(

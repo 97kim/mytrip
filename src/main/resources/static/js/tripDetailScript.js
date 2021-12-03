@@ -31,25 +31,25 @@ function getUserReview(id) {
 function postUserReview(reviewId) {
     let UserReviewComment = $('#comment_content').val();
 
-    if (UserReviewComment != null) {
-        $.ajax({
-            type: "POST",
-            url: `/userReview/comment/${reviewId}`,
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({comment: UserReviewComment}),
-            statusCode: {
-                401: () => { // 로그인 안 하고 댓글 작성 시
-                    alert('로그인이 필요한 서비스입니다.');
-                    window.location.href = "../templates/login.html";
-                }
-            },
-            success: function (response) {
-                window.location.reload();
-            }
-        });
-    } else {
-        alert('댓글을 입력해주세요!')
+    if (UserReviewComment.replaceAll(" ","").replaceAll("　", "") == "") {
+        return alert("댓글을 입력해주세요")
     }
+
+    $.ajax({
+        type: "POST",
+        url: `/userReview/comment/${reviewId}`,
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({comment: UserReviewComment}),
+        statusCode: {
+            401: () => { // 로그인 안 하고 댓글 작성 시
+                alert('로그인이 필요한 서비스입니다.');
+                window.location.href = "../templates/login.html";
+            }
+        },
+        success: function (response) {
+            showComments();
+        }
+    });
 }
 
 // 댓글 보여주기
@@ -76,8 +76,8 @@ function showComments() {
                                             <span style="margin-left: 5px; font-size: 15px; font-weight: 700;">${nickname}</span>
                                             <span style="margin-left: 5px; font-size: 13px;">${dateBefore}</span>
                                         </div>
-                                        <a id="${commentId}_update" href="javascript:showUpdateCommentModel(${commentId})" style="display: none;"><i class="fas fa-trash-alt" style="color: #6E85B2;">수정</i></a>
-                                        <a id="${commentId}_delete" href="javascript:deleteComment(${commentId})" style="display: none;"><i class="fas fa-trash-alt" style="color: #6E85B2;">삭제</i></a>
+                                        <a id="${commentId}_update" href="javascript:showUpdateCommentModel(${commentId})" style="display: none;"><i class="fas fa-edit" style="color: #6E85B2;"></i></a>
+                                        <a id="${commentId}_delete" href="javascript:deleteComment(${commentId})" style="display: none;"><i class="fas fa-trash-alt" style="color: #6E85B2;"></i></a>
                                          </div>
                                         <div style="margin: 5px 0 0 5px; word-break:break-all; font-size: 14px; font-weight: 400;">${comment}</div>
                                         <div id="${commentId}CommentUpdateInputModel" class="form-post" style="display:none">
@@ -87,7 +87,6 @@ function showComments() {
                                  </div>`;
 
                 $('#comment_list').append(html_temp);
-                // $(`#${commentId}_comment_update_input`).hide();
 
                 // 로그인한 유저와 댓글을 쓴 유저가 같으면 삭제 아이콘이 뜸
                 if (response[i]['user']['username'] === localStorage.getItem('username')) {
@@ -104,15 +103,18 @@ function showComments() {
 
 
 // 댓글 삭제하기
-function deleteComment(commentId) {
-    $.ajax({
-        type: "DELETE",
-        url: `/userReview/comment/${commentId}`,
-        success: function (response) {
-            alert(response)
-            window.location.reload();
-        }
-    });
+function deleteComment(comment_id) {
+    if (confirm("삭제하시겠습니까?") === true) {
+        $.ajax({
+            type: "DELETE",
+            url: `/userReview/comment/${comment_id}`,
+            data: {},
+            success: function (response) {
+                showComments();
+            }
+        });
+    }
+    ;
 }
 
 
@@ -128,6 +130,9 @@ function showUpdateCommentModel(commentId) {
 // 댓글 수정하기
 function updateComment(commentId) {
     let comment = $(`#${commentId}_comment_update_input`).val();
+    if (comment == "") {
+        return alert("수정할 댓글을 입력해주세요")
+    }
     let UserReviewComment = {
         commentId: commentId,
         comment: comment
@@ -145,9 +150,8 @@ function updateComment(commentId) {
             }
         },
         success: function (response) {
-            window.location.reload();
+            showComments();
             $(`#${commentId}_comment_update_input`).hide();
-            $(`#${commentId}_comment_update_input`).text("수정");
         }
     });
 }
@@ -172,15 +176,16 @@ function updateUserReview(id) {
 
 // 리뷰 삭제
 function deleteUserReview(id) {
-    $.ajax({
-        type: "DELETE",
-        url: `/userReview/delete/${id}`,
-        data: {},
-        success: function (response) {
-            alert('삭제 완료');
-            window.location.href = "../templates/tripsList.html";
-        }
-    });
+    if (confirm("삭제 하시겠습니까?") === true) {
+        $.ajax({
+            type: "DELETE",
+            url: `/userReview/delete/${id}`,
+            data: {},
+            success: function (response) {
+                window.location.href = "../templates/tripsList.html";
+            }
+        });
+    }
 }
 
 
@@ -190,6 +195,7 @@ function toggle_like(trip_id) {
 
     if (!localStorage.getItem('token')) {
         alert('로그인이 필요한 서비스입니다.')
+        ㄷ
         window.location.href = "../templates/login.html"
     } else {
         if ($('#like').hasClass("fas")) {
