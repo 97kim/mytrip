@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.domain.UserReview;
+import shop.kimkj.mytrip.domain.UserReviewLikes;
 import shop.kimkj.mytrip.dto.UserReviewRequestDto;
 import shop.kimkj.mytrip.repository.UserRepository;
+import shop.kimkj.mytrip.repository.UserReviewLikeRepository;
 import shop.kimkj.mytrip.repository.UserReviewRepository;
 import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.util.S3Manager;
@@ -24,6 +26,7 @@ public class UserReviewService {
 
     private final UserReviewRepository userReviewRepository;
     private final UserRepository userRepository;
+    private final UserReviewLikeRepository userReviewLikeRepository;
     private final S3Manager s3Manager;
 
     @Transactional
@@ -80,5 +83,36 @@ public class UserReviewService {
         }
         userReviewRepository.deleteById(reviewId); // DB에서 리뷰 삭제
         return new ResponseEntity<>(HttpStatus.OK); // 200 성공
+    }
+
+    public List<UserReviewLikes> findLike(Long userReviewId, UserDetailsImpl nowUser) {
+        return userReviewLikeRepository.findAllByUserReviewId(userReviewId);
+    }
+
+    @Transactional
+    public void deleteLike(Long userReviewId) {
+        UserReview userReview = userReviewRepository.findById(userReviewId).orElseThrow(
+                () -> new NullPointerException("해당 리뷰 없음")
+        );
+
+        userReview.setLikeCnt(userReview.getLikeCnt() - 1);
+        userReviewLikeRepository.deleteByUserReviewId(userReviewId);
+
+    }
+
+    @Transactional
+    public void saveLike(Long userReviewId, UserDetailsImpl nowUser) {
+        UserReview userReview = userReviewRepository.findById(userReviewId).orElseThrow(
+                () -> new NullPointerException("해당 리뷰 없음")
+        );
+        UserReviewLikes userReviewLikes = new UserReviewLikes(userReview, nowUser.getUser());
+        userReview.setLikeCnt(userReview.getLikeCnt() + 1);
+        userReviewLikeRepository.save(userReviewLikes);
+    }
+
+    public UserReviewLikes checkLikeStatus(Long userReviewId, Long userId) {
+
+        return userReviewLikeRepository.findByUserReviewIdAndUserId(userReviewId, userId);
+
     }
 }

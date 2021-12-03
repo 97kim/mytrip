@@ -15,7 +15,7 @@ function getUserReview(id) {
             $('#profile_img').attr('src', response['user']['profileImgUrl']);
             $('#file').attr('src', response['reviewImgUrl']);
             $('#date').text(response['createdAt']);
-            // $('#like').text(response['trip']['like']);
+            $('#like').text(response['likeCnt']);
 
             // 자신이 작성한 리뷰에만 수정/삭제 버튼 뜨게 한다
             if (response['user']['username'] == localStorage.getItem('username')) {
@@ -202,31 +202,29 @@ function toggle_like(trip_id) {
 
             $.ajax({
                 type: "POST",
-                url: "/trips/like",
-                data: {
-                    trip_id_give: trip_id,
-                    action_give: "uncheck"
-                },
+                url: "/userReview/like",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    user_review_id: trip_id,
+                    action: "uncheck"
+                }),
                 success: function (response) {
-                    if (response['result'] == 'success') {
-                        $('#like').removeClass("fas").addClass("far")
-                        $('#like').text(like - 1);
-                    }
+                    getUserReview(getId())
+                    $('#like').removeClass("fas").addClass("far")
                 }
             })
         } else {
             $.ajax({
                 type: "POST",
-                url: "/trips/like",
-                data: {
-                    trip_id_give: trip_id,
-                    action_give: "check"
-                },
+                url: "/userReview/like",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    user_review_id: trip_id,
+                    action: "check"
+                }),
                 success: function (response) {
-                    if (response['result'] == 'success') {
-                        $('#like').removeClass("far").addClass("fas")
-                        $('#like').text(like + 1);
-                    }
+                    getUserReview(getId())
+                    $('#like').removeClass("far").addClass("fas")
                 }
             });
         }
@@ -236,10 +234,10 @@ function toggle_like(trip_id) {
 function get_like(id) {
     $.ajax({
         type: "GET",
-        url: `/trips/like/${id}`,
+        url: `/userReview/like/${id}`,
         data: {},
         success: function (response) {
-            if (response['like_status'] == true) {
+            if (response['likeStatus'] == true) {
                 $('#like').removeClass("far").addClass("fas");
             } else {
                 $('#like').removeClass("fas").addClass("far")

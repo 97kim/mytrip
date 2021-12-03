@@ -11,7 +11,7 @@ function showUserReview(type) {
                 let userReviewPlace = response[i]['place'];
                 let userReviewFile = response[i]['reviewImgUrl'];
                 let userReviewDate = response[i]['createdAt'];
-                let userReviewLikes = response[i]['like'];
+                let userReviewLikes = response[i]['likeCnt'];
                 let userReviewProfile_img = response[i]['user']['profileImgUrl'];
                 let userReviewNickname = response[i]['user']['nickname'];
 
