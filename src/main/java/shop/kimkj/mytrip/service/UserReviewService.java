@@ -52,6 +52,7 @@ public class UserReviewService {
             userReviewRepository.save(userReview);
             return ResponseEntity.ok(userReview);
         }
+
         if (multipartFile == null) { // 처음 등록할 때 사진 선택하지 않으면 기본 이미지 저장
             userReview.setReviewImgUrl("https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg");
         } else { // 사진 선택하면 S3에 저장 + DB에 클라우드 프론트 url 저장

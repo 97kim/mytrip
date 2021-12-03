@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>myTrip</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--메타태그 설정-->
+    <meta property="og:title" content="여행어때"/>
+    <meta property="og:description" content="위치 기반 서비스로 근처의 여행지를 확인해보세요!"/>
+    <meta property="og:image" content="../static/ogImage.png"/>
+
+    <!--파비콘(주소창 아이콘) 적용-->
+    <link rel="shortcut icon" href="../favicon.ico"/>
+
+    <!--bootstrap cdn-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+          crossorigin="anonymous">
+    <!--jquery cdn-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <!--slick cdn-->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+    <!--fontawesome cdn-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+    <!--외부 static 파일 불러오기-->
+    <link rel="stylesheet" href="../css/public.css"/>
+    <link rel="stylesheet" href="../../../../../../myTrip-spring/src/main/resources/static/css/freeBoard.css"/>
+    <link rel="stylesheet" href="../../../../../../myTrip-spring/src/main/resources/static/css/freeboardStyle.css"/>
+    <script type="text/javascript" src="../js/freeBoardScript.js"></script>
+</head>
+<body>
+<div id="mainWrapper">f
+    <ul>
+        <!-- 게시판 제목 -->
+        <a href="templates/freeBoard.html">게시판</a>
+        <!-- 게시판 목록  -->
+        <li>
+            <ul id="ulTable">
+                <li>
+                    <ul>
+                        <li class="board-select" onclick="postUserReview()">게시판 생성하기</li>
+                        <li class="board-select" onclick="postUserReview()">최신순정렬하기</li>
+                        <li class="board-select" onclick="postUserReview()">조회수로정렬하기</li>
+                    </ul>
+                    <ul>
+                        <li>No</li>
+                        <li>제목</li>
+                        <li>작성일</li>
+                        <li>작성자</li>
+                        <li>조회수</li>
+                    </ul>
+                </li>
+                <!-- 게시물이 출력될 영역 -->
+                <li>
+                    <ul>
+                        <li>1</li>
+                        <li class="left">제목제목제목제목1</li>
+                        <li>2014.07.09</li>
+                        <li>자바킹</li>
+                        <li>0</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <ul>
+                        <li>2</li>
+                        <li class="left">제목제목제목제목1</li>
+                        <li>2014.07.09</li>
+                        <li>자바킹</li>
+                        <li>0</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <ul>
+                        <li>3</li>
+                        <li class="left">제목제목제목제목1</li>
+                        <li>2014.07.09</li>
+                        <li>자바킹</li>
+                        <li>0</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <ul>
+                        <li>4</li>
+                        <li class="left">제목제목제목제목1</li>
+                        <li>2014.07.09</li>
+                        <li>자바킹</li>
+                        <li>0</li>
+                    </ul>
+                <li>
+            </ul>
+        </li>
+
+        <!-- 게시판 페이징 영역 -->
+        <li>
+            <div id="divPaging">
+                <div>◀</div>
+                <div><b>1</b></div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>▶</div>
+            </div>
+        </li>
+
+        <!-- 검색 폼 영역 -->
+        <li id='liSearchOption'>
+            <div>
+                <select id='selSearchOption'>
+                    <option value='A'>제목+내용</option>
+                    <option value='T'>제목</option>
+                    <option value='C'>내용</option>
+                </select>
+                <input id='txtKeyWord'/>
+                <input type='button' value='검색'/>
+            </div>
+        </li>
+
+    </ul>
+
+
+    <!-- Site footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <h6>About</h6>
+                    <p class="text-justify">myTrip - <i>내일배움캠프 10팀 프로젝트</i><br>
+                        Card 템플릿은 <a href="https://codepen.io/seyedi/details/zYoeLEv">CodePen</a>에서
+                        <a href="https://codepen.io/seyedi">@seyedi</a>가 작성한 코드를 사용했습니다.
+                        Footer 템플릿은 <a href="https://codepen.io/scanfcode/pen/MEZPNd">CodePen</a>에서
+                        <a href="https://codepen.io/scanfcode">@scanfcode</a>가 작성한 코드를 사용했습니다.
+                        CodePen은 MIT 라이센스가 적용되며, 이는 CodePen PRO가 아닌 저작물에 한정됩니다. 라이센스 관련 궁금하신 사항은
+                        <a href="https://blog.codepen.io/documentation/licensing/">Blog.CodePen.io</a>에서 참고하시기 바랍니다.
+                        관광정보는 '출처표시' 외에는 이용제한을 두고 있지 않습니다. 자유 이용 보장의 의미는 활용자가 한국관광공사가 제공한
+                        관광정보의 사실적 내용을 유지하는 범위에서 자유롭게 가공·활용할 수 있다는 것이지, 공공데이터의 사실적인 내용을 위조, 변조, 왜곡하여
+                        사용하는 것까지 보장하는 것은 아닙니다.<br><br>
+                        (Open Api 데이터 제공 : 한국관광공사)
+                    </p>
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <h6>Members</h6>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/97kim">김경중</a></li>
+                        <li><a href="https://github.com/Woogys">서태욱</a></li>
+                        <li><a href="https://github.com/hyojin-dev">장효진</a></li>
+                    </ul>
+                    <br>
+                    <h6>Open Api FAQ</h6>
+                    <ul class="footer-links">
+                        <li><a href="https://api.visitkorea.or.kr/customer/faqList.do">한국관광공사</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/97kim/myTrip">About Us</a></li>
+                        <li><a href="https://github.com/97kim/myTrip">Contribute</a></li>
+                    </ul>
+                    <br>
+                    <h6>We used</h6>
+                    <ul class="footer-links">
+                        <li><a href="https://codepen.io/seyedi/pen/zYoeLEv">Card Template</a></li>
+                        <li><a href="https://codepen.io/scanfcode/pen/MEZPNd">Footer Template</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by
+                        <a href="https://github.com/97kim/myTrip">myTrip</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--bootstrap popper js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <!--bootstrap js-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+            crossorigin="anonymous"></script>
+
+    <!--slick js-->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+</div>
+</body>
+</html>
