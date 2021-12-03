@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.domain.UserReview;
 import shop.kimkj.mytrip.domain.UserReviewLikes;
-import shop.kimkj.mytrip.dto.NearDto;
 import shop.kimkj.mytrip.dto.UserReviewRequestDto;
 import shop.kimkj.mytrip.repository.UserRepository;
 import shop.kimkj.mytrip.repository.UserReviewLikeRepository;
@@ -69,20 +68,6 @@ public class UserReviewService {
         );
     }
 
-    public List<UserReview> getUserReviews(String type) throws Exception {
-        if (type.equals("like")) {
-            return userReviewRepository.findAll().stream()
-                    .sorted(Comparator.comparing(UserReview::getLikeCnt).reversed())
-                    .collect(Collectors.toList());
-        } else if (type.equals("date")) {
-            return userReviewRepository.findAll().stream()
-                    .sorted(Comparator.comparing(UserReview::getCreatedAt))
-                    .collect(Collectors.toList());
-        } else {
-            throw new Exception();
-        }
-    }
-
     @Transactional
     public ResponseEntity<?> deleteUserReview(Long reviewId, UserDetailsImpl nowUser) {
         if (!nowUser.getId().equals(getUserReview(reviewId).getUser().getId())) { // 리뷰 작성자랑 로그인한 유저랑 다르면
@@ -110,7 +95,6 @@ public class UserReviewService {
 
         userReview.setLikeCnt(userReview.getLikeCnt() - 1);
         userReviewLikeRepository.deleteByUserReviewId(userReviewId);
-
     }
 
     @Transactional
@@ -124,8 +108,20 @@ public class UserReviewService {
     }
 
     public UserReviewLikes checkLikeStatus(Long userReviewId, Long userId) {
-
         return userReviewLikeRepository.findByUserReviewIdAndUserId(userReviewId, userId);
+    }
 
+    public List<UserReview> getUserReviews(String type) throws Exception {
+        if (type.equals("like")) {
+            return userReviewRepository.findAll().stream()
+                    .sorted(Comparator.comparing(UserReview::getLikeCnt).reversed())
+                    .collect(Collectors.toList());
+        } else if (type.equals("date")) {
+            return userReviewRepository.findAll().stream()
+                    .sorted(Comparator.comparing(UserReview::getCreatedAt))
+                    .collect(Collectors.toList());
+        } else {
+            throw new Exception();
+        }
     }
 }

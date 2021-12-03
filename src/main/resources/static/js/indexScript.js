@@ -191,45 +191,46 @@ function onGeoError() { //위치 정보 공유 거부 시
 }
 
 
-function showTripReviews() {
+function showTripReviews(type) {
+    $('#index_trip_card').empty();
     $.ajax({
         type: "GET",
-        url: "/userReviews",
-        data: {},
+        url: `/userReviews/${type}`,
+        contentType: 'application/json; charset=utf-8',
         success: function (response) {
             for (let i = 0; i < response.length; i++) {
-                let tripId = response[i]['id'];
-                let tripTitle = response[i]['title'];
-                let tripPlace = response[i]['place'];
-                let tripFile = response[i]['reviewImgUrl'];
-                let tripDate = response[i]['createdAt'];
-                let tripLike = response[i]['likeCnt'];
-                let tripProfileImg = response[i]['user']['profileImgUrl'];
-                let tripNickname = response[i]['user']['nickname'];
+                let userReviewId = response[i]['id'];
+                let userReviewTitle = response[i]['title'];
+                let userReviewPlace = response[i]['place'];
+                let userReviewFile = response[i]['reviewImgUrl'];
+                let userReviewDate = response[i]['createdAt'];
+                let userReviewLikes = response[i]['likeCnt'];
+                let userReviewProfile_img = response[i]['user']['profileImgUrl'];
+                let userReviewNickname = response[i]['user']['nickname'];
 
                 let temp_html = `<li style="margin: 0 10px; height: 300px;">
-                                        <a onclick="moveTripDetail(${tripId})" class="card">
-                                            <img src="${tripFile}" class="card__image" alt="사용자가 올린 여행지 사진"/>
+                                        <a onclick="moveTripDetail(${userReviewId})" class="card">
+                                            <img src="${userReviewFile}" class="card__image" alt="사용자가 올린 여행지 사진"/>
                                             <div class="card__overlay">
                                                 <div class="card__header">
                                                     <svg class="card__arc" xmlns="https://www.w3.org/TR/2018/CR-SVG2-20181004/">
                                                         <path/>
                                                     </svg>
                                                     <div class="card__thumb2">
-                                                        <img src="${tripProfileImg}" alt="프로필 사진"/>
+                                                        <img src="${userReviewProfile_img}" alt="프로필 사진"/>
                                                     </div>
                                                     <div class="card__header-text">
-                                                        <h3 class="card__title">${tripTitle}</h3>
-                                                        <i class="far fa-thumbs-up">${tripLike}</i>
-                                                        <span class="card__status">${tripDate}</span>
+                                                        <h3 class="card__title">${userReviewTitle}</h3>
+                                                        <i class="far fa-thumbs-up">${userReviewLikes}</i>
+                                                        <span class="card__status">${userReviewDate}</span>
                                                     </div>
                                                 </div>
-                                                <p class="card__description">${tripPlace}</p>
-                                                <p class="card__description">by <b>@${tripNickname}</b></p>
+                                                <p class="card__description">${userReviewPlace}</p>
+                                                <p class="card__description">by <b>@${userReviewNickname}</b></p>
                                             </div>
                                         </a>
                                     </li>`
-                $('#trip_card').append(temp_html);
+                $('#index_trip_card').prepend(temp_html);
                 slide2();
             }
         }
