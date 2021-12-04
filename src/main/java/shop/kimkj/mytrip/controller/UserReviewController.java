@@ -54,7 +54,7 @@ public class UserReviewController {
         }
     }
 
-    @GetMapping("/userReview/like/{userReviewId}") // 좋아요 된 게시물은 나갔다 들어와도 좋아요 된
+    @GetMapping("/userReview/like/{userReviewId}") // 좋아요 된 게시물은 나갔다 들어와도 좋아요 된 것으로 표시
     public Map<String, Boolean> getLikeStatus(@PathVariable Long userReviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         Map<String, Boolean> response = new HashMap<>();
         UserReviewLikes userReviewLikes = userReviewService.checkLikeStatus(userReviewId, nowUser.getId());
