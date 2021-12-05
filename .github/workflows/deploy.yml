@@ -42,6 +42,6 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-#          platforms: linux/amd64 # pc 환경이 m1(linux/amr64)이라서 linux/amd64로 명시
+          platforms: linux/arm64 # pc 환경이 m1(linux/amr64)이라서 linux/amd64로 명시
           push: true
           tags: rudwnd33/mytrip-app:latest
