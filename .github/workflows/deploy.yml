@@ -1,0 +1,47 @@
+name: myTrip-spring-BE
+on:
+  push:
+    branches:
+      - deploy
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1.4.3
+        with:
+          java-version: 1.8
+
+      - name: Get timestamp
+        uses: gerred/actions/current-time@master
+        id: current-time
+
+#      - name: Grant execute permission for gradlew
+#        run: chmod +x gradlew # gradlew 실행권한 부여
+
+      - name: Build with Gradle
+        run: gradle build -x test # 테스트 없이 빌드
+#        run: ./gradlew clean build -x test # 테스트 없이 빌드
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 # 도커 로그인 액션
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }} # 도커허브 아이디
+          password: ${{ secrets.DOCKERHUB_TOKEN }} # 도커허브 토큰
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2 # 도커허브로 이미지 빌드 & 푸시
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64 # pc 환경이 m1(linux/amr64)이라서 linux/amd64로 명시
+          push: true
+          tags: rudwnd33/mytrip-app:latest
