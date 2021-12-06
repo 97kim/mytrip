@@ -20,7 +20,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-@PropertySource("classpath:env.properties") // env.properties에 저장된 키 값 가져올 수 있게 경로 설정
 public class S3Manager {
 
     private final AmazonS3Client amazonS3Client;

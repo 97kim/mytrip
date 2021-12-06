@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
-@PropertySource("classpath:env.properties") // env.properties에 저장된 키 값 가져올 수 있게 경로 설정
 public class JwtTokenUtil implements Serializable {
 
     private static final long serialVersionUID = -2550185165626007488L;
