@@ -23,7 +23,7 @@ public class UserReviewController {
 
     private final UserReviewService userReviewService;
 
-    @PostMapping("/userReview")
+    @PostMapping("/review")
     public ResponseEntity<?> postUserReview(@RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
                                             @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
                                             @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {

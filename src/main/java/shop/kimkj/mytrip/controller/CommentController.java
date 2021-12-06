@@ -17,19 +17,19 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/userReview/comment/{reviewId}") // 댓글 작성
+    @PostMapping("/review/comment/{reviewId}") // 댓글 작성
     public Comment postComment(@PathVariable Long reviewId, @RequestBody CommentDto comment,
                                @AuthenticationPrincipal UserDetailsImpl nowUser) {
         return commentService.postComment(reviewId, comment, nowUser);
     }
 
-    @GetMapping("/userReview/comment/{reviewId}") // 댓글 보여주기
+    @GetMapping("/review/comment/{reviewId}") // 댓글 보여주기
     public List<Comment> getComment(@PathVariable Long reviewId) {
         return commentService.getComment(reviewId);
     }
 
 
-    @DeleteMapping("/userReview/comment/{commentId}") // 댓글 삭제하기
+    @DeleteMapping("/review/comment/{commentId}") // 댓글 삭제하기
     public ResponseEntity<?> deleteComment(@PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         return commentService.deleteComment(commentId, nowUser);
     }
