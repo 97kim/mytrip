@@ -42,10 +42,4 @@ public class NearController {
     public String getWeatherNear(@RequestBody LatLngDto latLngDto) throws IOException {
         return nearService.getWeatherNear(latLngDto);
     }
-
-    // 테스트
-    @GetMapping("/")
-    public ResponseEntity<?> test() {
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }
