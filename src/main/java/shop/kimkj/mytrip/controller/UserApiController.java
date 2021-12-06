@@ -47,7 +47,7 @@ public class UserApiController {
         return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
     }
 
-    @PostMapping("/sign-up/check")
+    @PostMapping("/signup/check")
     public String checkUser(@RequestBody UserDto userDto) { // UserDto에 password 안 쓰이는 거 고민해보기
         JSONObject response = new JSONObject();
         try {
