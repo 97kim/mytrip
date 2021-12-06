@@ -18,7 +18,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 @Service
-@PropertySource("classpath:env.properties") // env.properties에 저장된 키 값 가져올 수 있게 경로 설정
 public class NearService {
 
     @Value("${TOUR_KEY}")

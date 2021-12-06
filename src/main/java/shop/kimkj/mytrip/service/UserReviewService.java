@@ -85,10 +85,6 @@ public class UserReviewService {
         return new ResponseEntity<>(HttpStatus.OK); // 200 성공
     }
 
-    public List<UserReviewLikes> findLike(Long userReviewId, UserDetailsImpl nowUser) {
-        return userReviewLikeRepository.findAllByUserReviewId(userReviewId);
-    }
-
     @Transactional
     public void deleteLike(Long userReviewId) {
         UserReview userReview = userReviewRepository.findById(userReviewId).orElseThrow(
