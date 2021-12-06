@@ -23,8 +23,8 @@ public class BookmarkService {
     }
 
     @Transactional
-    public void deleteBookmark(String contentId, Long userId) {
-        bookmarkRepository.deleteByContentIdAndUserId(contentId, userId);
+    public void deleteBookmark(String contentId, UserDetailsImpl nowUser) {
+        bookmarkRepository.deleteByContentIdAndUser(contentId, nowUser.getId());
     }
 
     @Transactional
