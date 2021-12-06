@@ -1,0 +1,12 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "267429925503.dkr.ecr.ap-northeast-2.amazonaws.com/mytrip-app",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": 8080
+    }
+  ]
+}
