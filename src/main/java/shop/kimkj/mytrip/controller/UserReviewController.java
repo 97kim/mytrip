@@ -40,7 +40,7 @@ public class UserReviewController {
         return userReviewService.getUserReviews(type);
     }
 
-    @DeleteMapping("/review/delete/{reviewId}")
+    @DeleteMapping("/review/{reviewId}")
     public ResponseEntity<?> deleteUserReview(@PathVariable Long reviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) { // @AuthenticationPrincipal 로그인한 유저 정보 가져오기
         return userReviewService.deleteUserReview(reviewId, nowUser);
     }

@@ -33,7 +33,7 @@ public class BookmarkController {
 
     @GetMapping("/popular/bookmark/{contentId}")
     public Map<String, Boolean> getPopularBookmarkStatus(@PathVariable String contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        Map<String, Boolean> response = new HashMap<>();
+        Map response = new HashMap<String, Boolean>();
         Bookmark bookmark = bookmarkService.checkBookmarkStatus(contentId, nowUser.getId());
         if (bookmark == null) {
             response.put("bookmarkStatus", Boolean.FALSE);

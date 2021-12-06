@@ -38,7 +38,7 @@ public class UserApiController {
         return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
     }
 
-    @PostMapping(value = "/sign-up/save")
+    @PostMapping(value = "/sign-up")
     public ResponseEntity<?> createUser(@RequestBody UserDto userDto) throws Exception {
         userService.registerUser(userDto); // 사용자 등록하고 userId 반환
         authenticate(userDto.getUsername(), userDto.getPassword());
