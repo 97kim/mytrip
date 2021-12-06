@@ -2,9 +2,15 @@ package shop.kimkj.mytrip.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.dto.LatLngDto;
 import shop.kimkj.mytrip.dto.NearDto;
+import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.service.NearService;
 
 
@@ -35,5 +41,11 @@ public class NearController {
     @PostMapping("/nearspot/weather")
     public String getWeatherNear(@RequestBody LatLngDto latLngDto) throws IOException {
         return nearService.getWeatherNear(latLngDto);
+    }
+
+    // 테스트
+    @PostMapping("/")
+    public ResponseEntity<?> test() {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
