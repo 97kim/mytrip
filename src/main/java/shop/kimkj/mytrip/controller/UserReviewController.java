@@ -23,7 +23,7 @@ public class UserReviewController {
 
     private final UserReviewService userReviewService;
 
-    @PostMapping("/userReview")
+    @PostMapping("/review")
     public ResponseEntity<?> postUserReview(@RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
                                             @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
                                             @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
@@ -40,7 +40,7 @@ public class UserReviewController {
         return userReviewService.getUserReviews(type);
     }
 
-    @DeleteMapping("/review/delete/{reviewId}")
+    @DeleteMapping("/review/{reviewId}")
     public ResponseEntity<?> deleteUserReview(@PathVariable Long reviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) { // @AuthenticationPrincipal 로그인한 유저 정보 가져오기
         return userReviewService.deleteUserReview(reviewId, nowUser);
     }

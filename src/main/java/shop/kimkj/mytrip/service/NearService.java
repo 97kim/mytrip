@@ -55,7 +55,7 @@ public class NearService {
 
             String returnLine;
 
-            while((returnLine = bufferedReader.readLine()) != null) {
+            while ((returnLine = bufferedReader.readLine()) != null) {
                 result.append(returnLine);
             }
 
@@ -94,7 +94,7 @@ public class NearService {
 
             String returnLine;
 
-            while((returnLine = bufferedReader.readLine()) != null) {
+            while ((returnLine = bufferedReader.readLine()) != null) {
                 result.append(returnLine);
             }
 
@@ -196,7 +196,7 @@ public class NearService {
 
             String returnLine;
 
-            while((returnLine = bufferedReader.readLine()) != null) {
+            while ((returnLine = bufferedReader.readLine()) != null) {
                 result.append(returnLine);
             }
 

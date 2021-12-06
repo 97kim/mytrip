@@ -3,7 +3,6 @@ package shop.kimkj.mytrip.controller;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.*;
-import shop.kimkj.mytrip.dto.ContentIdDto;
 import shop.kimkj.mytrip.dto.LatLngDto;
 import shop.kimkj.mytrip.dto.NearDto;
 import shop.kimkj.mytrip.service.NearService;
@@ -18,22 +17,22 @@ public class NearController {
 
     private final NearService nearService;
 
-    @PostMapping("/near")
+    @PostMapping("/nearspot")
     public String getNearPlace(@RequestBody LatLngDto latLngDto) throws IOException {
         return nearService.getNearPlace(latLngDto);
     }
 
-    @GetMapping("/near/{contentId}")
+    @GetMapping("/nearspot/{contentId}")
     public String getNearDetailIntro(@PathVariable Long contentId) throws IOException {
         return nearService.getNearDetailIntro(contentId);
     }
 
-    @PostMapping("/near/list")
+    @PostMapping("/nearspots")
     public String getNearPlaceList(@RequestBody NearDto nearDto) throws IOException {
         return nearService.getNearPlaceList(nearDto);
     }
 
-    @PostMapping("/near/weather")
+    @PostMapping("/nearspot/weather")
     public String getWeatherNear(@RequestBody LatLngDto latLngDto) throws IOException {
         return nearService.getWeatherNear(latLngDto);
     }
