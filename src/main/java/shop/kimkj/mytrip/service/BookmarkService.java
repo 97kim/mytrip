@@ -24,7 +24,7 @@ public class BookmarkService {
 
     @Transactional
     public void deleteBookmark(String contentId, UserDetailsImpl nowUser) {
-        bookmarkRepository.deleteByContentIdAndUser(contentId, nowUser.getId());
+        bookmarkRepository.deleteByContentIdAndUserId(contentId, nowUser.getId());
     }
 
     @Transactional
