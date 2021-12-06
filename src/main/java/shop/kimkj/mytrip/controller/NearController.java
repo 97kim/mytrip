@@ -44,7 +44,7 @@ public class NearController {
     }
 
     // 테스트
-    @PostMapping("/")
+    @GetMapping("/")
     public ResponseEntity<?> test() {
         return new ResponseEntity<>(HttpStatus.OK);
     }
