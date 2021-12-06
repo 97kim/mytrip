@@ -20,7 +20,7 @@ public class BookmarkController {
     @PostMapping("/theme/bookmark")
     public void bookmarkPopular(@RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         if (bookmarkDto.getAction().equals("uncheck")) {
-            bookmarkService.deleteBookmark(bookmarkDto.getContentId());
+            bookmarkService.deleteBookmark(bookmarkDto.getContentId(), nowUser);
         } else {
             bookmarkService.saveBookmark(bookmarkDto, nowUser);
         }
@@ -46,7 +46,7 @@ public class BookmarkController {
     @PostMapping("/nearspot/bookmark")
     public void bookmarkNear(@RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         if (bookmarkDto.getAction().equals("uncheck")) {
-            bookmarkService.deleteBookmark(bookmarkDto.getContentId());
+            bookmarkService.deleteBookmark(bookmarkDto.getContentId(), nowUser);
         } else {
             bookmarkService.saveBookmark(bookmarkDto, nowUser);
         }
