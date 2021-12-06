@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -84,13 +85,13 @@ public class UserReviewService {
     }
 
     @Transactional
-    public void deleteLike(Long userReviewId) {
+    public void deleteLike(Long userReviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         UserReview userReview = userReviewRepository.findById(userReviewId).orElseThrow(
                 () -> new NullPointerException("해당 리뷰 없음")
         );
 
         userReview.setLikeCnt(userReview.getLikeCnt() - 1);
-        userReviewLikeRepository.deleteByUserReviewId(userReviewId);
+        userReviewLikeRepository.deleteByUserReviewIdAndUserId(userReviewId, nowUser.getId());
     }
 
     @Transactional
