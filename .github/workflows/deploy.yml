@@ -91,7 +91,7 @@ jobs:
           VERSION=$(echo ${{ github.sha }} | cut -c1-8)
           echo VERSION=$VERSION
           echo "::set-output name=version::$VERSION"
-
+#
 # 쿠버네티스 관련 내용
 #      # kustomize 명령을 가져온다.
 #      - name: Setup Kustomize
