@@ -48,7 +48,7 @@ public class UserReviewController {
     @PostMapping("/review/like") // 눌러서 언체크면 삭제하고 아니면 save
     public void userReviewLike(@RequestBody UserReviewLikeDto userReviewLikeDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         if (userReviewLikeDto.getAction().equals("uncheck")) {
-            userReviewService.deleteLike(userReviewLikeDto.getUserReviewId());
+            userReviewService.deleteLike(userReviewLikeDto.getUserReviewId(), nowUser);
         } else {
             userReviewService.saveLike(userReviewLikeDto.getUserReviewId(), nowUser);
         }
