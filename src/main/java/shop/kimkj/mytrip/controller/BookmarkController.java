@@ -17,7 +17,7 @@ import java.util.Map;
 public class BookmarkController {
     private final BookmarkService bookmarkService;
 
-    @PostMapping("/popular/bookmark")
+    @PostMapping("/theme/bookmark")
     public void bookmarkPopular(@RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         if (bookmarkDto.getAction().equals("uncheck")) {
             bookmarkService.deleteBookmark(bookmarkDto.getContentId());
@@ -26,12 +26,12 @@ public class BookmarkController {
         }
     }
 
-    @GetMapping("/popular/bookmark")
+    @GetMapping("/theme/bookmark")
     public List<Bookmark> sendPopularBookmarks(@RequestParam String type, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         return bookmarkService.findBookmarks(nowUser.getId(), type);
     }
 
-    @GetMapping("/popular/bookmark/{contentId}")
+    @GetMapping("/theme/bookmark/{contentId}")
     public Map<String, Boolean> getPopularBookmarkStatus(@PathVariable String contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         Map response = new HashMap<String, Boolean>();
         Bookmark bookmark = bookmarkService.checkBookmarkStatus(contentId, nowUser.getId());
@@ -43,7 +43,7 @@ public class BookmarkController {
         return response;
     }
 
-    @PostMapping("/near/bookmark")
+    @PostMapping("/nearspot/bookmark")
     public void bookmarkNear(@RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         if (bookmarkDto.getAction().equals("uncheck")) {
             bookmarkService.deleteBookmark(bookmarkDto.getContentId());
@@ -52,12 +52,12 @@ public class BookmarkController {
         }
     }
 
-    @GetMapping("/near/bookmark")
+    @GetMapping("/nearspot/bookmark")
     public List<Bookmark> sendNearBookmarks(@RequestParam String type, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         return bookmarkService.findBookmarks(nowUser.getId(), type);
     }
 
-    @GetMapping("/near/bookmark/{contentId}")
+    @GetMapping("/nearspot/bookmark/{contentId}")
     public Map<String, Boolean> getNearBookmarkStatus(@PathVariable String contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         Map<String, Boolean> response = new HashMap<>();
         Bookmark bookmark = bookmarkService.checkBookmarkStatus(contentId, nowUser.getId());
