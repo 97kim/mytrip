@@ -17,22 +17,17 @@ import java.util.Map;
 public class BookmarkController {
     private final BookmarkService bookmarkService;
 
-    @PostMapping("/theme/bookmark")
-    public void bookmarkPopular(@RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+    @PostMapping("/themes/{contentId}/bookmark")
+    public void bookmarkPopular(@PathVariable Long contentId, @RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         if (bookmarkDto.getAction().equals("uncheck")) {
-            bookmarkService.deleteBookmark(bookmarkDto.getContentId(), nowUser);
+            bookmarkService.deleteBookmark(contentId, nowUser);
         } else {
-            bookmarkService.saveBookmark(bookmarkDto, nowUser);
+            bookmarkService.saveBookmark(contentId, bookmarkDto, nowUser);
         }
     }
 
-    @GetMapping("/theme/bookmark")
-    public List<Bookmark> sendPopularBookmarks(@RequestParam String type, @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        return bookmarkService.findBookmarks(nowUser.getId(), type);
-    }
-
-    @GetMapping("/theme/bookmark/{contentId}")
-    public Map<String, Boolean> getPopularBookmarkStatus(@PathVariable String contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+    @GetMapping("/themes/{contentId}/bookmark")
+    public Map<String, Boolean> getPopularBookmarkStatus(@PathVariable Long contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         Map response = new HashMap<String, Boolean>();
         Bookmark bookmark = bookmarkService.checkBookmarkStatus(contentId, nowUser.getId());
         if (bookmark == null) {
@@ -43,22 +38,17 @@ public class BookmarkController {
         return response;
     }
 
-    @PostMapping("/nearspot/bookmark")
-    public void bookmarkNear(@RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+    @PostMapping("/nearspots/{contentId}/bookmark")
+    public void bookmarkNear(@PathVariable Long contentId, @RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         if (bookmarkDto.getAction().equals("uncheck")) {
-            bookmarkService.deleteBookmark(bookmarkDto.getContentId(), nowUser);
+            bookmarkService.deleteBookmark(contentId, nowUser);
         } else {
-            bookmarkService.saveBookmark(bookmarkDto, nowUser);
+            bookmarkService.saveBookmark(contentId, bookmarkDto, nowUser);
         }
     }
 
-    @GetMapping("/nearspot/bookmark")
-    public List<Bookmark> sendNearBookmarks(@RequestParam String type, @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        return bookmarkService.findBookmarks(nowUser.getId(), type);
-    }
-
-    @GetMapping("/nearspot/bookmark/{contentId}")
-    public Map<String, Boolean> getNearBookmarkStatus(@PathVariable String contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+    @GetMapping("/nearspots/{contentId}/bookmark")
+    public Map<String, Boolean> getNearBookmarkStatus(@PathVariable Long contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         Map<String, Boolean> response = new HashMap<>();
         Bookmark bookmark = bookmarkService.checkBookmarkStatus(contentId, nowUser.getId());
         if (bookmark == null) {
@@ -69,5 +59,8 @@ public class BookmarkController {
         return response;
     }
 
-
+    @GetMapping("/bookmarks")
+    public List<Bookmark> sendBookmarks(@RequestParam String type, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        return bookmarkService.findBookmarks(nowUser.getId(), type);
+    }
 }
