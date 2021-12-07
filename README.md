@@ -75,6 +75,23 @@ https://velog.io/@rudwnd33/3%EC%B0%A8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-S.A
 
 <br>
 
+### 📌 아키텍처
+<img width="1235" alt="스크린샷 2021-12-05 오후 2 41 56" src="https://user-images.githubusercontent.com/64389162/144872466-263c5ae3-0846-4175-b844-dc593d164e70.png">
+
+<br>
+
+### 📌 ERD
+<img width="844" alt="ERD" src="https://user-images.githubusercontent.com/64389162/144872517-19c82a01-67b9-407a-ab17-fc44c5884bdd.png">
+
+<br>
+
+### 📌 API 설계
+<img width="779" alt="스크린샷 2021-12-07 오전 12 20 02" src="https://user-images.githubusercontent.com/64389162/144872561-b6006b3a-248a-416a-a8fe-1522fde71751.png">
+<img width="779" alt="스크린샷 2021-12-07 오전 12 20 17" src="https://user-images.githubusercontent.com/64389162/144872603-ed097dcc-19c7-4a74-b711-71fef856c855.png">
+<img width="779" alt="스크린샷 2021-12-07 오전 12 20 24" src="https://user-images.githubusercontent.com/64389162/144872610-67990181-2e43-4ac3-9b29-8f13a09fe31c.png">
+
+<br>
+
 ### 📌 문제를 이렇게 해결했어요!
 <a href="https://github.com/97kim/myTrip-spring-BE/wiki/4.-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85">트러블슈팅</a>
 

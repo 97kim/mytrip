@@ -1,6 +1,5 @@
 package shop.kimkj.mytrip.domain;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,12 +45,10 @@ public class UserReview extends Timestamped {
     private List<UserReviewLikes> userReviewLikes;
 
     public UserReview(UserReviewRequestDto requestDto, User user) {
-        if (requestDto.getId() != null) {
-            this.id = requestDto.getId();
-        }
         this.title = requestDto.getTitle();
         this.place = requestDto.getPlace();
         this.review = requestDto.getReview();
         this.user = user;
     }
+
 }
