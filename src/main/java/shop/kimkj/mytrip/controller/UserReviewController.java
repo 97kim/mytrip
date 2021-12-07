@@ -10,7 +10,6 @@ import shop.kimkj.mytrip.domain.UserReviewLikes;
 import shop.kimkj.mytrip.dto.UserReviewLikeDto;
 import shop.kimkj.mytrip.dto.UserReviewRequestDto;
 import shop.kimkj.mytrip.security.UserDetailsImpl;
-import shop.kimkj.mytrip.service.UserReviewService;
 
 import java.io.IOException;
 import java.util.HashMap;
