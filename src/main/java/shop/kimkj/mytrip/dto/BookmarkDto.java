@@ -5,13 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 public class BookmarkDto {
-
-    @JsonProperty(value = "content_id")
-    private String contentId;
 
     private String type;
 
