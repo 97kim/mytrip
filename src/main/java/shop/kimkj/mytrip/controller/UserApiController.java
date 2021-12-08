@@ -16,7 +16,6 @@ import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.dto.JwtResponse;
 import shop.kimkj.mytrip.dto.UserDto;
 import shop.kimkj.mytrip.security.UserDetailsImpl;
-import shop.kimkj.mytrip.service.UserService;
 import shop.kimkj.mytrip.util.JwtTokenUtil;
 
 import java.io.IOException;
