@@ -1,5 +1,6 @@
 package shop.kimkj.mytrip.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 public abstract class Timestamped {
 
     @CreatedDate // 최초 생성 시점
+    @JsonFormat(timezone = "Asia/seoul")
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
