@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import shop.kimkj.mytrip.domain.Comment;
 import shop.kimkj.mytrip.dto.CommentDto;
 import shop.kimkj.mytrip.security.UserDetailsImpl;
+import shop.kimkj.mytrip.service.CommentService;
 
 import java.util.List;
 
