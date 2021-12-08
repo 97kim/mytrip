@@ -33,9 +33,9 @@ public class UserReviewController {
 
     @PutMapping("/reviews/{reviewId}")
     public ResponseEntity<?> putUserReview(@PathVariable Long reviewId,
-                              @RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
-                              @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
-                              @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
+                                           @RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
+                                           @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
+                                           @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
         return userReviewService.putUserReview(reviewId, userReviewRequestDto, multipartFile, nowUser);
     }
 
@@ -55,16 +55,17 @@ public class UserReviewController {
         return userReviewService.deleteUserReview(reviewId, nowUser);
     }
 
-    @PostMapping("/review/like") // 눌러서 언체크면 삭제하고 아니면 save
-    public void userReviewLike(@RequestBody UserReviewLikeDto userReviewLikeDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        if (userReviewLikeDto.getAction().equals("uncheck")) {
-            userReviewService.deleteLike(userReviewLikeDto.getUserReviewId(), nowUser);
-        } else {
-            userReviewService.saveLike(userReviewLikeDto.getUserReviewId(), nowUser);
-        }
+    @PostMapping("/reviews/{reviewId}/like") // 눌러서 언체크면 삭제하고 아니면 save
+    public void userReviewLike(@PathVariable Long reviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        userReviewService.saveLike(reviewId, nowUser);
     }
 
-    @GetMapping("/review/like/{userReviewId}") // 좋아요 된 게시물은 나갔다 들어와도 좋아요 된 것으로 표시
+    @DeleteMapping("/reviews/{reviewId}/like") // 눌러서 언체크면 삭제하고 아니면 save
+    public void userReviewUnLike(@PathVariable Long reviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        userReviewService.deleteLike(reviewId, nowUser);
+    }
+
+    @GetMapping("/reviews/{userReviewId}/like") // 좋아요 된 게시물은 나갔다 들어와도 좋아요 된 것으로 표시
     public Map<String, Boolean> getLikeStatus(@PathVariable Long userReviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
         Map<String, Boolean> response = new HashMap<>();
         UserReviewLikes userReviewLikes = userReviewService.checkLikeStatus(userReviewId, nowUser.getId());
