@@ -26,9 +26,7 @@ public class NearService {
     @Value("${WEATHER_KEY}")
     private String WEATHER_KEY;
 
-    public String getNearPlace(LatLngDto latLngDto) {
-        String lng = latLngDto.getPlaceLng();
-        String lat = latLngDto.getPlaceLat();
+    public String getNearPlace(String lat, String lng) {
 
         StringBuffer result = new StringBuffer();
         JSONObject jsonObject = null;
