@@ -63,7 +63,7 @@ https://www.kimkj.shop
 <br>
 
 ### 📌 아키텍처
-<img width="1235" alt="스크린샷 2021-12-05 오후 2 41 56" src="https://user-images.githubusercontent.com/64389162/144872466-263c5ae3-0846-4175-b844-dc593d164e70.png">
+<img width="1914" alt="스크린샷 2021-12-08 오후 2 17 43" src="https://user-images.githubusercontent.com/64389162/145219488-2131e99d-626e-4a6b-98f2-d4ac8ad25e73.png">
 
 <br>
 
