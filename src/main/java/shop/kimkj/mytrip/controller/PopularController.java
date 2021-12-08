@@ -29,7 +29,7 @@ public class PopularController {
         return popularService.getPopularDetailIntro(contentId);
     }
 
-    @PostMapping("/weathers")
+    @PostMapping("/weather")
     public String getWeatherPopular(@RequestBody LatLngDto latLngDto) throws IOException {
         return popularService.getWeatherPopular(latLngDto);
     }
