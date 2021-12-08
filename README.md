@@ -3,8 +3,7 @@
 프론트 코드는 Flask -> Spring boot Converting 완료 후 떼어낼 예정입니다.
 
 ### 🔗 라이브
-https://www.kimkj.shop/templates/index.html
-
+https://www.kimkj.shop
 <br>
 
 ### 🔖 Starting Assignment
