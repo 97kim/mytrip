@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import shop.kimkj.mytrip.domain.Bookmark;
 import shop.kimkj.mytrip.dto.BookmarkDto;
 import shop.kimkj.mytrip.security.UserDetailsImpl;
+import shop.kimkj.mytrip.service.BookmarkService;
 
 import java.util.HashMap;
 import java.util.List;
