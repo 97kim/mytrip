@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import shop.kimkj.mytrip.dto.LatLngDto;
 import shop.kimkj.mytrip.dto.PopularDto;
+import shop.kimkj.mytrip.service.PopularService;
 
 import java.io.IOException;
 
