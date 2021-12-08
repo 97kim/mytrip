@@ -23,24 +23,34 @@ public class UserReviewController {
 
     private final UserReviewService userReviewService;
 
-    @PostMapping("/review")
+
+    @PostMapping("/reviews")
     public ResponseEntity<?> postUserReview(@RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
                                             @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
                                             @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
         return userReviewService.postUserReview(userReviewRequestDto, multipartFile, nowUser);
     }
 
-    @GetMapping("/review/{reviewId}")
+    @PutMapping("/reviews/{reviewId}")
+    public void putUserReview(@PathVariable Long reviewId,
+                              @RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
+                              @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
+                              @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
+        userReviewService.putUserReview(reviewId, userReviewRequestDto, multipartFile, nowUser);
+    }
+
+
+    @GetMapping("/reviews/{reviewId}")
     public UserReview getUserReview(@PathVariable Long reviewId) {
         return userReviewService.getUserReview(reviewId);
     }
 
-    @GetMapping("/reviews/{type}") // 타입 별(최근, 좋아요) 순서대로 받아오기
-    public List<UserReview> getUserReviews(@PathVariable String type) throws Exception {
-        return userReviewService.getUserReviews(type);
+    @GetMapping("/reviews") // 타입 별(최근, 좋아요) 순서대로 받아오기
+    public List<UserReview> getUserReviews(@RequestParam String sort) throws Exception {
+        return userReviewService.getUserReviews(sort);
     }
 
-    @DeleteMapping("/review/{reviewId}")
+    @DeleteMapping("/reviews/{reviewId}")
     public ResponseEntity<?> deleteUserReview(@PathVariable Long reviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) { // @AuthenticationPrincipal 로그인한 유저 정보 가져오기
         return userReviewService.deleteUserReview(reviewId, nowUser);
     }

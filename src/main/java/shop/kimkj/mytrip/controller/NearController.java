@@ -17,12 +17,12 @@ public class NearController {
 
     private final NearService nearService;
 
-    @PostMapping("/nearspot")
-    public String getNearPlace(@RequestBody LatLngDto latLngDto) throws IOException {
-        return nearService.getNearPlace(latLngDto);
+    @GetMapping("/nearspots")
+    public String getNearPlace(@RequestParam String lat, @RequestParam String lng) throws IOException {
+        return nearService.getNearPlace(lat, lng);
     }
 
-    @GetMapping("/nearspot/{contentId}")
+    @GetMapping("/nearspots/{contentId}")
     public String getNearDetailIntro(@PathVariable Long contentId) throws IOException {
         return nearService.getNearDetailIntro(contentId);
     }
@@ -32,7 +32,7 @@ public class NearController {
         return nearService.getNearPlaceList(nearDto);
     }
 
-    @PostMapping("/nearspot/weather")
+    @PostMapping("/weathers")
     public String getWeatherNear(@RequestBody LatLngDto latLngDto) throws IOException {
         return nearService.getWeatherNear(latLngDto);
     }

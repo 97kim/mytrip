@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -46,15 +45,11 @@ public class User extends Timestamped {
     @OneToMany(mappedBy = "user")
     private List<Bookmark> bookmarks;
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "user")
-//    private List<Comment> comments;
-
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<UserReview> userReviews;
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "user")
-//    private List<UserReviewLikes> userReviewLikes;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
 }
