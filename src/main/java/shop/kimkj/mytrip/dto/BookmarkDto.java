@@ -10,8 +10,6 @@ public class BookmarkDto {
 
     private String type;
 
-    private String action;
-
     private String title;
 
     private String address;
