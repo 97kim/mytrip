@@ -32,11 +32,11 @@ public class UserReviewController {
     }
 
     @PutMapping("/reviews/{reviewId}")
-    public void putUserReview(@PathVariable Long reviewId,
+    public ResponseEntity<?> putUserReview(@PathVariable Long reviewId,
                               @RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
                               @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
                               @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
-        userReviewService.putUserReview(reviewId, userReviewRequestDto, multipartFile, nowUser);
+        return userReviewService.putUserReview(reviewId, userReviewRequestDto, multipartFile, nowUser);
     }
 
 
