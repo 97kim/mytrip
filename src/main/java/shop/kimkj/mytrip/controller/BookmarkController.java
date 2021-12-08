@@ -19,11 +19,12 @@ public class BookmarkController {
 
     @PostMapping("/themes/{contentId}/bookmark")
     public void bookmarkPopular(@PathVariable Long contentId, @RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        if (bookmarkDto.getAction().equals("uncheck")) {
-            bookmarkService.deleteBookmark(contentId, nowUser);
-        } else {
-            bookmarkService.saveBookmark(contentId, bookmarkDto, nowUser);
-        }
+        bookmarkService.saveBookmark(contentId, bookmarkDto, nowUser);
+    }
+
+    @DeleteMapping("/themes/{contentId}/bookmark")
+    public void unBookmarkPopular(@PathVariable Long contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        bookmarkService.deleteBookmark(contentId, nowUser);
     }
 
     @GetMapping("/themes/{contentId}/bookmark")
@@ -40,11 +41,12 @@ public class BookmarkController {
 
     @PostMapping("/nearspots/{contentId}/bookmark")
     public void bookmarkNear(@PathVariable Long contentId, @RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        if (bookmarkDto.getAction().equals("uncheck")) {
-            bookmarkService.deleteBookmark(contentId, nowUser);
-        } else {
-            bookmarkService.saveBookmark(contentId, bookmarkDto, nowUser);
-        }
+        bookmarkService.saveBookmark(contentId, bookmarkDto, nowUser);
+    }
+
+    @DeleteMapping("/nearspots/{contentId}/bookmark")
+    public void unBookmarkNear(@PathVariable Long contentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        bookmarkService.deleteBookmark(contentId, nowUser);
     }
 
     @GetMapping("/nearspots/{contentId}/bookmark")
