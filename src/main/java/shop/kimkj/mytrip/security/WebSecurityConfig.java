@@ -29,7 +29,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAuthenticationFilter jwtRequestFilter;
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -39,11 +38,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // 인증과정 필요
 <<<<<<< HEAD
+<<<<<<< HEAD
                 .antMatchers("/theme/bookmark/**").authenticated()
+=======
+>>>>>>> c5ce9621ecf9b9249745c8c6b71f85b308715cde
                 .antMatchers("/theme/bookmark").authenticated()
-                .antMatchers("/nearspot/bookmark/**").authenticated()
                 .antMatchers("/nearspot/bookmark").authenticated()
                 .antMatchers("/reviews/delete/**").authenticated()
+<<<<<<< HEAD
                 .antMatchers("/reviews/like/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/review/comment/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/nearspots").permitAll()
@@ -55,12 +57,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/nearspots/**/bookmark").authenticated()
                 .antMatchers("/reviews/**/like").authenticated()
 >>>>>>> f7bc4d988f2d33ed4aefa87c25663f01cf247cad
+=======
+>>>>>>> c5ce9621ecf9b9249745c8c6b71f85b308715cde
 
                 // 인증과정 필요 없이 모두 허용
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/signin").permitAll()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/signup/**").permitAll()
                 .antMatchers("/**.html").permitAll()
                 .antMatchers("/templates/**.html").permitAll()
