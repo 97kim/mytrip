@@ -3,12 +3,11 @@
 프론트 코드는 Flask -> Spring boot Converting 완료 후 떼어낼 예정입니다.
 
 ### 🔗 라이브
-https://www.kimkj.shop/templates/index.html
-
+https://www.kimkj.shop
 <br>
 
 ### 🔖 Starting Assignment
-https://velog.io/@rudwnd33/3%EC%B0%A8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-S.A
+[3차 프로젝트 S.A](https://velog.io/@rudwnd33/3%EC%B0%A8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-S.A)
 
 <br>
 
@@ -31,28 +30,16 @@ https://velog.io/@rudwnd33/3%EC%B0%A8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-S.A
 
 <br>
 
-### 📌 기술 선택 이유!
-<p>
-<img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=plastic&logo=Flask&logoColor=white"/>
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=plastic&logo=MongoDB&logoColor=white"/>
-<img src="https://img.shields.io/badge/Bootstrap-7952B3?style=plastic&logo=Bootstrap&logoColor=white"/>
-<img src="https://img.shields.io/badge/CodePen-000000?style=plastic&logo=CodePen&logoColor=white"/>
-<img src="https://img.shields.io/badge/Bulma-00D1B2?style=plastic&logo=CodePen&logoColor=white"/>
-<img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=plastic&logo=Amazon%20AWS&logoColor=white"/>
-</p>
-
-- 스프링 사용 이유 추가해야함
-- css를 하나하나 조정하며 예쁘게 꾸미고 싶지만, 모두 백엔드 개발 희망자이기도 해서 UI는 부트스트랩, CodePen, Bulma를 참고했습니다.
-- AWS EB와 GitHub Action을 통해 자동배포 환경을 구축했습니다.
-- 이미지를 업로드할 시 AWS S3에 업로드가 되며 해당 이미지를 AWS Cloudfront를 통해 불러오도록 했습니다.
+### 📌 기술 스택
+[WIKI - 기술 스택](https://github.com/97kim/mytrip/wiki/3.-%EA%B8%B0%EC%88%A0-%EC%84%A0%ED%83%9D-%EC%9D%B4%EC%9C%A0)
 
 <br>
 
-#### Open API 사용
-- <a href="https://www.data.go.kr/iim/api/selectAPIAcountView.do">한국관광공사 API</a>
-- <a href="https://openweathermap.org">날씨 API</a>
-- <a href="https://www.ncloud.com/product/applicationService/maps">네이버 지도 API</a>
-- <a href="https://developers.kakao.com/docs/latest/ko/message/js-link#default-template-msg">카카오톡 공유하기 API</a>
+### 📌 Open API 사용
+- [한국관광공사 API](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
+- [날씨 API](https://openweathermap.org)
+- [네이버 지도 API](https://www.ncloud.com/product/applicationService/maps)
+- [카카오톡 공유하기 API](https://developers.kakao.com/docs/latest/ko/message/js-link#default-template-msg)
 
 <br>
 
@@ -76,29 +63,22 @@ https://velog.io/@rudwnd33/3%EC%B0%A8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-S.A
 <br>
 
 ### 📌 아키텍처
-<img width="1235" alt="스크린샷 2021-12-05 오후 2 41 56" src="https://user-images.githubusercontent.com/64389162/144872466-263c5ae3-0846-4175-b844-dc593d164e70.png">
+<img width="1914" alt="스크린샷 2021-12-08 오후 2 17 43" src="https://user-images.githubusercontent.com/64389162/145219488-2131e99d-626e-4a6b-98f2-d4ac8ad25e73.png">
 
 <br>
 
-### 📌 ERD
-<img width="844" alt="ERD" src="https://user-images.githubusercontent.com/64389162/145237600-772b0fa5-4db9-4c96-8db6-00626da38006.png">
-
-<br>
-
-### 📌 API 설계
-<img width="779" alt="스크린샷 2021-12-07 오전 12 20 02" src="https://user-images.githubusercontent.com/64389162/144872561-b6006b3a-248a-416a-a8fe-1522fde71751.png">
-<img width="779" alt="스크린샷 2021-12-07 오전 12 20 17" src="https://user-images.githubusercontent.com/64389162/144872603-ed097dcc-19c7-4a74-b711-71fef856c855.png">
-<img width="779" alt="스크린샷 2021-12-07 오전 12 20 24" src="https://user-images.githubusercontent.com/64389162/144872610-67990181-2e43-4ac3-9b29-8f13a09fe31c.png">
+### 📌 ERD & API 설계
+[WIKI - ERD & API 설계](https://github.com/97kim/mytrip/wiki/API-%EC%84%A4%EA%B3%84)
 
 <br>
 
 ### 📌 문제를 이렇게 해결했어요!
-<a href="https://github.com/97kim/myTrip-spring-BE/wiki/4.-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85">트러블슈팅</a>
+[트러블 슈팅](https://github.com/97kim/myTrip-spring-BE/wiki/4.-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85)
 
 <br>
 
 ### 📌 WIKI
-<a href="https://github.com/97kim/myTrip-spring-BE/wiki">WIKI로 이동</a>
+[WIKI로 이동](https://github.com/97kim/myTrip-spring-BE/wiki)
 
 <br>
 

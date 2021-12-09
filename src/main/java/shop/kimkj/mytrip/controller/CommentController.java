@@ -17,21 +17,27 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/review/comment/{reviewId}") // 댓글 작성
+    @PostMapping("/reviews/{reviewId}/comment") // 댓글 작성
     public Comment postComment(@PathVariable Long reviewId, @RequestBody CommentDto comment,
                                @AuthenticationPrincipal UserDetailsImpl nowUser) {
         return commentService.postComment(reviewId, comment, nowUser);
     }
 
-    @GetMapping("/review/comment/{reviewId}") // 댓글 보여주기
+    @GetMapping("/reviews/{reviewId}/comments") // 댓글 보여주기
     public List<Comment> getComment(@PathVariable Long reviewId) {
         return commentService.getComment(reviewId);
     }
 
+    @PutMapping("/reviews/{reviewId}/comments/{commentId}") // 댓글 수정하기
+    public Comment updateComment(@PathVariable Long commentId, @PathVariable Long reviewId, @RequestBody CommentDto comment,
+                               @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        return commentService.updateComment(reviewId, commentId, comment, nowUser);
+    }
 
-    @DeleteMapping("/review/comment/{commentId}") // 댓글 삭제하기
-    public ResponseEntity<?> deleteComment(@PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        return commentService.deleteComment(commentId, nowUser);
+    @DeleteMapping("/reviews/{reviewId}/comments/{commentId}") // 댓글 삭제하기
+    public ResponseEntity<?> deleteComment(@PathVariable Long commentId, @PathVariable Long reviewId,
+                                           @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        return commentService.deleteComment(reviewId, commentId, nowUser);
     }
 }
 
