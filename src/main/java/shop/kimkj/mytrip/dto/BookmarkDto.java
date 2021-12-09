@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class BookmarkDto {
 
-    private String type;
-
     private String title;
 
     private String address;
