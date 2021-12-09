@@ -40,23 +40,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/theme/bookmark").authenticated()
                 .antMatchers("/nearspot/bookmark").authenticated()
                 .antMatchers("/reviews/delete/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/review/comment/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/nearspots").permitAll()
-                .antMatchers(HttpMethod.POST, "/themes").permitAll()
-                .antMatchers("/profile").authenticated()
-                .antMatchers("/own").authenticated()
-                .antMatchers("/themes/**/bookmark").authenticated()
-                .antMatchers("/nearspots/**/bookmark").authenticated()
-                .antMatchers("/reviews/**/like").authenticated()
 
                 // 인증과정 필요 없이 모두 허용
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-
                 .antMatchers("/login").permitAll()
                 .antMatchers("/signup/**").permitAll()
-
                 .antMatchers("/**.html").permitAll()
                 .antMatchers("/templates/**.html").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
