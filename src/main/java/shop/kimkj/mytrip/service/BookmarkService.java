@@ -23,20 +23,20 @@ public class BookmarkService {
     }
 
     @Transactional
-    public void deleteBookmark(String contentId, UserDetailsImpl nowUser) {
+    public void deleteBookmark(Long contentId, UserDetailsImpl nowUser) {
         bookmarkRepository.deleteByContentIdAndUserId(contentId, nowUser.getId());
     }
 
     @Transactional
-    public void saveBookmark(BookmarkDto bookmarkDto, UserDetailsImpl nowUser) {
+    public Bookmark saveBookmark(Long contentId, String type, BookmarkDto bookmarkDto, UserDetailsImpl nowUser) {
         User user = userRepository.findById(nowUser.getId()).orElseThrow(
                 () -> new NullPointerException("해당 User 없음")
         );
-        Bookmark bookmark = new Bookmark(bookmarkDto, user);
-        bookmarkRepository.save(bookmark);
+        Bookmark bookmark = new Bookmark(contentId, type, bookmarkDto, user);
+        return bookmarkRepository.save(bookmark);
     }
 
-    public Bookmark checkBookmarkStatus(String contentId, Long userId) {
+    public Bookmark checkBookmarkStatus(Long contentId, Long userId) {
         return bookmarkRepository.findByContentIdAndUserId(contentId, userId);
     }
 

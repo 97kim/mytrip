@@ -227,11 +227,9 @@ public class PopularService {
             while ((returnLine = bufferedReader.readLine()) != null) {
                 result.append(returnLine);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return result.toString();
     }
 

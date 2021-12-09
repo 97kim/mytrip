@@ -38,15 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // 인증과정 필요
-                .antMatchers("/theme/bookmark/**").authenticated()
-                .antMatchers("/theme/bookmark").authenticated()
-                .antMatchers("/nearspot/bookmark/**").authenticated()
-                .antMatchers("/nearspot/bookmark").authenticated()
-                .antMatchers("/review/delete/**").authenticated()
-                .antMatchers("/review/like/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/review/comment/**").authenticated()
-                .antMatchers("/profile").authenticated()
-                .antMatchers("/own").authenticated()
+                .antMatchers("/themes/**/bookmark").authenticated()
+                .antMatchers("/nearspots/**/bookmark").authenticated()
+                .antMatchers("/reviews/**/like").authenticated()
 
                 // 인증과정 필요 없이 모두 허용
                 .antMatchers("/css/**").permitAll()
@@ -55,14 +49,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/signin").permitAll()
                 .antMatchers("/signup/**").permitAll()
                 .antMatchers("/**.html").permitAll()
-                .antMatchers("/templates/**.html").permitAll()
-                .antMatchers("/nearspot/**").permitAll()
-                .antMatchers("/nearspots").permitAll()
-                .antMatchers("/theme/**").permitAll()
-                .antMatchers("/themes").permitAll()
-                .antMatchers("/review/**").permitAll()
-                .antMatchers("/reviews").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
+                .antMatchers(HttpMethod.GET, "/nearspots/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/nearspots").permitAll()
+                .antMatchers(HttpMethod.GET, "/themes/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/themes").permitAll()
+                .antMatchers(HttpMethod.GET, "/reviews/**").permitAll()
+                .antMatchers("/weather").permitAll()
                 .antMatchers("/").permitAll()
 
                 // 그 외 모든 요청은 인증과정 필요
@@ -72,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin()
-                .loginPage("/templates/login.html").loginProcessingUrl("/templates/login.html").defaultSuccessUrl("/").permitAll()
+                .loginPage("/login.html").loginProcessingUrl("/login.html").defaultSuccessUrl("/").permitAll()
                 .and()
                 .logout().logoutUrl("/logout");
 
@@ -107,5 +100,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
-
 

@@ -11,12 +11,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "USER_REVIEW_LIKE")
 public class UserReviewLikes extends Timestamped {
 
     // ID가 자동으로 생성 및 증가합니다.
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @Column(name = "USER_REVIEW_LIKES_ID")
+    @Column(name = "USER_REVIEW_LIKE_ID")
     private Long id;
 
     @JsonIgnore

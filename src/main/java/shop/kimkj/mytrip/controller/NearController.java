@@ -2,15 +2,9 @@ package shop.kimkj.mytrip.controller;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.dto.LatLngDto;
 import shop.kimkj.mytrip.dto.NearDto;
-import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.service.NearService;
 
 
@@ -23,12 +17,12 @@ public class NearController {
 
     private final NearService nearService;
 
-    @PostMapping("/nearspot")
-    public String getNearPlace(@RequestBody LatLngDto latLngDto) throws IOException {
-        return nearService.getNearPlace(latLngDto);
+    @GetMapping("/nearspots")
+    public String getNearPlace(@RequestParam String lat, @RequestParam String lng) throws IOException {
+        return nearService.getNearPlace(lat, lng);
     }
 
-    @GetMapping("/nearspot/{contentId}")
+    @GetMapping("/nearspots/{contentId}")
     public String getNearDetailIntro(@PathVariable Long contentId) throws IOException {
         return nearService.getNearDetailIntro(contentId);
     }
@@ -38,8 +32,4 @@ public class NearController {
         return nearService.getNearPlaceList(nearDto);
     }
 
-    @PostMapping("/nearspot/weather")
-    public String getWeatherNear(@RequestBody LatLngDto latLngDto) throws IOException {
-        return nearService.getWeatherNear(latLngDto);
-    }
 }
