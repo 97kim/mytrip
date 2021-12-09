@@ -29,7 +29,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAuthenticationFilter jwtRequestFilter;
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -38,30 +37,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // 인증과정 필요
-<<<<<<< HEAD
-                .antMatchers("/theme/bookmark/**").authenticated()
                 .antMatchers("/theme/bookmark").authenticated()
-                .antMatchers("/nearspot/bookmark/**").authenticated()
                 .antMatchers("/nearspot/bookmark").authenticated()
                 .antMatchers("/reviews/delete/**").authenticated()
-                .antMatchers("/reviews/like/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/review/comment/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/nearspots").permitAll()
                 .antMatchers(HttpMethod.POST, "/themes").permitAll()
                 .antMatchers("/profile").authenticated()
                 .antMatchers("/own").authenticated()
-=======
                 .antMatchers("/themes/**/bookmark").authenticated()
                 .antMatchers("/nearspots/**/bookmark").authenticated()
                 .antMatchers("/reviews/**/like").authenticated()
->>>>>>> f7bc4d988f2d33ed4aefa87c25663f01cf247cad
 
                 // 인증과정 필요 없이 모두 허용
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/signin").permitAll()
+
+                .antMatchers("/login").permitAll()
                 .antMatchers("/signup/**").permitAll()
+
                 .antMatchers("/**.html").permitAll()
                 .antMatchers("/templates/**.html").permitAll()
                 .antMatchers("/favicon.ico").permitAll()

@@ -30,17 +30,11 @@ public class UserApiController {
     private final UserDetailsService userDetailsService;
     private final UserService userService;
 
-    @PostMapping("/signin")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody UserDto userDto) throws Exception {
-        authenticate(userDto.getUsername(), userDto.getPassword());
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
-        final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
-    }
-
-    @PostMapping(value = "/signup")
-    public ResponseEntity<?> createUser(@RequestBody UserDto userDto) throws Exception {
-        userService.registerUser(userDto); // 사용자 등록하고 userId 반환
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody UserDto userDto) throws Exception {
+        if (userDto.getLoginCheck().equals("signup")) {
+            userService.registerUser(userDto); // 사용자 등록
+        }
         authenticate(userDto.getUsername(), userDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);

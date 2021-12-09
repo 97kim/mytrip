@@ -22,10 +22,6 @@ import java.util.Map;
 public class UserReviewController {
     private final UserReviewService userReviewService;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f7bc4d988f2d33ed4aefa87c25663f01cf247cad
     @PostMapping("/review")
     public ResponseEntity<?> postUserReview(@RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
                                             @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
@@ -33,21 +29,12 @@ public class UserReviewController {
         return userReviewService.postUserReview(userReviewRequestDto, multipartFile, nowUser);
     }
 
-<<<<<<< HEAD
-    @PutMapping("/review/{reviewId}")
-    public void putUserReview(@PathVariable Long reviewId,
-                              @RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
-                              @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
-                              @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
-        userReviewService.putUserReview(reviewId, userReviewRequestDto, multipartFile, nowUser);
-=======
     @PutMapping("/reviews/{reviewId}")
     public ResponseEntity<?> putUserReview(@PathVariable Long reviewId,
                                            @RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
                                            @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
                                            @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
         return userReviewService.putUserReview(reviewId, userReviewRequestDto, multipartFile, nowUser);
->>>>>>> f7bc4d988f2d33ed4aefa87c25663f01cf247cad
     }
 
 
