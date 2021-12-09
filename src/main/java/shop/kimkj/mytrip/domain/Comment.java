@@ -34,9 +34,6 @@ public class Comment extends Timestamped {
     private User user;
 
     public Comment(CommentDto commentDto, UserReview userReview, User user) {
-        if (commentDto.getCommentId() != null) {
-            this.id = commentDto.getCommentId();
-        }
         this.comment = commentDto.getComment();
         this.userReview = userReview;
         this.user = user;
