@@ -32,26 +32,37 @@ public class UserReviewService {
     private final S3Manager s3Manager;
 
     @Transactional
+    public ResponseEntity<?> putUserReview(Long reviewId, UserReviewRequestDto userReviewRequestDto, MultipartFile multipartFile, UserDetailsImpl nowUser) throws IOException {
+        UserReview editReview = userReviewRepository.findById(reviewId).orElseThrow(
+                () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
+        editReview.setTitle(userReviewRequestDto.getTitle());
+        editReview.setPlace(userReviewRequestDto.getPlace());
+        editReview.setReview(userReviewRequestDto.getReview());
+
+        if (!nowUser.getId().equals(getUserReview(reviewId).getUser().getId())) {
+            return new ResponseEntity<>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN); // 403(FORBIDDEN)에러 - 권한없음
+        }
+        // 작성자인 경우
+        if (multipartFile == null) { // 수정할 때 사진 선택하지 않으면 기존에 등록했던 이미지 적용
+            UserReview originReview = userReviewRepository.findById(reviewId).orElseThrow(
+                    () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
+            editReview.setReviewImgUrl(originReview.getReviewImgUrl());
+            userReviewRepository.save(editReview);
+            return ResponseEntity.ok(editReview);
+        }
+        String reviewImgUrl = s3Manager.upload(multipartFile, "reviewImg"); // 클라우드 프론트 url
+        editReview.setReviewImgUrl(reviewImgUrl);
+        userReviewRepository.save(editReview);
+        return ResponseEntity.ok(editReview);
+    }
+
+    @Transactional
     public ResponseEntity<?> postUserReview(UserReviewRequestDto userReviewRequestDto, MultipartFile multipartFile, UserDetailsImpl nowUser) throws IOException {
         User user = userRepository.findById(nowUser.getId()).orElseThrow(
                 () -> new NullPointerException("해당 User 없음")
         );
+
         UserReview userReview = new UserReview(userReviewRequestDto, user);
-        Long reviewId = userReviewRequestDto.getId(); // reviewId는 작성된 리뷰의 id다. null인 경우는 리뷰를 처음 생성할 때다.
-
-        // 작성자가 아닌 경우 수정 제한
-        if (reviewId != null && !nowUser.getId().equals(getUserReview(reviewId).getUser().getId())) {
-            return new ResponseEntity<>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN); // 403(FORBIDDEN)에러 - 권한없음
-        }
-
-        // 작성자인 경우
-        if (reviewId != null && multipartFile == null) { // 수정할 때 사진 선택하지 않으면 기존에 등록했던 이미지 적용
-            UserReview originReview = userReviewRepository.findById(reviewId).orElseThrow(
-                    () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
-            userReview.setReviewImgUrl(originReview.getReviewImgUrl());
-            userReviewRepository.save(userReview);
-            return ResponseEntity.ok(userReview);
-        }
 
         if (multipartFile == null) { // 처음 등록할 때 사진 선택하지 않으면 기본 이미지 저장
             userReview.setReviewImgUrl("https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg");
