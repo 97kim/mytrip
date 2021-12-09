@@ -93,6 +93,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/reviews/**").permitAll()
                 .antMatchers("/weather").permitAll()
                 .antMatchers("/").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-ui/**").permitAll()
+                .antMatchers("/swagger-ui.html","/swagger-ui/**","/v3/api-docs/**").permitAll()
 
                 // 그 외 모든 요청은 인증과정 필요
                 .anyRequest().authenticated()
