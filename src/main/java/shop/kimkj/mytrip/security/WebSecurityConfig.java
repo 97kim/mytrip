@@ -41,11 +41,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/themes/**/bookmark").authenticated()
                 .antMatchers("/nearspots/**/bookmark").authenticated()
                 .antMatchers("/reviews/**/like").authenticated()
-//                .antMatchers("/reviews/**").authenticated()
-//                .antMatchers("/reviews/**/like").authenticated()
-//                .antMatchers("/reviews/**/comments/**").authenticated()
-//                .antMatchers("/profile").authenticated()
-//                .antMatchers("/own").authenticated()
 
                 // 인증과정 필요 없이 모두 허용
                 .antMatchers("/css/**").permitAll()
@@ -57,7 +52,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/templates/**.html").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers(HttpMethod.GET, "/nearspots/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/nearspots").permitAll()
                 .antMatchers(HttpMethod.GET, "/themes/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/themes").permitAll()
                 .antMatchers(HttpMethod.GET, "/reviews/**").permitAll()
                 .antMatchers("/weather").permitAll()
                 .antMatchers("/").permitAll()

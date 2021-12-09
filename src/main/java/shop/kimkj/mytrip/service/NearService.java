@@ -166,42 +166,6 @@ public class NearService {
 
         JSONArray nearList = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
 
-        JSONObject jsonObjectNear = new JSONObject();
-        jsonObjectNear.put("near_list", nearList);
-
-        return jsonObjectNear.toString();
-    }
-
-    public String getWeatherNear(LatLngDto latLngDto) {
-        String placeLat = latLngDto.getPlaceLat();
-        String placeLng = latLngDto.getPlaceLng();
-
-        StringBuffer result = new StringBuffer();
-        try {
-            String apiUrl = String.format(
-                    "https://api.openweathermap.org/data/2.5/weather?" +
-                            "lat=%s&lon=%s" +
-                            "&appid=%s&units=metric"
-                    , placeLat, placeLng, WEATHER_KEY);
-
-            URL url = new URL(apiUrl);
-
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.connect();
-
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream, "UTF-8"));
-
-            String returnLine;
-
-            while ((returnLine = bufferedReader.readLine()) != null) {
-                result.append(returnLine);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result.toString();
+        return nearList.toString();
     }
 }
