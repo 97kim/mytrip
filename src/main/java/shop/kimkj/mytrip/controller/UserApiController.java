@@ -32,8 +32,8 @@ public class UserApiController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserDto userDto) throws Exception {
-        if (userDto.getLoginCheck().equals("sign")) {
-            userService.registerUser(userDto); // 사용자 등록 저장
+        if (userDto.getLoginCheck().equals("signup")) {
+            userService.registerUser(userDto); // 사용자 등록
         }
         authenticate(userDto.getUsername(), userDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
