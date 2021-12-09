@@ -81,7 +81,7 @@ https://velog.io/@rudwnd33/3%EC%B0%A8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-S.A
 <br>
 
 ### 📌 ERD
-<img width="844" alt="ERD" src="https://user-images.githubusercontent.com/64389162/144872517-19c82a01-67b9-407a-ab17-fc44c5884bdd.png">
+<img width="844" alt="ERD" src="https://user-images.githubusercontent.com/64389162/145237600-772b0fa5-4db9-4c96-8db6-00626da38006.png">
 
 <br>
 
