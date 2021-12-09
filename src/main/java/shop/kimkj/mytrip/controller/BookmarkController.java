@@ -19,7 +19,7 @@ public class BookmarkController {
 
     @PostMapping("/themes/{contentId}/bookmark")
     public void bookmarkPopular(@PathVariable Long contentId, @RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        bookmarkService.saveBookmark(contentId, bookmarkDto, nowUser);
+        bookmarkService.saveBookmark(contentId, "popular", bookmarkDto, nowUser);
     }
 
     @DeleteMapping("/themes/{contentId}/bookmark")
@@ -41,7 +41,7 @@ public class BookmarkController {
 
     @PostMapping("/nearspots/{contentId}/bookmark")
     public void bookmarkNear(@PathVariable Long contentId, @RequestBody BookmarkDto bookmarkDto, @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        bookmarkService.saveBookmark(contentId, bookmarkDto, nowUser);
+        bookmarkService.saveBookmark(contentId, "near", bookmarkDto, nowUser);
     }
 
     @DeleteMapping("/nearspots/{contentId}/bookmark")

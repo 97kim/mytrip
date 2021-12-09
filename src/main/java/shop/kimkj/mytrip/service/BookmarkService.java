@@ -28,11 +28,11 @@ public class BookmarkService {
     }
 
     @Transactional
-    public Bookmark saveBookmark(Long contentId, BookmarkDto bookmarkDto, UserDetailsImpl nowUser) {
+    public Bookmark saveBookmark(Long contentId, String type, BookmarkDto bookmarkDto, UserDetailsImpl nowUser) {
         User user = userRepository.findById(nowUser.getId()).orElseThrow(
                 () -> new NullPointerException("해당 User 없음")
         );
-        Bookmark bookmark = new Bookmark(contentId, bookmarkDto, user);
+        Bookmark bookmark = new Bookmark(contentId, type, bookmarkDto, user);
         return bookmarkRepository.save(bookmark);
     }
 
