@@ -36,7 +36,24 @@ public class CommentService {
     }
 
     @Transactional
-    public ResponseEntity<?> deleteComment(Long commentId, UserDetailsImpl nowUser) {
+    public Comment updateComment(Long reviewId, Long commentId, CommentDto commentDto, UserDetailsImpl nowUser) {
+        userReviewRepository.findById(reviewId).orElseThrow(
+                () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
+
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                () -> new NullPointerException("해당 댓글이 존재하지 않습니다."));
+
+        comment.setComment(commentDto.getComment());
+
+        commentRepository.save(comment);
+        return comment;
+    }
+
+    @Transactional
+    public ResponseEntity<?> deleteComment(Long reviewId, Long commentId, UserDetailsImpl nowUser) {
+        userReviewRepository.findById(reviewId).orElseThrow(
+                () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
+
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new NullPointerException("해당 댓글이 존재하지 않습니다."));
         if (!nowUser.getId().equals(comment.getUser().getId())) {
