@@ -32,8 +32,4 @@ public class NearController {
         return nearService.getNearPlaceList(nearDto);
     }
 
-    @PostMapping("/weathers")
-    public String getWeatherNear(@RequestBody LatLngDto latLngDto) throws IOException {
-        return nearService.getWeatherNear(latLngDto);
-    }
 }

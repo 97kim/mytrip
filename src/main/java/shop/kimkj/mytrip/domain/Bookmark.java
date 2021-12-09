@@ -24,7 +24,7 @@ public class Bookmark extends Timestamped {
     private String type;
 
     @Column(nullable = false)
-    private String contentId;
+    private Long contentId;
 
     @Column(nullable = false)
     private String title;
@@ -40,9 +40,9 @@ public class Bookmark extends Timestamped {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-    public Bookmark(BookmarkDto bookmarkDto, User user) {
-        this.contentId = bookmarkDto.getContentId();
-        this.type = bookmarkDto.getType();
+    public Bookmark(Long contentId, String type, BookmarkDto bookmarkDto, User user) {
+        this.contentId = contentId;
+        this.type = type;
         this.title = bookmarkDto.getTitle();
         this.imgUrl = bookmarkDto.getImgUrl();
         this.address = bookmarkDto.getAddress();

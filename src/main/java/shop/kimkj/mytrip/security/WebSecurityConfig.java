@@ -38,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // 인증과정 필요
+<<<<<<< HEAD
                 .antMatchers("/theme/bookmark/**").authenticated()
                 .antMatchers("/theme/bookmark").authenticated()
                 .antMatchers("/nearspot/bookmark/**").authenticated()
@@ -49,6 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/themes").permitAll()
                 .antMatchers("/profile").authenticated()
                 .antMatchers("/own").authenticated()
+=======
+                .antMatchers("/themes/**/bookmark").authenticated()
+                .antMatchers("/nearspots/**/bookmark").authenticated()
+                .antMatchers("/reviews/**/like").authenticated()
+>>>>>>> f7bc4d988f2d33ed4aefa87c25663f01cf247cad
 
                 // 인증과정 필요 없이 모두 허용
                 .antMatchers("/css/**").permitAll()
@@ -58,13 +64,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/signup/**").permitAll()
                 .antMatchers("/**.html").permitAll()
                 .antMatchers("/templates/**.html").permitAll()
-                .antMatchers("/nearspots/**").permitAll()
-                .antMatchers("/nearspots").permitAll()
-                .antMatchers("/themes/**").permitAll()
-                .antMatchers("/themes").permitAll()
-                .antMatchers("/reviews/**").permitAll()
-                .antMatchers("/reviews").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
+                .antMatchers(HttpMethod.GET, "/nearspots/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/nearspots").permitAll()
+                .antMatchers(HttpMethod.GET, "/themes/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/themes").permitAll()
+                .antMatchers(HttpMethod.GET, "/reviews/**").permitAll()
+                .antMatchers("/weather").permitAll()
                 .antMatchers("/").permitAll()
 
                 // 그 외 모든 요청은 인증과정 필요
