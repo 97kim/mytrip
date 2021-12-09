@@ -26,7 +26,6 @@ import java.io.IOException;
 public class UserApiController {
 
     private final JwtTokenUtil jwtTokenUtil;
-    private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final UserService userService;
 
@@ -35,7 +34,6 @@ public class UserApiController {
         if (userDto.getLoginCheck().equals("signup")) {
             userService.registerUser(userDto); // 사용자 등록
         }
-        authenticate(userDto.getUsername(), userDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
@@ -59,15 +57,5 @@ public class UserApiController {
                               @RequestPart(name = "profileImgUrl", required = false) MultipartFile multipartFile,
                               @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
         return userService.updateProfile(nickname, multipartFile, nowUser);
-    }
-
-    private void authenticate(String username, String password) throws Exception {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
-        } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
     }
 }
