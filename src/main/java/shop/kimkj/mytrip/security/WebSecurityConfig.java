@@ -37,23 +37,49 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // 인증과정 필요
+<<<<<<< HEAD
                 .antMatchers("/theme/bookmark").authenticated()
                 .antMatchers("/nearspot/bookmark").authenticated()
                 .antMatchers("/reviews/delete/**").authenticated()
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+                .antMatchers("/theme/bookmark/**").authenticated()
+=======
+>>>>>>> c5ce9621ecf9b9249745c8c6b71f85b308715cde
+                .antMatchers("/theme/bookmark").authenticated()
+                .antMatchers("/nearspot/bookmark").authenticated()
+                .antMatchers("/reviews/delete/**").authenticated()
+<<<<<<< HEAD
+                .antMatchers("/reviews/like/**").authenticated()
+>>>>>>> main
                 .antMatchers(HttpMethod.POST, "/review/comment/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/nearspots").permitAll()
                 .antMatchers(HttpMethod.POST, "/themes").permitAll()
                 .antMatchers("/profile").authenticated()
                 .antMatchers("/own").authenticated()
+<<<<<<< HEAD
                 .antMatchers("/themes/**/bookmark").authenticated()
                 .antMatchers("/nearspots/**/bookmark").authenticated()
                 .antMatchers("/reviews/**/like").authenticated()
+=======
+=======
+                .antMatchers("/themes/**/bookmark").authenticated()
+                .antMatchers("/nearspots/**/bookmark").authenticated()
+                .antMatchers("/reviews/**/like").authenticated()
+>>>>>>> f7bc4d988f2d33ed4aefa87c25663f01cf247cad
+=======
+>>>>>>> c5ce9621ecf9b9249745c8c6b71f85b308715cde
+>>>>>>> main
 
                 // 인증과정 필요 없이 모두 허용
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
                 .antMatchers("/login").permitAll()
                 .antMatchers("/signup/**").permitAll()
 
