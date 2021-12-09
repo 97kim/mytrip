@@ -45,11 +45,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 인증과정 필요 없이 모두 허용
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/signup/**").permitAll()
                 .antMatchers("/**.html").permitAll()
-                .antMatchers("/favicon.ico").permitAll()
+                .antMatchers("/img/favicon.ico").permitAll()
                 .antMatchers(HttpMethod.GET, "/nearspots/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/nearspots").permitAll()
                 .antMatchers(HttpMethod.GET, "/themes/**").permitAll()
@@ -58,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/weather").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/swagger-ui/**").permitAll()
-                .antMatchers("/swagger-ui.html","/swagger-ui/**","/v3/api-docs/**").permitAll()
+                .antMatchers("/v3/api-docs/**").permitAll()
                 .antMatchers("/").permitAll()
 
                 // 그 외 모든 요청은 인증과정 필요
