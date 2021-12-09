@@ -20,18 +20,16 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 public class UserReviewController {
-
     private final UserReviewService userReviewService;
 
-
-    @PostMapping("/reviews")
+    @PostMapping("/review")
     public ResponseEntity<?> postUserReview(@RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
                                             @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
                                             @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
         return userReviewService.postUserReview(userReviewRequestDto, multipartFile, nowUser);
     }
 
-    @PutMapping("/reviews/{reviewId}")
+    @PutMapping("/review/{reviewId}")
     public void putUserReview(@PathVariable Long reviewId,
                               @RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
                               @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
