@@ -4,6 +4,7 @@
 
 ### 🔗 라이브
 https://www.kimkj.shop
+
 <br>
 
 ### 🔖 Starting Assignment
@@ -69,6 +70,11 @@ https://www.kimkj.shop
 
 ### 📌 ERD & API 설계
 [WIKI - ERD & API 설계](https://github.com/97kim/mytrip/wiki/API-%EC%84%A4%EA%B3%84)
+
+<br>
+
+### 📌 API 문서 자동화 - SWAGGER
+https://api.kimkj.shop/swagger-ui.html
 
 <br>
 
