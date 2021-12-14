@@ -34,4 +34,5 @@ dependencies {
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.1.RELEASE'
     // API 문서 자동화, Swagger
     implementation 'org.springdoc:springdoc-openapi-ui:1.5.13'
+    implementation 'org.apache.commons:commons-text:1.9'
 }
