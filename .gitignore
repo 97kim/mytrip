@@ -39,3 +39,4 @@ out/
 .DS_Store
 mytripdb.lock.db
 mytripdb.mv.db
+application-prod.properties
