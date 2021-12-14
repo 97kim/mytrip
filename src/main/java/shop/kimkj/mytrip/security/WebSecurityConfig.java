@@ -108,14 +108,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // Spring Boot는 Jackson 라이브러리가 포함되어 있어서 자동으로 MappingJackson2HttpMessageConverter를 사용하여 JSON으로 변환한다.
     // Spring Boot를 사용하면 MappingJackson2HttpMessageConverter를 커스터마이징 할 때 WebMvcConfigurer를 implement 할 필요가 없다.
     // 해당 bean을 선언만 해주면 된다.
-    @Bean
-    public MappingJackson2HttpMessageConverter jsonEscapeConverter() {
-        // MappingJackson2HttpMessageConverter Default ObjectMapper 설정 및 ObjectMapper Config 설정
-        ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().build();
-        objectMapper.getFactory().setCharacterEscapes(new HtmlCharacterEscapes());
-        return new MappingJackson2HttpMessageConverter(objectMapper);
-    }
-
-
+//    @Bean
+//    public MappingJackson2HttpMessageConverter jsonEscapeConverter() {
+//        // MappingJackson2HttpMessageConverter Default ObjectMapper 설정 및 ObjectMapper Config 설정
+//        ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().build();
+//        objectMapper.getFactory().setCharacterEscapes(new HtmlCharacterEscapes());
+//        return new MappingJackson2HttpMessageConverter(objectMapper);
+//    }
 }
 
