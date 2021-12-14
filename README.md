@@ -1,9 +1,8 @@
 ## 스파르타 내일배움캠프 3차 프로젝트
 
-프론트 코드는 Flask -> Spring boot Converting 완료 후 떼어낼 예정입니다.
-
 ### 🔗 라이브
 https://www.kimkj.shop
+
 <br>
 
 ### 🔖 Starting Assignment
@@ -72,8 +71,13 @@ https://www.kimkj.shop
 
 <br>
 
+### 📌 API 문서 자동화 - SWAGGER
+https://api.kimkj.shop/swagger-ui.html
+
+<br>
+
 ### 📌 문제를 이렇게 해결했어요!
-[트러블 슈팅](https://github.com/97kim/myTrip-spring-BE/wiki/4.-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85)
+[WIKI - 트러블 슈팅](https://github.com/97kim/myTrip-spring-BE/wiki/4.-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85)
 
 <br>
 
