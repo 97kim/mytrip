@@ -20,8 +20,10 @@ public abstract class Timestamped {
 
     @CreatedDate // 최초 생성 시점
     @Column(updatable = false)
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @LastModifiedDate // 마지막 변경 시점
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modifiedAt;
 }
