@@ -32,4 +32,5 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.1.RELEASE'
+    implementation 'org.apache.commons:commons-text:1.9'
 }
