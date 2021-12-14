@@ -1,5 +1,6 @@
 package shop.kimkj.mytrip.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +24,14 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
+
 public class UserApiController {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final UserDetailsService userDetailsService;
     private final UserService userService;
 
+    @Operation(description = "로그인, 회원가입", method = "POST")
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserDto userDto) throws Exception {
         if (userDto.getLoginCheck().equals("signup")) {
@@ -39,6 +42,7 @@ public class UserApiController {
         return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
     }
 
+    @Operation(description = "회원가입 시 아이디 유효성 검사", method = "POST")
     @PostMapping("/signup/check")
     public String checkUser(@RequestBody UserDto userDto) { // UserDto에 password 안 쓰이는 거 고민해보기
         JSONObject response = new JSONObject();
@@ -52,6 +56,7 @@ public class UserApiController {
         return response.toString();
     }
 
+    @Operation(description = "프로필 설정, 로그인 필요", method = "POST")
     @PostMapping("/profile")
     public User updateProfile(@RequestPart(required = false) String nickname,
                               @RequestPart(name = "profileImgUrl", required = false) MultipartFile multipartFile,
