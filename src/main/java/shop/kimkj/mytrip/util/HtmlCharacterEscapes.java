@@ -26,8 +26,19 @@ public class HtmlCharacterEscapes extends CharacterEscapes {
         return asciiEscapes;
     }
 
+    // 이모지 파싱 중 에러 발생 부분 해결
     @Override
     public SerializableString getEscapeSequence(int ch) {
-        return new SerializedString(StringEscapeUtils.escapeHtml4(Character.toString((char) ch)));
+        SerializedString serializedString;
+        char charAt = (char) ch;
+        if (Character.isHighSurrogate(charAt) || Character.isLowSurrogate(charAt)) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("\\u");
+            sb.append(String.format("%04x", ch));
+            serializedString = new SerializedString(sb.toString());
+        } else {
+            serializedString = new SerializedString(StringEscapeUtils.escapeHtml4(Character.toString(charAt)));
+        }
+        return serializedString;
     }
 }
