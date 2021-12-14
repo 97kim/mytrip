@@ -15,6 +15,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class PopularService {
@@ -110,6 +113,11 @@ public class PopularService {
         jsonObject2.put("cat2", cat2);
         jsonObject2.put("cat3", cat3);
 
+        System.out.println("이거시작");
+        System.out.println(jsonObject2.toString());
+        String test = jsonObject2.toString();
+        List d = Arrays.asList(test.split(","));
+        System.out.println(d.size());
         return jsonObject2.toString();
     }
 
