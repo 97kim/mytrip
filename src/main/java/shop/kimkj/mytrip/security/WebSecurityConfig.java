@@ -20,7 +20,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import shop.kimkj.mytrip.controller.JwtAuthenticationEntryPoint;
 import shop.kimkj.mytrip.controller.JwtAuthenticationFilter;
-import shop.kimkj.mytrip.util.HtmlCharacterEscapes;
+//import shop.kimkj.mytrip.util.HtmlCharacterEscapes;
 
 import java.util.Arrays;
 
