@@ -113,11 +113,6 @@ public class PopularService {
         jsonObject2.put("cat2", cat2);
         jsonObject2.put("cat3", cat3);
 
-        System.out.println("이거시작");
-        System.out.println(jsonObject2.toString());
-        String test = jsonObject2.toString();
-        List d = Arrays.asList(test.split(","));
-        System.out.println(d.size());
         return jsonObject2.toString();
     }
 
