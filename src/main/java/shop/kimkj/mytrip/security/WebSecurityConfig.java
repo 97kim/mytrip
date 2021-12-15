@@ -1,9 +1,12 @@
 package shop.kimkj.mytrip.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +20,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import shop.kimkj.mytrip.controller.JwtAuthenticationEntryPoint;
 import shop.kimkj.mytrip.controller.JwtAuthenticationFilter;
+import shop.kimkj.mytrip.util.HtmlCharacterEscapes;
 
 import java.util.Arrays;
 
@@ -119,6 +123,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
+    }
+
+    // Spring Boot는 Jackson 라이브러리가 포함되어 있어서 자동으로 MappingJackson2HttpMessageConverter를 사용하여 JSON으로 변환한다.
+    // Spring Boot를 사용하면 MappingJackson2HttpMessageConverter를 커스터마이징 할 때 WebMvcConfigurer를 implement 할 필요가 없다.
+    // 해당 bean을 선언만 해주면 된다.
+    @Bean
+    public MappingJackson2HttpMessageConverter jsonEscapeConverter() {
+        // MappingJackson2HttpMessageConverter Default ObjectMapper 설정 및 ObjectMapper Config 설정
+        ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().build();
+        objectMapper.getFactory().setCharacterEscapes(new HtmlCharacterEscapes());
+        return new MappingJackson2HttpMessageConverter(objectMapper);
     }
 
 }
