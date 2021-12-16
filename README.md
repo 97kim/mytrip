@@ -1,7 +1,7 @@
 ## 스파르타 내일배움캠프 3차 프로젝트
 
 ### 🔗 라이브
-https://www.kimkj.shop
+https://www.mytrips.shop
 
 <br>
 
