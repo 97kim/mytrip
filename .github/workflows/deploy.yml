@@ -51,11 +51,11 @@ jobs:
           format: YYYYMMDD_HH-mm-ss
           utcOffset: "+09:00"
 
-      # Dockerrun.aws.json, .platform/nginx/conf.d/proxy.conf 파일을 deploy 디렉토리 안에 복사
       - name: Generate deployment package
         run: |
           mkdir -p deploy
-          cp Dockerrun.aws.json .platform/nginx/conf.d/proxy.conf deploy/
+          cp Dockerrun.aws.json deploy/Dockerrun.aws.json
+          cp .platform/nginx/conf.d/proxy.conf deploy/.platform/nginx/conf.d/proxy.conf
           cd deploy && zip -r deploy.zip .
 
       - name: Beanstalk Deploy
