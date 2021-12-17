@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import shop.kimkj.mytrip.domain.UserReview;
 import shop.kimkj.mytrip.domain.UserReviewLikes;
-import shop.kimkj.mytrip.dto.UserReviewLikeDto;
-import shop.kimkj.mytrip.dto.UserReviewRequestDto;
+import shop.kimkj.mytrip.dto.UserReviewDto;
 import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.service.UserReviewService;
 
@@ -25,19 +24,19 @@ public class UserReviewController {
 
     @Operation(description = "리뷰 생성, 로그인 필요", method = "POST")
     @PostMapping("/review")
-    public ResponseEntity<?> postUserReview(@RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
+    public UserReview postUserReview(@RequestPart(name = "review_data") UserReviewDto userReviewDto,
                                             @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
                                             @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
-        return userReviewService.postUserReview(userReviewRequestDto, multipartFile, nowUser);
+        return userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
     }
 
     @Operation(description = "리뷰 수정, 로그인 필요", method = "PUT")
     @PutMapping("/reviews/{reviewId}")
-    public ResponseEntity<?> putUserReview(@PathVariable Long reviewId,
-                                           @RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
+    public UserReview putUserReview(@PathVariable Long reviewId,
+                                           @RequestPart(name = "review_data") UserReviewDto userReviewDto,
                                            @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
                                            @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
-        return userReviewService.putUserReview(reviewId, userReviewRequestDto, multipartFile, nowUser);
+        return userReviewService.putUserReview(reviewId, userReviewDto, multipartFile, nowUser);
     }
 
     @Operation(description = "리뷰 조회", method = "GET")
