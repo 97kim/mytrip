@@ -62,7 +62,7 @@ public class ReviewServiceTest {
     @Test
     @DisplayName("리뷰 수정 성공")
     void putUserReviewTest() throws IOException {
-
+        // given
         UserReviewDto userReviewDto = new UserReviewDto("title", "place", "review");
         MockMultipartFile multipartFile = new MockMultipartFile("image",
                 "testEdit.png",
@@ -77,14 +77,14 @@ public class ReviewServiceTest {
         UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
         userReviewRepository.save(userReview);
 
-        // given
+        // when
         UserReviewDto userReviewDtoEdit = new UserReviewDto("title-edit", "place-edit", "review-edit");
         MockMultipartFile multipartFileEdit = new MockMultipartFile("image",
                 "test.png",
                 "image/png",
                 new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\22.jpg"));
-        // when
         UserReview userReviewEdit = userReviewService.putUserReview(userReview.getId(), userReviewDtoEdit, multipartFileEdit, nowUser);
+
         // then
         assertEquals("title 의 값이 변경되어야 한다.", "title-edit", userReviewEdit.getTitle());
         assertEquals("place 의 값이 변경되어야 한다.", "place-edit", userReviewEdit.getPlace());
