@@ -36,7 +36,7 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment updateComment(Long reviewId, Long commentId, CommentDto commentDto, UserDetailsImpl nowUser) {
+    public Comment updateComment(Long reviewId, Long commentId, CommentDto commentDto ) {
         userReviewRepository.findById(reviewId).orElseThrow(
                 () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
 
