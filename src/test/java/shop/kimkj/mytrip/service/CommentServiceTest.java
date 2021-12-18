@@ -19,14 +19,8 @@ import shop.kimkj.mytrip.repository.CommentRepository;
 import shop.kimkj.mytrip.repository.UserReviewRepository;
 import shop.kimkj.mytrip.security.UserDetailsImpl;
 
-
-import java.util.List;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
-import static org.springframework.test.util.AssertionErrors.fail;
 
 
 @SpringBootTest
@@ -108,11 +102,11 @@ public class CommentServiceTest {
             System.out.println("테스트 성공");
             assertEquals("테스트에 성공하였습니다.", 1, 1);
         }
-        
+
 //        Exception exception = assertThrows(NullPointerException.class, () -> {
 //            Comment commentTest = commentRepository.getById(comment.getId());
 //        });
-//
 //        Assertions.assertEquals("댓글이 정상적으로 삭제되었습니다.", exception.getMessage());
+
     }
 }
