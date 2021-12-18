@@ -1,5 +1,6 @@
 package shop.kimkj.mytrip.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,20 +37,29 @@ public class ReviewServiceTest {
     @Autowired
     UserRepository userRepository;
 
-    @Test
-    @DisplayName("리뷰 생성 성공")
-    void postUserReview() throws IOException {
-        // given
-        UserReviewDto userReviewDto = new UserReviewDto("title", "place", "review");
-        MockMultipartFile multipartFile = new MockMultipartFile("image",
-                "test.png",
+    User user;
+    UserDetailsImpl nowUser;
+    UserReviewDto userReviewDto;
+    MockMultipartFile multipartFile;
+
+    @BeforeEach
+    void beforeEach() throws IOException {
+        this.userReviewDto = new UserReviewDto("title", "place", "review");
+        this.multipartFile = new MockMultipartFile("image",
+                "testEdit.png",
                 "image/png",
                 new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg"));
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경 삽입
 
         UserDto userDto = new UserDto("signup", "test1234", "test1234");
-        User user = userService.registerUser(userDto);
-        UserDetailsImpl nowUser = new UserDetailsImpl(user);
+        this.user = userService.registerUser(userDto);
+        this.nowUser = new UserDetailsImpl(user);
+    }
+
+    @Test
+    @DisplayName("리뷰 생성 성공")
+    void postUserReview() throws IOException {
+        // given
 
         // when
         UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
@@ -62,17 +72,6 @@ public class ReviewServiceTest {
     @DisplayName("리뷰 수정 성공")
     void putUserReviewTest() throws IOException {
         // given
-        UserReviewDto userReviewDto = new UserReviewDto("title", "place", "review");
-        MockMultipartFile multipartFile = new MockMultipartFile("image",
-                "testEdit.png",
-                "image/png",
-                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg"));
-        // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경 삽입
-
-        UserDto userDto = new UserDto("signup", "test1234", "test1234");
-        User user = userService.registerUser(userDto);
-        UserDetailsImpl nowUser = new UserDetailsImpl(user);
-
         UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
         userReviewRepository.save(userReview);
 
@@ -82,6 +81,7 @@ public class ReviewServiceTest {
                 "test.png",
                 "image/png",
                 new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\22.jpg"));
+        // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경 삽입
         UserReview userReviewEdit = userReviewService.putUserReview(userReview.getId(), userReviewDtoEdit, multipartFileEdit, nowUser);
 
         // then
