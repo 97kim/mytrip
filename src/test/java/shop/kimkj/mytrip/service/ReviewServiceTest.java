@@ -60,10 +60,12 @@ public class ReviewServiceTest {
     @DisplayName("리뷰 생성 성공")
     void postUserReview() throws IOException {
         // given
+        // beforeEach()
+        UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
 
         // when
-        UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
         UserReview userReviewTest = userReviewRepository.getById(userReview.getId());
+
         // then
         assertEquals("리뷰 Id 값이 같아야 한다.", userReview.getId(), userReviewTest.getId());
     }
@@ -75,13 +77,14 @@ public class ReviewServiceTest {
         UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
         userReviewRepository.save(userReview);
 
-        // when
         UserReviewDto userReviewDtoEdit = new UserReviewDto("title-edit", "place-edit", "review-edit");
         MockMultipartFile multipartFileEdit = new MockMultipartFile("image",
                 "test.png",
                 "image/png",
                 new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\22.jpg"));
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경 삽입
+
+        // when
         UserReview userReviewEdit = userReviewService.putUserReview(userReview.getId(), userReviewDtoEdit, multipartFileEdit, nowUser);
 
         // then

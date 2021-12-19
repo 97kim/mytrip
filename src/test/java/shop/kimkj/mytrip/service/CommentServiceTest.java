@@ -37,9 +37,9 @@ public class CommentServiceTest {
     UserService userService;
 
     User user;
+    UserDetailsImpl nowUser;
     UserReview userReview;
     Comment comment;
-    UserDetailsImpl nowUser;
 
     @BeforeEach
     void beforeEach() {
@@ -76,9 +76,9 @@ public class CommentServiceTest {
     void updateComment() {
         // given
         // beforeEach()
+        CommentDto commentDtoEdit = new CommentDto("comment-edit");
 
         // when
-        CommentDto commentDtoEdit = new CommentDto("comment-edit");
         Comment commentTest = commentService.updateComment(userReview.getId(), comment.getId(), commentDtoEdit);
 
         // then
@@ -102,7 +102,6 @@ public class CommentServiceTest {
             System.out.println("테스트 성공");
             assertEquals("테스트에 성공하였습니다.", 1, 1);
         }
-
 //        Exception exception = assertThrows(NullPointerException.class, () -> {
 //            Comment commentTest = commentRepository.getById(comment.getId());
 //        });
