@@ -51,7 +51,11 @@ public class BookmarkServiceTest {
 
         this.user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
-        this.userReviewDto = new UserReviewDto("title", "place", "review");
+        this.userReviewDto = new UserReviewDto();
+        userReviewDto.setTitle("title");
+        userReviewDto.setPlace("place");
+        userReviewDto.setReview("review");
+
         this.multipartFile = new MockMultipartFile("image",
                 "testEdit.png",
                 "image/png",

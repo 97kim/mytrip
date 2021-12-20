@@ -48,7 +48,11 @@ public class CommentServiceTest {
         this.user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
 
-        UserReviewDto userReviewDto = new UserReviewDto("title", "place", "review");
+        UserReviewDto userReviewDto = new UserReviewDto();
+        userReviewDto.setTitle("title");
+        userReviewDto.setPlace("place");
+        userReviewDto.setReview("review");
+
         UserReview saveUserReview = new UserReview(userReviewDto, user);
         this.userReview = userReviewRepository.save(saveUserReview);
     }

@@ -1,6 +1,7 @@
 package shop.kimkj.mytrip.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,10 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final S3Manager s3Manager;
+
+    public void deleteUser(UserDetailsImpl nowUser) {
+        userRepository.deleteById(nowUser.getId());
+    }
 
     public User registerUser(UserDto userDto) {
         String username = userDto.getUsername();

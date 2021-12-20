@@ -31,6 +31,12 @@ public class UserApiController {
     private final UserDetailsService userDetailsService;
     private final UserService userService;
 
+    @Operation(description = "유저 삭제", method = "DELETE")
+    @DeleteMapping("/deleteUser")
+    public void deleteUser(@AuthenticationPrincipal UserDetailsImpl nowUser) {
+        userService.deleteUser(nowUser);
+    }
+
     @Operation(description = "로그인, 회원가입", method = "POST")
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserDto userDto) throws Exception {
