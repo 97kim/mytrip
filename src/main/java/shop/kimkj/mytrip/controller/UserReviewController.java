@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import shop.kimkj.mytrip.domain.UserReview;
 import shop.kimkj.mytrip.domain.UserReviewLikes;
-import shop.kimkj.mytrip.dto.UserReviewLikeDto;
 import shop.kimkj.mytrip.dto.UserReviewRequestDto;
 import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.service.UserReviewService;
@@ -73,13 +72,6 @@ public class UserReviewController {
     @Operation(description = "좋아요 상태 체크", method = "GET")
     @GetMapping("/reviews/{userReviewId}/like") // 좋아요 된 게시물은 나갔다 들어와도 좋아요 된 것으로 표시
     public Map<String, Boolean> getLikeStatus(@PathVariable Long userReviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        Map<String, Boolean> response = new HashMap<>();
-        UserReviewLikes userReviewLikes = userReviewService.checkLikeStatus(userReviewId, nowUser.getId());
-        if (userReviewLikes == null) {
-            response.put("likeStatus", Boolean.FALSE);
-        } else {
-            response.put("likeStatus", Boolean.TRUE);
-        }
-        return response;
+        return userReviewService.checkLikeStatus(userReviewId, nowUser.getId());
     }
 }
