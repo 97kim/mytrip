@@ -2,13 +2,13 @@ package shop.kimkj.mytrip.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import shop.kimkj.mytrip.domain.UserReview;
 import shop.kimkj.mytrip.dto.UserReviewDto;
-import shop.kimkj.mytrip.dto.UserReviewRequestDto;
 import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.service.UserReviewService;
 
@@ -24,18 +24,24 @@ public class UserReviewController {
     @Operation(description = "리뷰 생성, 로그인 필요", method = "POST")
     @PostMapping("/review")
     public UserReview postUserReview(@RequestPart(name = "review_data") UserReviewDto userReviewDto,
-                                            @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
-                                            @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
+                                     @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
+                                     @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
         return userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
     }
 
     @Operation(description = "리뷰 수정, 로그인 필요", method = "PUT")
     @PutMapping("/reviews/{reviewId}")
-    public UserReview putUserReview(@PathVariable Long reviewId,
+    public ResponseEntity<?> putUserReview(@PathVariable Long reviewId,
                                            @RequestPart(name = "review_data") UserReviewDto userReviewDto,
                                            @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
                                            @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
-        return userReviewService.putUserReview(reviewId, userReviewDto, multipartFile, nowUser);
+
+        if (!nowUser.getId().equals(getUserReview(reviewId).getUser().getId())) {
+            return new ResponseEntity<>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN); // 403(FORBIDDEN)에러 - 권한없음
+        }
+
+        UserReview userReview = userReviewService.putUserReview(reviewId, userReviewDto, multipartFile, nowUser);
+        return ResponseEntity.ok(userReview);
     }
 
     @Operation(description = "리뷰 조회", method = "GET")

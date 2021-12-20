@@ -83,9 +83,10 @@ class UserServiceTest {
         // when
         try {
             userService.checkExist(userDto);
+        }
 
         // then
-        } catch (Exception e) {
+        catch (Exception e) {
             assertEquals("동일한 이름으로 확인 되면 오류가 발생하여 catch 문이 실행", 1, userRepository.findAll().size());
         }
     }
