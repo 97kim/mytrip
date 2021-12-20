@@ -107,13 +107,14 @@ public class UserReviewService {
     }
 
     @Transactional
-    public void saveLike(Long userReviewId, UserDetailsImpl nowUser) {
+    public UserReviewLikes saveLike(Long userReviewId, UserDetailsImpl nowUser) {
         UserReview userReview = userReviewRepository.findById(userReviewId).orElseThrow(
                 () -> new NullPointerException("해당 리뷰 없음")
         );
         UserReviewLikes userReviewLikes = new UserReviewLikes(userReview, nowUser.getUser());
         userReview.setLikeCnt(userReview.getLikeCnt() + 1);
         userReviewLikeRepository.save(userReviewLikes);
+        return userReviewLikes;
     }
 
     public UserReviewLikes checkLikeStatus(Long userReviewId, Long userId) {

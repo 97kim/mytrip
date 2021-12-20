@@ -12,6 +12,7 @@ import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.util.S3Manager;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final S3Manager s3Manager;
 
-    public User registerUser(UserDto userDto) {
+    public void registerUser(UserDto userDto) {
         String username = userDto.getUsername();
         // 회원가입 시 nickname은 username으로 설정
         String nickname = username;
@@ -31,7 +32,6 @@ public class UserService {
 
         User user = new User(username, password, nickname, profileImgUrl);
         userRepository.save(user);
-        return user;
     }
 
     public void checkExist(UserDto userDto) {
