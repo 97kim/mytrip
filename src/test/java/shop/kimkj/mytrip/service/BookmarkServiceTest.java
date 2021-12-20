@@ -65,14 +65,15 @@ public class BookmarkServiceTest {
     void saveBookmark() {
         // given
         BookmarkDto bookmarkDto = new BookmarkDto("title", "address", "imgUrl");
-        Bookmark bookmark = bookmarkService.saveBookmark(userReview.getId(), "popularTest", bookmarkDto, nowUser);
 
         // when
+        Bookmark bookmark = bookmarkService.saveBookmark(userReview.getId(), "popularTest", bookmarkDto, nowUser);
+
+        // then
         Bookmark bookmarkTest = bookmarkRepository.findById(bookmark.getId()).orElseThrow(
                 () -> new NullPointerException("Bookmark 가 정상적으로 생성되지 않았습니다.")
         );
 
-        // then
         assertEquals("북마크가 성공적으로 저장되었습니다.", userReview.getId(), bookmarkTest.getContentId());
     }
 
@@ -83,12 +84,11 @@ public class BookmarkServiceTest {
         BookmarkDto bookmarkDto = new BookmarkDto("title", "address", "imgUrl");
         Bookmark bookmark = bookmarkService.saveBookmark(userReview.getId(), "nearTest", bookmarkDto, nowUser);
 
+        // when
         bookmarkService.deleteBookmark(userReview.getId(), nowUser);
 
-        // when
-        Optional<Bookmark> bookmarkTest = bookmarkRepository.findById(bookmark.getId());
-
         // then
+        Optional<Bookmark> bookmarkTest = bookmarkRepository.findById(bookmark.getId());
         if (bookmarkTest.isPresent())
             throw new IllegalArgumentException("북마크 삭제가 실패하였습니다.");
         else

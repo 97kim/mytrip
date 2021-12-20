@@ -58,14 +58,15 @@ public class CommentServiceTest {
     void postComment() {
         // given
         CommentDto commentDto = new CommentDto("comment");
-        Comment comment = commentService.postComment(userReview.getId(), commentDto, nowUser);
 
         // when
+        Comment comment = commentService.postComment(userReview.getId(), commentDto, nowUser);
+
+        // then
         Comment commentTest = commentRepository.findById(comment.getId()).orElseThrow(
                 () -> new NullPointerException("Comment 가 정상적으로 생성되지 않았습니다.")
         );
 
-        // then
         assertEquals("Comment 의 Id 값이 일치하는지 확인.", comment.getId(), commentTest.getId());
     }
 

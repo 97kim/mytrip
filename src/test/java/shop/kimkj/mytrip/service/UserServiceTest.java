@@ -43,11 +43,12 @@ class UserServiceTest {
 
         // when
         User user = userService.registerUser(userDto);
+
+        // then
         User userTest = userRepository.findById(user.getId()).orElseThrow(
                 () -> new NullPointerException("User 가 정상적으로 생성되지 않았습니다.")
         );
 
-        // then
         assertEquals("Id가 같은지 확인", user.getId(), userTest.getId());
     }
 
@@ -56,19 +57,15 @@ class UserServiceTest {
     void updateProfile() throws IOException {
         // given
         User user = userService.registerUser(userDto);
+        user.setProfileImgUrl("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg");
         UserDetailsImpl nowUser = new UserDetailsImpl(user);
-        MockMultipartFile multipartFile = new MockMultipartFile("image",
-                "testEdit.png",
-                "image/png",
-                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg"));
-        // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
 
-        // when
         MockMultipartFile multipartFileEdit = new MockMultipartFile("image",
                 "testEdit.png",
                 "image/png",
                 new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\로그인 수정.PNG"));
 
+        // when
         User userTest = userService.updateProfile("test1234-edit", multipartFileEdit, nowUser);
 
         // then

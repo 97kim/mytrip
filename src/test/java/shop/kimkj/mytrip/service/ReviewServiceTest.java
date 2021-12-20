@@ -110,11 +110,11 @@ public class ReviewServiceTest {
 
         // then
         Optional<UserReview> userReviewTest = userReviewRepository.findById(userReview.getId());
+
         if (userReviewTest.isPresent())
             throw new IllegalArgumentException("UserReview 가 정상적으로 삭제되지 않았습니다.");
         else
             assertEquals("Comment 가 정상적으로 삭제되었습니다.", Optional.empty(), userReviewTest);
-
     }
 
     @Test
@@ -124,10 +124,10 @@ public class ReviewServiceTest {
         UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
 
         // when
-        UserReviewLikes userReviewLikes = userReviewService.saveLike(userReview.getId(), nowUser);
+        userReviewService.saveLike(userReview.getId(), nowUser);
 
         // then
-        assertEquals("UserReview.getLikeCnt 값이 1 증가해야 한다.", 1, userReview.getLikeCnt());
+        assertEquals("UserReview.getLikeCnt 값이 1이 되어야 한다.", 1, userReview.getLikeCnt());
     }
 
     @Test
@@ -142,7 +142,8 @@ public class ReviewServiceTest {
 
         // then
         Optional<UserReviewLikes> userReviewLikesTest = userReviewLikeRepository.findById(userReviewLikes.getId());
-        assertEquals("UserReview 의 좋아요 이후(+1) 숫자가 -1이 적용되어야 한다(-1)", 0, userReview.getLikeCnt());
+
+        assertEquals("UserReview.getLikeCnt 값이 0이 되어야 한다.", 0, userReview.getLikeCnt());
     }
 }
 
