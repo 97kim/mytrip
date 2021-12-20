@@ -41,9 +41,6 @@ public class UserReviewService {
         editReview.setPlace(userReviewRequestDto.getPlace());
         editReview.setReview(userReviewRequestDto.getReview());
 
-        if (!nowUser.getId().equals(getUserReview(reviewId).getUser().getId())) {
-            return editReview = null;
-        }
         // 작성자인 경우
         if (multipartFile == null) { // 수정할 때 사진 선택하지 않으면 기존에 등록했던 이미지 적용
             UserReview originReview = userReviewRepository.findById(reviewId).orElseThrow(
