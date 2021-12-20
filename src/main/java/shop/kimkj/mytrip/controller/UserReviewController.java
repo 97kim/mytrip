@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import shop.kimkj.mytrip.domain.UserReview;
 import shop.kimkj.mytrip.dto.UserReviewDto;
+import shop.kimkj.mytrip.dto.UserReviewRequestDto;
 import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.service.UserReviewService;
 
