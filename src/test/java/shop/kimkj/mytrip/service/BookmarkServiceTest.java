@@ -68,8 +68,10 @@ public class BookmarkServiceTest {
     @DisplayName("북마크 저장 성공")
     void saveBookmark() {
         // given
-        BookmarkDto bookmarkDto = new BookmarkDto("title", "address", "imgUrl");
-
+        BookmarkDto bookmarkDto = new BookmarkDto();
+        bookmarkDto.setTitle("title");
+        bookmarkDto.setTitle("address");
+        bookmarkDto.setTitle("imgUrl");
         // when
         Bookmark bookmark = bookmarkService.saveBookmark(userReview.getId(), "popularTest", bookmarkDto, nowUser);
 
@@ -85,7 +87,11 @@ public class BookmarkServiceTest {
     @DisplayName("북마크 삭제 성공")
     void deleteBookmark() {
         // given
-        BookmarkDto bookmarkDto = new BookmarkDto("title", "address", "imgUrl");
+        BookmarkDto bookmarkDto = new BookmarkDto();
+        bookmarkDto.setTitle("title");
+        bookmarkDto.setTitle("address");
+        bookmarkDto.setTitle("imgUrl");
+
         Bookmark bookmark = bookmarkService.saveBookmark(userReview.getId(), "nearTest", bookmarkDto, nowUser);
 
         // when

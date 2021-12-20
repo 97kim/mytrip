@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
+
 public class UserReviewDto {
     private String title;
     private String place;
