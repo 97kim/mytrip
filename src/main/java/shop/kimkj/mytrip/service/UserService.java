@@ -23,7 +23,7 @@ public class UserService {
     private final S3Manager s3Manager;
 
     public void deleteUser(UserDetailsImpl nowUser) {
-        userRepository.deleteById(nowUser.getId());
+        userRepository.deleteById(nowUser.getUser().getId());
     }
 
     public User registerUser(UserDto userDto) {
