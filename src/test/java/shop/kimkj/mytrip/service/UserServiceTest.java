@@ -71,6 +71,23 @@ class UserServiceTest {
         // then
         assertEquals("Id가 같은지 확인", user.getId(), userTest.getId());
         assertEquals("nickname 업데이트 확인", "test1234-edit", userTest.getNickname());
-        System.out.println("profileImgUrl 의 값이 변경되었는지 확인. " + userTest.getProfileImgUrl());
+        System.out.println("profileImgUrl 의 값이 변경되었는지 확인." + userTest.getProfileImgUrl());
+    }
+
+    @Test
+    @DisplayName("유저 ID 중복 체크 성공")
+    void checkExist() throws IOException {
+        // given
+        User user = userService.registerUser(userDto);
+
+        // when
+        try {
+            userService.checkExist(userDto);
+        }
+
+        // then
+        catch (IllegalArgumentException e) {
+            assertEquals("기존 값이 있을 경우 Id 중복 체크 발생하여 catch 가 실행.", 1, userRepository.findAll().size());
+        }
     }
 }

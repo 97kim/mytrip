@@ -11,7 +11,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.domain.UserReview;
-import shop.kimkj.mytrip.domain.UserReviewLikes;
 import shop.kimkj.mytrip.dto.UserDto;
 import shop.kimkj.mytrip.dto.UserReviewDto;
 import shop.kimkj.mytrip.repository.UserReviewLikeRepository;
@@ -132,17 +131,15 @@ public class ReviewServiceTest {
 
     @Test
     @DisplayName("좋아요 삭제")
-    void deleteBookmark() throws IOException {
+    void deleteLike() throws IOException {
         // given
         UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
-        UserReviewLikes userReviewLikes = userReviewService.saveLike(userReview.getId(), nowUser);
+        userReviewService.saveLike(userReview.getId(), nowUser);
 
         // when
         userReviewService.deleteLike(userReview.getId(), nowUser);
 
         // then
-        Optional<UserReviewLikes> userReviewLikesTest = userReviewLikeRepository.findById(userReviewLikes.getId());
-
         assertEquals("UserReview.getLikeCnt 값이 0이 되어야 한다.", 0, userReview.getLikeCnt());
     }
 }
