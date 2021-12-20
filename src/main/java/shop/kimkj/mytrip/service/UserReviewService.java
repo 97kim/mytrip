@@ -20,7 +20,9 @@ import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.util.S3Manager;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -115,8 +117,15 @@ public class UserReviewService {
         userReviewLikeRepository.save(userReviewLikes);
     }
 
-    public UserReviewLikes checkLikeStatus(Long userReviewId, Long userId) {
-        return userReviewLikeRepository.findByUserReviewIdAndUserId(userReviewId, userId);
+    public Map<String, Boolean> checkLikeStatus(Long userReviewId, Long userId) {
+        Map<String, Boolean> response = new HashMap<>();
+        UserReviewLikes userReviewLikes = userReviewLikeRepository.findByUserReviewIdAndUserId(userReviewId, userId);
+        if (userReviewLikes == null) {
+            response.put("likeStatus", Boolean.FALSE);
+        } else {
+            response.put("likeStatus", Boolean.TRUE);
+        }
+        return response;
     }
 
     public List<UserReview> getUserReviews(String type) throws Exception {
