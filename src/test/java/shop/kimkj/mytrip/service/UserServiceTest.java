@@ -78,7 +78,7 @@ class UserServiceTest {
     @DisplayName("유저 ID 중복 체크 성공")
     void checkExist() throws IOException {
         // given
-        User user = userService.registerUser(userDto);
+        userService.registerUser(userDto);
 
         // when
         try {
