@@ -78,16 +78,15 @@ class UserServiceTest {
     @DisplayName("유저 ID 중복 체크 성공")
     void checkExist() throws IOException {
         // given
-        userService.registerUser(userDto);
+        User user = userService.registerUser(userDto);
 
         // when
         try {
             userService.checkExist(userDto);
-        }
 
         // then
-        catch (IllegalArgumentException e) {
-            assertEquals("기존 값이 있을 경우 Id 중복 체크 발생하여 catch 가 실행.", 1, userRepository.findAll().size());
+        } catch (Exception e) {
+            assertEquals("동일한 이름으로 확인 되면 오류가 발생하여 catch 문이 실행", 1, userRepository.findAll().size());
         }
     }
 }

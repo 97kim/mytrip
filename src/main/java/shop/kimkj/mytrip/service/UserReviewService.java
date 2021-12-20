@@ -42,7 +42,6 @@ public class UserReviewService {
         editReview.setReview(userReviewRequestDto.getReview());
 
         if (!nowUser.getId().equals(getUserReview(reviewId).getUser().getId())) {
-//            return new ResponseEntity<>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN); // 403(FORBIDDEN)에러 - 권한없음
             return editReview = null;
         }
         // 작성자인 경우
