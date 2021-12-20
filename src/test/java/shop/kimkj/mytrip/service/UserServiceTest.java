@@ -62,7 +62,12 @@ class UserServiceTest {
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
 
         // when
-        User userTest = userService.updateProfile("test1234-edit", multipartFile, nowUser);
+        MockMultipartFile multipartFileEdit = new MockMultipartFile("image",
+                "testEdit.png",
+                "image/png",
+                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\로그인 수정.PNG"));
+
+        User userTest = userService.updateProfile("test1234-edit", multipartFileEdit, nowUser);
 
         // then
         assertEquals("Id가 같은지 확인", user.getId(), userTest.getId());
