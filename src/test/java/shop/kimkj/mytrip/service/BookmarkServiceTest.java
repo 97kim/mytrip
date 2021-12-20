@@ -45,7 +45,10 @@ public class BookmarkServiceTest {
 
     @BeforeEach
     void beforeEach() throws IOException {
-        UserDto userDto = new UserDto("signup", "test1234", "test1234");
+        UserDto userDto = new UserDto();
+        userDto.setUsername("test1234");
+        userDto.setPassword("test1234");
+
         this.user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
         this.userReviewDto = new UserReviewDto("title", "place", "review");

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
-import shop.kimkj.mytrip.domain.Comment;
 import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.domain.UserReview;
 import shop.kimkj.mytrip.domain.UserReviewLikes;
@@ -47,7 +46,10 @@ public class ReviewServiceTest {
 
     @BeforeEach
     void beforeEach() throws IOException {
-        UserDto userDto = new UserDto("signup", "test1234", "test1234");
+        UserDto userDto = new UserDto();
+        userDto.setUsername("test1234");
+        userDto.setPassword("test1234");
+
         this.user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
         this.userReviewDto = new UserReviewDto("title", "place", "review");
@@ -120,15 +122,27 @@ public class ReviewServiceTest {
     void saveLike() throws IOException {
         // given
         UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
+
+        // when
+        UserReviewLikes userReviewLikes = userReviewService.saveLike(userReview.getId(), nowUser);
+
+        // then
+        assertEquals("UserReview.getLikeCnt 값이 1 증가해야 한다.", 1, userReview.getLikeCnt());
+    }
+
+    @Test
+    @DisplayName("좋아요 삭제")
+    void deleteBookmark() throws IOException {
+        // given
+        UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
         UserReviewLikes userReviewLikes = userReviewService.saveLike(userReview.getId(), nowUser);
 
         // when
-        UserReviewLikes userReviewLikesTest = userReviewLikeRepository.findById(userReviewLikes.getId()).orElseThrow(
-                () -> new NullPointerException("좋아요가 실패하였습니다.")
-        );
+        userReviewService.deleteLike(userReview.getId(), nowUser);
 
         // then
-        assertEquals("UserReviewLikes 가 정상적으로 생성되었습니다..", userReviewLikes.getId(), userReviewLikesTest.getId());
+        Optional<UserReviewLikes> userReviewLikesTest = userReviewLikeRepository.findById(userReviewLikes.getId());
+        assertEquals("UserReview 의 좋아요 이후(+1) 숫자가 -1이 적용되어야 한다(-1)", 0, userReview.getLikeCnt());
     }
 }
 

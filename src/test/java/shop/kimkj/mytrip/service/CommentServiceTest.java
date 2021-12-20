@@ -42,7 +42,9 @@ public class CommentServiceTest {
 
     @BeforeEach
     void beforeEach() {
-        UserDto userDto = new UserDto("signup", "test1234", "test1234");
+        UserDto userDto = new UserDto();
+        userDto.setUsername("test1234");
+        userDto.setPassword("test1234");
         this.user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
 
