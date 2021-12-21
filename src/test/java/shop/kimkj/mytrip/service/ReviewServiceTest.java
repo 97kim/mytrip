@@ -57,7 +57,7 @@ public class ReviewServiceTest {
         this.multipartFile = new MockMultipartFile("image",
                 "testEdit.png",
                 "image/png",
-                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg"));
+                new FileInputStream("/Users/twseo/Desktop/hawaii.jpeg"));
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
     }
 
@@ -90,7 +90,7 @@ public class ReviewServiceTest {
         MockMultipartFile multipartFileEdit = new MockMultipartFile("image",
                 "test.png",
                 "image/png",
-                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\22.jpg"));
+                new FileInputStream("/Users/twseo/Desktop/jeonju2.jpeg"));
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
 
         // when

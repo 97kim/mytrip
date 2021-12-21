@@ -59,7 +59,7 @@ public class BookmarkServiceTest {
         this.multipartFile = new MockMultipartFile("image",
                 "testEdit.png",
                 "image/png",
-                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg"));
+                new FileInputStream("/Users/twseo/Desktop/jeonju2.jpeg"));
         this.userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
     }
