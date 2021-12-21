@@ -38,8 +38,6 @@ public class BookmarkServiceTest {
     UserReviewService userReviewService;
 
     UserDetailsImpl nowUser;
-    UserReviewDto userReviewDto;
-    MockMultipartFile multipartFile;
     UserReview userReview;
     BookmarkDto bookmarkDto;
 
@@ -52,27 +50,27 @@ public class BookmarkServiceTest {
         User user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
 
-        this.bookmarkDto = new BookmarkDto();
-        bookmarkDto.setTitle("title");
-        bookmarkDto.setTitle("address");
-        bookmarkDto.setTitle("imgUrl");
-
-        this.userReviewDto = new UserReviewDto();
+        UserReviewDto userReviewDto = new UserReviewDto();
         userReviewDto.setTitle("title");
         userReviewDto.setPlace("place");
         userReviewDto.setReview("review");
 
-        this.multipartFile = new MockMultipartFile("image",
+        MockMultipartFile multipartFile = new MockMultipartFile("image",
                 "testEdit.png",
                 "image/png",
                 new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg"));
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
         this.userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
+
+        this.bookmarkDto = new BookmarkDto();
+        bookmarkDto.setTitle(userReview.getTitle());
+        bookmarkDto.setAddress(userReview.getPlace());
+        bookmarkDto.setImgUrl(userReview.getReviewImgUrl());
     }
 
     @Test
     @DisplayName("북마크 저장 성공")
-    void saveBookmark() {
+    void saveBookmark() throws IOException {
         // given
 
         // when
@@ -83,12 +81,12 @@ public class BookmarkServiceTest {
                 () -> new NullPointerException("Bookmark 가 정상적으로 생성되지 않았습니다.")
         );
 
-        assertEquals("북마크가 성공적으로 저장되었습니다.", userReview.getId(), bookmarkTest.getContentId());
+        assertEquals("Review ID 값과 Bookmark 에 저장된 ContentId 값이 동일해야 한다.   .", userReview.getId(), bookmarkTest.getContentId());
     }
 
     @Test
     @DisplayName("북마크 삭제 성공")
-    void deleteBookmark() {
+    void deleteBookmark() throws IOException {
         // given
         Bookmark bookmark = bookmarkService.saveBookmark(userReview.getId(), "nearTest", bookmarkDto, nowUser);
 
