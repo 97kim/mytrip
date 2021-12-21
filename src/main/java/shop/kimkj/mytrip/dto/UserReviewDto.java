@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserReviewDto {
     private String title;
     private String place;
