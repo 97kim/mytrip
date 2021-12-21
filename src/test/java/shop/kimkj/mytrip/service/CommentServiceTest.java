@@ -87,7 +87,7 @@ public class CommentServiceTest {
         commentDto.setComment("comment-edit");
 
         // when
-        Comment commentTest = commentService.updateComment(userReview.getId(), comment.getId(), commentDtoEdit);
+        Comment commentTest = commentService.updateComment(userReview.getId(), comment.getId(), commentDtoEdit, nowUser);
 
         // then
         assertEquals("Comment Id 값이 일치하는지 확인.", comment.getId(), commentTest.getId());
