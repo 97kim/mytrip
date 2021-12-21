@@ -43,17 +43,12 @@ public class BookmarkServiceTest {
 
     @BeforeEach
     void beforeEach() throws IOException {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("test1234");
-        userDto.setPassword("test1234");
+        UserDto userDto = new UserDto("test", "test1234", "test1234");
 
         User user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
 
-        UserReviewDto userReviewDto = new UserReviewDto();
-        userReviewDto.setTitle("title");
-        userReviewDto.setPlace("place");
-        userReviewDto.setReview("review");
+        UserReviewDto userReviewDto = new UserReviewDto("title","place","review");
 
         MockMultipartFile multipartFile = new MockMultipartFile("image",
                 "testEdit.png",

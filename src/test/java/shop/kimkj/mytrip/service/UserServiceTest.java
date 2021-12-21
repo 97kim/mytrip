@@ -31,9 +31,7 @@ class UserServiceTest {
 
     @BeforeEach
     void beforeEach() {
-        this.userDto = new UserDto();
-        userDto.setUsername("test1234");
-        userDto.setPassword("test1234");
+        this.userDto = new UserDto("test", "test1234", "test1234");
     }
 
     @Test

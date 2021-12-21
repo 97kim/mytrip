@@ -44,16 +44,11 @@ public class ReviewServiceTest {
 
     @BeforeEach
     void beforeEach() throws IOException {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("test1234");
-        userDto.setPassword("test1234");
+        UserDto userDto = new UserDto("test", "test1234", "test1234");
 
         User user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
-        this.userReviewDto = new UserReviewDto();
-        userReviewDto.setTitle("title");
-        userReviewDto.setPlace("place");
-        userReviewDto.setReview("review");
+        this.userReviewDto = new UserReviewDto("title", "place", "review");
         this.multipartFile = new MockMultipartFile("image",
                 "testEdit.png",
                 "image/png",
@@ -83,10 +78,7 @@ public class ReviewServiceTest {
         UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
         userReviewRepository.save(userReview);
 
-        UserReviewDto userReviewDtoEdit = new UserReviewDto();
-        userReviewDto.setTitle("title-edit");
-        userReviewDto.setPlace("place-edit");
-        userReviewDto.setReview("review-edit");
+        UserReviewDto userReviewDtoEdit = new UserReviewDto("title-edit", "place-edit", "review-edit");
         MockMultipartFile multipartFileEdit = new MockMultipartFile("image",
                 "test.png",
                 "image/png",
