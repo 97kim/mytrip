@@ -102,6 +102,6 @@ public class BookmarkServiceTest {
         if (bookmarkTest.isPresent())
             throw new IllegalArgumentException("북마크 삭제가 실패하였습니다.");
         else
-            assertEquals("북마크가 정상적으로 삭제되었습니다.", Optional.empty(), bookmarkTest);
+            assertEquals("Bookmark 가 비어있어야 한다.", Optional.empty(), bookmarkTest);
     }
 }
