@@ -38,7 +38,6 @@ public class ReviewServiceTest {
     @Autowired
     UserReviewLikeRepository userReviewLikeRepository;
 
-    User user;
     UserDetailsImpl nowUser;
     UserReviewDto userReviewDto;
     MockMultipartFile multipartFile;
@@ -49,7 +48,7 @@ public class ReviewServiceTest {
         userDto.setUsername("test1234");
         userDto.setPassword("test1234");
 
-        this.user = userService.registerUser(userDto);
+        User user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
         this.userReviewDto = new UserReviewDto();
         userReviewDto.setTitle("title");
