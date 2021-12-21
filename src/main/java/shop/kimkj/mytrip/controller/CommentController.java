@@ -33,15 +33,16 @@ public class CommentController {
 
     @Operation(description = "댓글 수정, 로그인 필요", method = "PUT")
     @PutMapping("/reviews/{reviewId}/comments/{commentId}") // 댓글 수정하기
-    public Comment updateComment(@PathVariable Long commentId, @PathVariable Long reviewId, @RequestBody CommentDto comment) {
-        return commentService.updateComment(reviewId, commentId, comment);
+    public Comment updateComment(@PathVariable Long commentId, @PathVariable Long reviewId, @RequestBody CommentDto comment,
+                                 @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        return commentService.updateComment(reviewId, commentId, comment, nowUser);
     }
 
     @Operation(description = "댓글 삭제, 로그인 필요", method = "DELETE")
     @DeleteMapping("/reviews/{reviewId}/comments/{commentId}") // 댓글 삭제하기
-    public ResponseEntity<?> deleteComment(@PathVariable Long commentId, @PathVariable Long reviewId,
+    public void deleteComment(@PathVariable Long commentId, @PathVariable Long reviewId,
                                            @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        return commentService.deleteComment(reviewId, commentId, nowUser);
+        commentService.deleteComment(reviewId, commentId, nowUser);
     }
 }
 

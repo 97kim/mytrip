@@ -31,17 +31,12 @@ public class UserReviewController {
 
     @Operation(description = "리뷰 수정, 로그인 필요", method = "PUT")
     @PutMapping("/reviews/{reviewId}")
-    public ResponseEntity<?> putUserReview(@PathVariable Long reviewId,
-                                           @RequestPart(name = "review_data") UserReviewDto userReviewDto,
-                                           @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
-                                           @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
+    public UserReview putUserReview(@PathVariable Long reviewId,
+                                    @RequestPart(name = "review_data") UserReviewDto userReviewDto,
+                                    @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
+                                    @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
 
-        if (!nowUser.getId().equals(getUserReview(reviewId).getUser().getId())) {
-            return new ResponseEntity<>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN); // 403(FORBIDDEN)에러 - 권한없음
-        }
-
-        UserReview userReview = userReviewService.putUserReview(reviewId, userReviewDto, multipartFile, nowUser);
-        return ResponseEntity.ok(userReview);
+        return userReviewService.putUserReview(reviewId, userReviewDto, multipartFile, nowUser);
     }
 
     @Operation(description = "리뷰 조회", method = "GET")
@@ -58,8 +53,8 @@ public class UserReviewController {
 
     @Operation(description = "리뷰 삭제", method = "DELETE")
     @DeleteMapping("/reviews/{reviewId}")
-    public ResponseEntity<?> deleteUserReview(@PathVariable Long reviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) { // @AuthenticationPrincipal 로그인한 유저 정보 가져오기
-        return userReviewService.deleteUserReview(reviewId, nowUser);
+    public void deleteUserReview(@PathVariable Long reviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) { // @AuthenticationPrincipal 로그인한 유저 정보 가져오기
+        userReviewService.deleteUserReview(reviewId, nowUser);
     }
 
     @Operation(description = "좋아요 표시, 로그인 필요", method = "POST")

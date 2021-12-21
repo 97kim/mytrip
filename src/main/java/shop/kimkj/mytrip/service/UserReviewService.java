@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,10 @@ public class UserReviewService {
         editReview.setTitle(userReviewRequestDto.getTitle());
         editReview.setPlace(userReviewRequestDto.getPlace());
         editReview.setReview(userReviewRequestDto.getReview());
+
+        if (!nowUser.getId().equals(getUserReview(reviewId).getUser().getId())) {
+            throw new AccessDeniedException("권한이 없습니다.");
+        }
 
         // 작성자인 경우
         if (multipartFile == null) { // 수정할 때 사진 선택하지 않으면 기존에 등록했던 이미지 적용
@@ -80,9 +85,9 @@ public class UserReviewService {
     }
 
     @Transactional
-    public ResponseEntity<?> deleteUserReview(Long reviewId, UserDetailsImpl nowUser) {
+    public void deleteUserReview(Long reviewId, UserDetailsImpl nowUser) {
         if (!nowUser.getId().equals(getUserReview(reviewId).getUser().getId())) { // 리뷰 작성자랑 로그인한 유저랑 다르면
-            return new ResponseEntity<>("삭제 권한이 없습니다.", HttpStatus.FORBIDDEN); // 403(FORBIDDEN)에러 - 권한없음
+            throw new AccessDeniedException("권한이 없습니다.");
         }
         UserReview userReview = userReviewRepository.findById(reviewId).orElseThrow(
                 () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
@@ -91,7 +96,6 @@ public class UserReviewService {
             s3Manager.delete(reviewImgUrl); // s3에 해당 이미지 있으면 삭제
         }
         userReviewRepository.deleteById(reviewId); // DB에서 리뷰 삭제
-        return new ResponseEntity<>(HttpStatus.OK); // 200 성공
     }
 
     @Transactional

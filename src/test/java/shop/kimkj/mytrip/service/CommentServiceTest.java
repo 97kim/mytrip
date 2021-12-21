@@ -18,6 +18,7 @@ import shop.kimkj.mytrip.repository.CommentRepository;
 import shop.kimkj.mytrip.repository.UserReviewRepository;
 import shop.kimkj.mytrip.security.UserDetailsImpl;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import static org.springframework.test.util.AssertionErrors.assertEquals;
@@ -36,7 +37,6 @@ public class CommentServiceTest {
     @Autowired
     UserService userService;
 
-    User user;
     UserDetailsImpl nowUser;
     UserReview userReview;
     CommentDto commentDto;
@@ -46,7 +46,7 @@ public class CommentServiceTest {
         UserDto userDto = new UserDto();
         userDto.setUsername("test1234");
         userDto.setPassword("test1234");
-        this.user = userService.registerUser(userDto);
+        User user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
 
         UserReviewDto userReviewDto = new UserReviewDto();
@@ -63,7 +63,7 @@ public class CommentServiceTest {
 
     @Test
     @DisplayName("댓글 생성 성공")
-    void postComment() {
+    void postComment() throws IOException {
         // given
 
         // when
@@ -79,7 +79,7 @@ public class CommentServiceTest {
 
     @Test
     @DisplayName("댓글 수정 성공")
-    void updateComment() {
+    void updateComment() throws IOException {
         // given
         Comment comment = commentService.postComment(userReview.getId(), commentDto, nowUser);
 
@@ -87,16 +87,16 @@ public class CommentServiceTest {
         commentDto.setComment("comment-edit");
 
         // when
-        Comment commentTest = commentService.updateComment(userReview.getId(), comment.getId(), commentDtoEdit);
+        Comment commentTest = commentService.updateComment(userReview.getId(), comment.getId(), commentDtoEdit, nowUser);
 
         // then
         assertEquals("Comment Id 값이 일치하는지 확인.", comment.getId(), commentTest.getId());
-        assertEquals("Comment 내용이 업데이트 되었는지 확인", "comment-edit", comment.getComment());
+        assertEquals("Comment 내용이 업데이트 되었는지 확인", commentDtoEdit.getComment(), commentTest.getComment());
     }
 
     @Test
     @DisplayName("댓글 삭제 성공")
-    void deleteComment() {
+    void deleteComment() throws IOException {
         // given
         Comment comment = commentService.postComment(userReview.getId(), commentDto, nowUser);
 
