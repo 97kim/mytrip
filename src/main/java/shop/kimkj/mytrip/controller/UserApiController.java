@@ -32,7 +32,7 @@ public class UserApiController {
     private final UserService userService;
 
     @Operation(description = "유저 삭제", method = "DELETE")
-    @DeleteMapping("/deleteUser")
+    @DeleteMapping("/user")
     public void deleteUser(@AuthenticationPrincipal UserDetailsImpl nowUser) {
         userService.deleteUser(nowUser);
     }
@@ -63,7 +63,7 @@ public class UserApiController {
     }
 
     @Operation(description = "프로필 설정, 로그인 필요", method = "POST")
-    @PostMapping("/profile")
+    @PostMapping("/user")
     public User updateProfile(@RequestPart(required = false) String nickname,
                               @RequestPart(name = "profileImgUrl", required = false) MultipartFile multipartFile,
                               @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
