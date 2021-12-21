@@ -14,6 +14,7 @@ import shop.kimkj.mytrip.security.UserDetailsImpl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Optional;
 
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
@@ -87,5 +88,25 @@ class UserServiceTest {
         catch (Exception e) {
             assertEquals("이미 저장된 이름일 경우 IllegalArgumentException 에러가 발생", 1, userRepository.findAll().size());
         }
+    }
+
+    @Test
+    @DisplayName("유저 삭제 성공")
+    void deleteUser() throws Exception {
+        // given
+        User user = userService.registerUser(userDto);
+        UserDetailsImpl nowuser = new UserDetailsImpl(user);
+
+        // when
+        userService.deleteUser(nowuser);
+
+        // then
+        Optional<User> userTest = userRepository.findById(user.getId());
+
+        if (userTest.isPresent())
+            throw new IllegalArgumentException("User 가 정상적으로 삭제되지 않았습니다.");
+        else
+            assertEquals("User 가 정상적으로 삭제되었습니다.", Optional.empty(), userTest);
+
     }
 }
