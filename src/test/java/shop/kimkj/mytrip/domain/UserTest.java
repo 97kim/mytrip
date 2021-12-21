@@ -47,6 +47,6 @@ class UserTest {
         users.add(user3);
 
         //then
-        assertThat(users.size()).isEqualTo(31);
+        assertThat(users.size()).isEqualTo(3);
     }
 }
