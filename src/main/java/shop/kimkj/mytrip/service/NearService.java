@@ -4,15 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import shop.kimkj.mytrip.dto.ContentIdDto;
-import shop.kimkj.mytrip.dto.LatLngDto;
 import shop.kimkj.mytrip.dto.NearDto;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;

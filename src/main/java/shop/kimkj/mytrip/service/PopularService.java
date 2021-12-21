@@ -4,9 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import shop.kimkj.mytrip.dto.ContentIdDto;
 import shop.kimkj.mytrip.dto.LatLngDto;
 import shop.kimkj.mytrip.dto.PopularDto;
 

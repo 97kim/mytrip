@@ -4,10 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,7 +20,6 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
-
 public class UserApiController {
 
     private final JwtTokenUtil jwtTokenUtil;
@@ -57,10 +52,16 @@ public class UserApiController {
     }
 
     @Operation(description = "프로필 설정, 로그인 필요", method = "POST")
-    @PostMapping("/profile")
+    @PostMapping("/user")
     public User updateProfile(@RequestPart(required = false) String nickname,
                               @RequestPart(name = "profileImgUrl", required = false) MultipartFile multipartFile,
                               @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
         return userService.updateProfile(nickname, multipartFile, nowUser);
+    }
+
+    @Operation(description = "유저 삭제", method = "DELETE")
+    @DeleteMapping("/user")
+    public void deleteUser(@AuthenticationPrincipal UserDetailsImpl nowUser) {
+        userService.deleteUser(nowUser);
     }
 }

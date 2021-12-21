@@ -12,7 +12,6 @@ import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.util.S3Manager;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,6 +21,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final S3Manager s3Manager;
 
+    @Transactional
     public void registerUser(UserDto userDto) {
         String username = userDto.getUsername();
 
@@ -62,5 +62,10 @@ public class UserService {
         }
         userRepository.save(user);
         return user;
+    }
+
+    @Transactional
+    public void deleteUser(UserDetailsImpl nowUser) {
+        userRepository.deleteById(nowUser.getUser().getId());
     }
 }

@@ -1,4 +1,4 @@
-package shop.kimkj.mytrip.controller;
+package shop.kimkj.mytrip.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;

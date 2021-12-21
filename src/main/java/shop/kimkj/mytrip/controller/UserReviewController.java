@@ -7,13 +7,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import shop.kimkj.mytrip.domain.UserReview;
-import shop.kimkj.mytrip.domain.UserReviewLikes;
-import shop.kimkj.mytrip.dto.UserReviewRequestDto;
+import shop.kimkj.mytrip.dto.UserReviewDto;
 import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.service.UserReviewService;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,19 +22,20 @@ public class UserReviewController {
 
     @Operation(description = "리뷰 생성, 로그인 필요", method = "POST")
     @PostMapping("/review")
-    public ResponseEntity<?> postUserReview(@RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
+    public ResponseEntity<?> postUserReview(@RequestPart(name = "review_data") UserReviewDto userReviewDto,
                                             @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
                                             @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
-        return userReviewService.postUserReview(userReviewRequestDto, multipartFile, nowUser);
+        return userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
     }
 
     @Operation(description = "리뷰 수정, 로그인 필요", method = "PUT")
     @PutMapping("/reviews/{reviewId}")
-    public ResponseEntity<?> putUserReview(@PathVariable Long reviewId,
-                                           @RequestPart(name = "review_data") UserReviewRequestDto userReviewRequestDto,
-                                           @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
-                                           @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
-        return userReviewService.putUserReview(reviewId, userReviewRequestDto, multipartFile, nowUser);
+    public UserReview putUserReview(@PathVariable Long reviewId,
+                                    @RequestPart(name = "review_data") UserReviewDto userReviewDto,
+                                    @RequestPart(name = "review_img", required = false) MultipartFile multipartFile,
+                                    @AuthenticationPrincipal UserDetailsImpl nowUser) throws IOException {
+
+        return userReviewService.putUserReview(reviewId, userReviewDto, multipartFile, nowUser);
     }
 
     @Operation(description = "리뷰 조회", method = "GET")
@@ -53,8 +52,8 @@ public class UserReviewController {
 
     @Operation(description = "리뷰 삭제", method = "DELETE")
     @DeleteMapping("/reviews/{reviewId}")
-    public ResponseEntity<?> deleteUserReview(@PathVariable Long reviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) { // @AuthenticationPrincipal 로그인한 유저 정보 가져오기
-        return userReviewService.deleteUserReview(reviewId, nowUser);
+    public void deleteUserReview(@PathVariable Long reviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) { // @AuthenticationPrincipal 로그인한 유저 정보 가져오기
+        userReviewService.deleteUserReview(reviewId, nowUser);
     }
 
     @Operation(description = "좋아요 표시, 로그인 필요", method = "POST")
