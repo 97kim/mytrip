@@ -1,4 +1,4 @@
-package shop.kimkj.mytrip.controller;
+package shop.kimkj.mytrip.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
