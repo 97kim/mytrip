@@ -108,6 +108,6 @@ public class CommentServiceTest {
         if (commentTest.isPresent())
             throw new IllegalArgumentException("Comment 가 정상적으로 삭제되지 않았습니다.");
         else
-            assertEquals("Comment 가 정상적으로 삭제되었습니다.", Optional.empty(), commentTest);
+            assertEquals("Comment 가 비어있어야 한다.", Optional.empty(), commentTest);
     }
 }
