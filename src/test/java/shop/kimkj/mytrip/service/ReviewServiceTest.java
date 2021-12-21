@@ -97,9 +97,9 @@ public class ReviewServiceTest {
         UserReview userReviewEdit = userReviewService.putUserReview(userReview.getId(), userReviewDtoEdit, multipartFileEdit, nowUser);
 
         // then
-        assertEquals("title 의 값이 변경되어야 한다.", "title-edit", userReviewEdit.getTitle());
-        assertEquals("place 의 값이 변경되어야 한다.", "place-edit", userReviewEdit.getPlace());
-        assertEquals("review 의 값이 변경되어야 한다.", "review-edit", userReviewEdit.getReview());
+        assertEquals("title 의 값이 변경되어야 한다.", userReviewDtoEdit.getTitle(), userReviewEdit.getTitle());
+        assertEquals("place 의 값이 변경되어야 한다.", userReviewDtoEdit.getPlace(), userReviewEdit.getPlace());
+        assertEquals("review 의 값이 변경되어야 한다.", userReviewDtoEdit.getReview(), userReviewEdit.getReview());
         System.out.println("image 의 값이 변경되어야 한다. " + userReviewEdit.getReviewImgUrl());
     }
 
