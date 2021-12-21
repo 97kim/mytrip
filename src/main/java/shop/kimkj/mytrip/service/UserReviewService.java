@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.domain.UserReview;
 import shop.kimkj.mytrip.domain.UserReviewLikes;
-import shop.kimkj.mytrip.dto.UserReviewRequestDto;
+import shop.kimkj.mytrip.dto.UserReviewDto;
 import shop.kimkj.mytrip.repository.UserRepository;
 import shop.kimkj.mytrip.repository.UserReviewLikeRepository;
 import shop.kimkj.mytrip.repository.UserReviewRepository;
@@ -34,37 +34,34 @@ public class UserReviewService {
     private final S3Manager s3Manager;
 
     @Transactional
-    public ResponseEntity<?> putUserReview(Long reviewId, UserReviewRequestDto userReviewRequestDto, MultipartFile multipartFile, UserDetailsImpl nowUser) throws IOException {
+    public UserReview putUserReview(Long reviewId, UserReviewDto userReviewRequestDto, MultipartFile multipartFile, UserDetailsImpl nowUser) throws IOException {
         UserReview editReview = userReviewRepository.findById(reviewId).orElseThrow(
                 () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
         editReview.setTitle(userReviewRequestDto.getTitle());
         editReview.setPlace(userReviewRequestDto.getPlace());
         editReview.setReview(userReviewRequestDto.getReview());
 
-        if (!nowUser.getId().equals(getUserReview(reviewId).getUser().getId())) {
-            return new ResponseEntity<>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN); // 403(FORBIDDEN)에러 - 권한없음
-        }
         // 작성자인 경우
         if (multipartFile == null) { // 수정할 때 사진 선택하지 않으면 기존에 등록했던 이미지 적용
             UserReview originReview = userReviewRepository.findById(reviewId).orElseThrow(
                     () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
             editReview.setReviewImgUrl(originReview.getReviewImgUrl());
             userReviewRepository.save(editReview);
-            return ResponseEntity.ok(editReview);
+            return editReview;
         }
         String reviewImgUrl = s3Manager.upload(multipartFile, "reviewImg"); // 클라우드 프론트 url
         editReview.setReviewImgUrl(reviewImgUrl);
         userReviewRepository.save(editReview);
-        return ResponseEntity.ok(editReview);
+        return editReview;
     }
 
     @Transactional
-    public ResponseEntity<?> postUserReview(UserReviewRequestDto userReviewRequestDto, MultipartFile multipartFile, UserDetailsImpl nowUser) throws IOException {
+    public UserReview postUserReview(UserReviewDto userReviewDto, MultipartFile multipartFile, UserDetailsImpl nowUser) throws IOException {
         User user = userRepository.findById(nowUser.getId()).orElseThrow(
                 () -> new NullPointerException("해당 User 없음")
         );
 
-        UserReview userReview = new UserReview(userReviewRequestDto, user);
+        UserReview userReview = new UserReview(userReviewDto, user);
 
         if (multipartFile == null) { // 처음 등록할 때 사진 선택하지 않으면 기본 이미지 저장
             userReview.setReviewImgUrl("https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg");
@@ -73,7 +70,7 @@ public class UserReviewService {
             userReview.setReviewImgUrl(reviewImgUrl);
         }
         userReviewRepository.save(userReview);
-        return ResponseEntity.ok(userReview);
+        return userReview;
     }
 
     public UserReview getUserReview(Long reviewId) {
@@ -108,13 +105,14 @@ public class UserReviewService {
     }
 
     @Transactional
-    public void saveLike(Long userReviewId, UserDetailsImpl nowUser) {
+    public UserReviewLikes saveLike(Long userReviewId, UserDetailsImpl nowUser) {
         UserReview userReview = userReviewRepository.findById(userReviewId).orElseThrow(
                 () -> new NullPointerException("해당 리뷰 없음")
         );
         UserReviewLikes userReviewLikes = new UserReviewLikes(userReview, nowUser.getUser());
         userReview.setLikeCnt(userReview.getLikeCnt() + 1);
         userReviewLikeRepository.save(userReviewLikes);
+        return userReviewLikes;
     }
 
     public Map<String, Boolean> checkLikeStatus(Long userReviewId, Long userId) {
