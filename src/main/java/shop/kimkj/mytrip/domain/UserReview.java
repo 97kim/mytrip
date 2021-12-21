@@ -3,7 +3,7 @@ package shop.kimkj.mytrip.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import shop.kimkj.mytrip.dto.UserReviewRequestDto;
+import shop.kimkj.mytrip.dto.UserReviewDto;
 
 import javax.persistence.*;
 import java.util.List;
@@ -44,7 +44,7 @@ public class UserReview extends Timestamped {
     @OneToMany(mappedBy = "userReview", cascade = CascadeType.REMOVE)
     private List<UserReviewLikes> userReviewLikes;
 
-    public UserReview(UserReviewRequestDto requestDto, User user) {
+    public UserReview(UserReviewDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.place = requestDto.getPlace();
         this.review = requestDto.getReview();
