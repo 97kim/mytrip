@@ -38,7 +38,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("유저 생성 성공")
-    void registerUser() {
+    void registerUser() throws Exception {
         // given
 
         // when
@@ -76,7 +76,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("유저 ID 중복 체크 성공")
-    void checkExist() {
+    void checkExist() throws Exception {
         // given
         User user = userService.registerUser(userDto);
 
@@ -87,7 +87,7 @@ class UserServiceTest {
 
         // then
         catch (Exception e) {
-            assertEquals("동일한 이름으로 확인 되면 오류가 발생하여 catch 문이 실행", 1, userRepository.findAll().size());
+            assertEquals("이미 저장된 이름일 경우 IllegalArgumentException 에러가 발생", 1, userRepository.findAll().size());
         }
     }
 }

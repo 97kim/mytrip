@@ -37,11 +37,11 @@ public class BookmarkServiceTest {
     @Autowired
     UserReviewService userReviewService;
 
-    User user;
     UserDetailsImpl nowUser;
     UserReviewDto userReviewDto;
     MockMultipartFile multipartFile;
     UserReview userReview;
+    BookmarkDto bookmarkDto;
 
     @BeforeEach
     void beforeEach() throws IOException {
@@ -49,8 +49,14 @@ public class BookmarkServiceTest {
         userDto.setUsername("test1234");
         userDto.setPassword("test1234");
 
-        this.user = userService.registerUser(userDto);
+        User user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
+
+        this.bookmarkDto = new BookmarkDto();
+        bookmarkDto.setTitle("title");
+        bookmarkDto.setTitle("address");
+        bookmarkDto.setTitle("imgUrl");
+
         this.userReviewDto = new UserReviewDto();
         userReviewDto.setTitle("title");
         userReviewDto.setPlace("place");
@@ -60,18 +66,15 @@ public class BookmarkServiceTest {
                 "testEdit.png",
                 "image/png",
                 new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg"));
-        this.userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
+        this.userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
     }
 
     @Test
     @DisplayName("북마크 저장 성공")
     void saveBookmark() {
         // given
-        BookmarkDto bookmarkDto = new BookmarkDto();
-        bookmarkDto.setTitle("title");
-        bookmarkDto.setTitle("address");
-        bookmarkDto.setTitle("imgUrl");
+
         // when
         Bookmark bookmark = bookmarkService.saveBookmark(userReview.getId(), "popularTest", bookmarkDto, nowUser);
 
@@ -87,11 +90,6 @@ public class BookmarkServiceTest {
     @DisplayName("북마크 삭제 성공")
     void deleteBookmark() {
         // given
-        BookmarkDto bookmarkDto = new BookmarkDto();
-        bookmarkDto.setTitle("title");
-        bookmarkDto.setTitle("address");
-        bookmarkDto.setTitle("imgUrl");
-
         Bookmark bookmark = bookmarkService.saveBookmark(userReview.getId(), "nearTest", bookmarkDto, nowUser);
 
         // when
@@ -102,6 +100,6 @@ public class BookmarkServiceTest {
         if (bookmarkTest.isPresent())
             throw new IllegalArgumentException("북마크 삭제가 실패하였습니다.");
         else
-            assertEquals("북마크가 정상적으로 삭제되었습니다.", Optional.empty(), bookmarkTest);
+            assertEquals("Bookmark 가 비어있어야 한다.", Optional.empty(), bookmarkTest);
     }
 }

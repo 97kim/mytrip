@@ -36,16 +36,16 @@ public class CommentServiceTest {
     @Autowired
     UserService userService;
 
-    User user;
     UserDetailsImpl nowUser;
     UserReview userReview;
+    CommentDto commentDto;
 
     @BeforeEach
     void beforeEach() {
         UserDto userDto = new UserDto();
         userDto.setUsername("test1234");
         userDto.setPassword("test1234");
-        this.user = userService.registerUser(userDto);
+        User user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
 
         UserReviewDto userReviewDto = new UserReviewDto();
@@ -55,14 +55,15 @@ public class CommentServiceTest {
 
         UserReview saveUserReview = new UserReview(userReviewDto, user);
         this.userReview = userReviewRepository.save(saveUserReview);
+
+        this.commentDto = new CommentDto();
+        this.commentDto.setComment("comment");
     }
 
     @Test
     @DisplayName("댓글 생성 성공")
     void postComment() {
         // given
-        CommentDto commentDto = new CommentDto();
-        commentDto.setComment("comment");
 
         // when
         Comment comment = commentService.postComment(userReview.getId(), commentDto, nowUser);
@@ -79,8 +80,6 @@ public class CommentServiceTest {
     @DisplayName("댓글 수정 성공")
     void updateComment() {
         // given
-        CommentDto commentDto = new CommentDto();
-        commentDto.setComment("comment");
         Comment comment = commentService.postComment(userReview.getId(), commentDto, nowUser);
 
         CommentDto commentDtoEdit = new CommentDto();
@@ -98,8 +97,6 @@ public class CommentServiceTest {
     @DisplayName("댓글 삭제 성공")
     void deleteComment() {
         // given
-        CommentDto commentDto = new CommentDto();
-        commentDto.setComment("comment");
         Comment comment = commentService.postComment(userReview.getId(), commentDto, nowUser);
 
         //when
@@ -110,6 +107,6 @@ public class CommentServiceTest {
         if (commentTest.isPresent())
             throw new IllegalArgumentException("Comment 가 정상적으로 삭제되지 않았습니다.");
         else
-            assertEquals("Comment 가 정상적으로 삭제되었습니다.", Optional.empty(), commentTest);
+            assertEquals("Comment 가 비어있어야 한다.", Optional.empty(), commentTest);
     }
 }
