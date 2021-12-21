@@ -52,4 +52,8 @@ public class User extends Timestamped {
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Comment> comments;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<UserReviewLikes> userReviewLikes;
 }
