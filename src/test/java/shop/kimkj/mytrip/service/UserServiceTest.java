@@ -95,10 +95,10 @@ class UserServiceTest {
     void deleteUser() throws Exception {
         // given
         User user = userService.registerUser(userDto);
-        UserDetailsImpl nowuser = new UserDetailsImpl(user);
+        UserDetailsImpl nowUser = new UserDetailsImpl(user);
 
         // when
-        userService.deleteUser(nowuser);
+        userService.deleteUser(nowUser);
 
         // then
         Optional<User> userTest = userRepository.findById(user.getId());
