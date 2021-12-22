@@ -16,11 +16,9 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import shop.kimkj.mytrip.dto.LatLngDto;
 import shop.kimkj.mytrip.dto.PopularDto;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrlTemplate;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -40,7 +38,7 @@ class PopularControllerTest {
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext) {
         this.mockMvc = MockMvcBuilders
-               .webAppContextSetup(webApplicationContext)
+                .webAppContextSetup(webApplicationContext)
                 .addFilters(new CharacterEncodingFilter("UTF-8", true))
                 .alwaysDo(MockMvcResultHandlers.print())
                 .build();
@@ -74,7 +72,7 @@ class PopularControllerTest {
 
     @Test
     @Order(3)
-    public void 테마별_여행지_가족_필터() throws Exception{
+    public void 테마별_여행지_가족_필터() throws Exception {
         PopularDto popularDto = new PopularDto();
         popularDto.setQuantity("20");
         popularDto.setCat1("C01");
@@ -91,7 +89,7 @@ class PopularControllerTest {
 
     @Test
     @Order(4)
-    public void 테마별_여행지_나홀로_필터() throws Exception{
+    public void 테마별_여행지_나홀로_필터() throws Exception {
         PopularDto popularDto = new PopularDto();
         popularDto.setQuantity("20");
         popularDto.setCat1("C01");
@@ -108,7 +106,7 @@ class PopularControllerTest {
 
     @Test
     @Order(5)
-    public void 테마별_여행지_힐링_필터() throws Exception{
+    public void 테마별_여행지_힐링_필터() throws Exception {
         PopularDto popularDto = new PopularDto();
         popularDto.setQuantity("20");
         popularDto.setCat1("C01");
@@ -125,7 +123,7 @@ class PopularControllerTest {
 
     @Test
     @Order(6)
-    public void 테마별_여행지_걷기좋은_필터() throws Exception{
+    public void 테마별_여행지_걷기좋은_필터() throws Exception {
         PopularDto popularDto = new PopularDto();
         popularDto.setQuantity("20");
         popularDto.setCat1("C01");
@@ -142,7 +140,7 @@ class PopularControllerTest {
 
     @Test
     @Order(7)
-    public void 테마별_여행지_캠핑_필터() throws Exception{
+    public void 테마별_여행지_캠핑_필터() throws Exception {
         PopularDto popularDto = new PopularDto();
         popularDto.setQuantity("20");
         popularDto.setCat1("C01");
@@ -159,7 +157,7 @@ class PopularControllerTest {
 
     @Test
     @Order(8)
-    public void 테마별_여행지_맛집_필터() throws Exception{
+    public void 테마별_여행지_맛집_필터() throws Exception {
         PopularDto popularDto = new PopularDto();
         popularDto.setQuantity("20");
         popularDto.setCat1("C01");
@@ -176,7 +174,7 @@ class PopularControllerTest {
 
     @Test
     @Order(8)
-    public void 날씨() throws Exception{
+    public void 날씨() throws Exception {
         LatLngDto latLngDto = new LatLngDto();
         latLngDto.setPlaceLat("37.47472177841315");
         latLngDto.setPlaceLng("126.94872261770247");
