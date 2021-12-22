@@ -43,17 +43,12 @@ public class BookmarkServiceTest {
 
     @BeforeEach
     void beforeEach() throws IOException {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("test1234");
-        userDto.setPassword("test1234");
+        UserDto userDto = new UserDto("test", "test1234", "test1234");
 
         User user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
 
-        UserReviewDto userReviewDto = new UserReviewDto();
-        userReviewDto.setTitle("title");
-        userReviewDto.setPlace("place");
-        userReviewDto.setReview("review");
+        UserReviewDto userReviewDto = new UserReviewDto("title", "place", "review");
 
         MockMultipartFile multipartFile = new MockMultipartFile("image",
                 "testEdit.png",
@@ -62,10 +57,7 @@ public class BookmarkServiceTest {
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
         this.userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
 
-        this.bookmarkDto = new BookmarkDto();
-        bookmarkDto.setTitle(userReview.getTitle());
-        bookmarkDto.setAddress(userReview.getPlace());
-        bookmarkDto.setImgUrl(userReview.getReviewImgUrl());
+        this.bookmarkDto = new BookmarkDto(userReview.getTitle(), userReview.getPlace(), userReview.getReviewImgUrl());
     }
 
     @Test
@@ -81,7 +73,7 @@ public class BookmarkServiceTest {
                 () -> new NullPointerException("Bookmark 가 정상적으로 생성되지 않았습니다.")
         );
 
-        assertEquals("Review ID 값과 Bookmark 에 저장된 ContentId 값이 동일해야 한다.   .", userReview.getId(), bookmarkTest.getContentId());
+        assertEquals("Review ID 값과 Bookmark 에 저장된 ContentId 값이 동일해야 한다.", userReview.getId(), bookmarkTest.getContentId());
     }
 
     @Test
@@ -98,6 +90,6 @@ public class BookmarkServiceTest {
         if (bookmarkTest.isPresent())
             throw new IllegalArgumentException("북마크 삭제가 실패하였습니다.");
         else
-            assertEquals("Bookmark 가 비어있어야 한다.", Optional.empty(), bookmarkTest);
+            assertEquals("bookmarkRepository 에서 찾은 bookmarkTest 가 비어있어야 한다.", Optional.empty(), bookmarkTest);
     }
 }

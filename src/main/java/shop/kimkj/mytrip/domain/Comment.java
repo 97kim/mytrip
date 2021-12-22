@@ -23,7 +23,6 @@ public class Comment extends Timestamped {
     @Column(nullable = false)
     private String comment;
 
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "USER_REVIEW_ID", nullable = false)
