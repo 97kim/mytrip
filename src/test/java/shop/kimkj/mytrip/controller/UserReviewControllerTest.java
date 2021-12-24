@@ -21,8 +21,10 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.domain.UserReview;
+import shop.kimkj.mytrip.domain.UserReviewLikes;
 import shop.kimkj.mytrip.dto.UserReviewDto;
 import shop.kimkj.mytrip.repository.UserRepository;
+import shop.kimkj.mytrip.repository.UserReviewLikeRepository;
 import shop.kimkj.mytrip.repository.UserReviewRepository;
 
 import javax.transaction.Transactional;
@@ -55,6 +57,9 @@ class UserReviewControllerTest {
     @Autowired
     UserReviewRepository userReviewRepository;
 
+    @Autowired
+    UserReviewLikeRepository userReviewLikeRepository;
+
     private User user;
 
     @BeforeEach
@@ -74,7 +79,8 @@ class UserReviewControllerTest {
 
     @AfterTransaction
     void deleteUser() {
-        userRepository.deleteAll();
+        Long userId = user.getId();
+        userRepository.deleteById(userId);
     }
 
     @Test
@@ -199,7 +205,7 @@ class UserReviewControllerTest {
     @Order(6)
     public void getReviewsByDate() throws Exception {
         mockMvc.perform(get("/reviews")
-                        .param("sort","date"))
+                        .param("sort", "date"))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -209,21 +215,76 @@ class UserReviewControllerTest {
     @Order(7)
     public void getReviewsByLike() throws Exception {
         mockMvc.perform(get("/reviews")
-                        .param("sort","like"))
+                        .param("sort", "like"))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
 
     @Test
     @DisplayName("좋아요 저장")
+    @WithUserDetails(value = "testId")
     @Order(8)
     public void doLike() throws Exception {
-        mockMvc.perform(get("/reviews")
-                        .param("sort","like"))
+        UserReviewDto userReviewDto = new UserReviewDto("testTitle", "testPlace", "testReview");
+        UserReview userReview = new UserReview(userReviewDto, user);
+        userReviewRepository.save(userReview);
+
+        Long reviewId = userReview.getId();
+
+        mockMvc.perform(post("/reviews/{reviewId}/like", reviewId))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("좋아요 해제")
+    @WithUserDetails(value = "testId")
+    @Order(9)
+    public void deleteLike() throws Exception {
+        UserReviewDto userReviewDto = new UserReviewDto("testTitle", "testPlace", "testReview");
+        UserReview userReview = new UserReview(userReviewDto, user);
+        userReviewRepository.save(userReview);
 
+        Long reviewId = userReview.getId();
 
+        mockMvc.perform(delete("/reviews/{reviewId}/like", reviewId))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("좋아요 상태 체크 True")
+    @WithUserDetails(value = "testId")
+    @Order(10)
+    public void checkLikeTrue() throws Exception {
+        UserReviewDto userReviewDto = new UserReviewDto("testTitle", "testPlace", "testReview");
+        UserReview userReview = new UserReview(userReviewDto, user);
+        userReviewRepository.save(userReview);
+
+        Long reviewId = userReview.getId();
+        UserReviewLikes userReviewLikes = new UserReviewLikes(userReview, user);
+        userReviewLikeRepository.save(userReviewLikes);
+
+        mockMvc.perform(get("/reviews/{reviewId}/like", reviewId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("likeStatus", is(true)))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("좋아요 상태 체크 False")
+    @WithUserDetails(value = "testId")
+    @Order(11)
+    public void checkLikeFalse() throws Exception {
+        UserReviewDto userReviewDto = new UserReviewDto("testTitle", "testPlace", "testReview");
+        UserReview userReview = new UserReview(userReviewDto, user);
+        userReviewRepository.save(userReview);
+
+        Long reviewId = userReview.getId();
+
+        mockMvc.perform(get("/reviews/{reviewId}/like", reviewId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("likeStatus", is(false)))
+                .andDo(print());
+    }
 }
