@@ -15,8 +15,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -210,6 +208,16 @@ class UserReviewControllerTest {
     @DisplayName("리뷰 리스트 좋아요순 조회")
     @Order(7)
     public void getReviewsByLike() throws Exception {
+        mockMvc.perform(get("/reviews")
+                        .param("sort","like"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("좋아요 저장")
+    @Order(8)
+    public void doLike() throws Exception {
         mockMvc.perform(get("/reviews")
                         .param("sort","like"))
                 .andExpect(status().isOk())
