@@ -49,9 +49,11 @@ class UserRepositoryTest {
         //then
         assertThat(userRepository.count()).isEqualTo(2);
         assertThat(findUser.getUsername()).isEqualTo("testId");
+        assertThat(findUser.getPassword()).isEqualTo("testPassword");
         assertThat(findUser.getNickname()).isEqualTo("testNickname");
         assertThat(findUser.getProfileImgUrl()).isEqualTo("http://placeimg.com/640/480/nature");
         assertThat(findUser2.getUsername()).isEqualTo("testId2");
+        assertThat(findUser2.getPassword()).isEqualTo("testPassword2");
         assertThat(findUser2.getNickname()).isEqualTo("testNickname2");
         assertThat(findUser2.getProfileImgUrl()).isEqualTo("http://placeimg.com/640/480/people");
     }
