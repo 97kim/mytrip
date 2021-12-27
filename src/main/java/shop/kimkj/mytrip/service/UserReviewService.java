@@ -1,10 +1,7 @@
 package shop.kimkj.mytrip.service;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
@@ -54,6 +51,7 @@ public class UserReviewService {
             userReviewRepository.save(editReview);
             return editReview;
         }
+
         String reviewImgUrl = s3Manager.upload(multipartFile, "reviewImg"); // 클라우드 프론트 url
         editReview.setReviewImgUrl(reviewImgUrl);
         userReviewRepository.save(editReview);
@@ -86,12 +84,15 @@ public class UserReviewService {
 
     @Transactional
     public void deleteUserReview(Long reviewId, UserDetailsImpl nowUser) {
+        UserReview userReview = userReviewRepository.findById(reviewId).orElseThrow(
+                () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
+
         if (!nowUser.getId().equals(getUserReview(reviewId).getUser().getId())) { // 리뷰 작성자랑 로그인한 유저랑 다르면
             throw new AccessDeniedException("권한이 없습니다.");
         }
-        UserReview userReview = userReviewRepository.findById(reviewId).orElseThrow(
-                () -> new NullPointerException("해당 리뷰가 존재하지 않습니다."));
+
         String reviewImgUrl = userReview.getReviewImgUrl(); // userReview에서 이미지 url 가져옴
+
         if (!reviewImgUrl.equals("https://dk9q1cr2zzfmc.cloudfront.net/img/default.jpg")) { // 기본 이미지가 아닐 때만 S3에서 삭제
             s3Manager.delete(reviewImgUrl); // s3에 해당 이미지 있으면 삭제
         }

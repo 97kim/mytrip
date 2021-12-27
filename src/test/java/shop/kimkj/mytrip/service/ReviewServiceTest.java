@@ -28,7 +28,6 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 @ExtendWith(MockitoExtension.class)
 @Transactional
 public class ReviewServiceTest {
-
     @Autowired
     UserService userService;
     @Autowired
@@ -50,9 +49,9 @@ public class ReviewServiceTest {
         this.nowUser = new UserDetailsImpl(user);
         this.userReviewDto = new UserReviewDto("title", "place", "review");
         this.multipartFile = new MockMultipartFile("image",
-                "testEdit.png",
+                "testPhoto.png",
                 "image/png",
-                new FileInputStream("/Users/twseo/Desktop/hawaii.jpeg"));
+                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg"));
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
     }
 
@@ -80,9 +79,9 @@ public class ReviewServiceTest {
 
         UserReviewDto userReviewDtoEdit = new UserReviewDto("title-edit", "place-edit", "review-edit");
         MockMultipartFile multipartFileEdit = new MockMultipartFile("image",
-                "test.png",
+                "testPhotoEdit.png",
                 "image/png",
-                new FileInputStream("/Users/twseo/Desktop/jeonju2.jpeg"));
+                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\22.jpg"));
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
 
         // when
@@ -132,7 +131,7 @@ public class ReviewServiceTest {
         // given
         UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
         userReviewService.saveLike(userReview.getId(), nowUser);
-
+        assertEquals("UserReview.getLikeCnt 값이 1이 되어야 한다.", 1, userReview.getLikeCnt());
         // when
         userReviewService.deleteLike(userReview.getId(), nowUser);
 

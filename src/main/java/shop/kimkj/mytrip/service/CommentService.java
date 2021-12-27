@@ -47,7 +47,6 @@ public class CommentService {
         }
         comment.setComment(commentDto.getComment());
         commentRepository.save(comment);
-
         return comment;
     }
 

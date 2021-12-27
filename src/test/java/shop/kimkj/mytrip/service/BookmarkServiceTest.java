@@ -51,7 +51,7 @@ public class BookmarkServiceTest {
         UserReviewDto userReviewDto = new UserReviewDto("title", "place", "review");
 
         MockMultipartFile multipartFile = new MockMultipartFile("image",
-                "testEdit.png",
+                "testPhoto.png",
                 "image/png",
                 new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg"));
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
