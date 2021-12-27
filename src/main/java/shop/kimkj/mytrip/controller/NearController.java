@@ -2,7 +2,6 @@ package shop.kimkj.mytrip.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.web.bind.annotation.*;
 import shop.kimkj.mytrip.dto.NearDto;
 import shop.kimkj.mytrip.service.NearService;

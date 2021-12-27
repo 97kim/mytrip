@@ -2,7 +2,6 @@ package shop.kimkj.mytrip.domain;
 
 import org.junit.jupiter.api.*;
 import shop.kimkj.mytrip.dto.UserReviewDto;
-import shop.kimkj.mytrip.dto.UserReviewDto;
 
 import java.util.ArrayList;
 import java.util.List;

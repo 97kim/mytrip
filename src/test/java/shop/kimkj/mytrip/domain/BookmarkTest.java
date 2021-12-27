@@ -1,9 +1,7 @@
 package shop.kimkj.mytrip.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import shop.kimkj.mytrip.dto.BookmarkDto;
-import shop.kimkj.mytrip.dto.UserReviewDto;
 
 import java.util.ArrayList;
 import java.util.List;
