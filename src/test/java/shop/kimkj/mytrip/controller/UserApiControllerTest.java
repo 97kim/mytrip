@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockPart;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.transaction.AfterTransaction;
@@ -51,6 +52,9 @@ class UserApiControllerTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext) {
         this.mockMvc = MockMvcBuilders
@@ -62,7 +66,7 @@ class UserApiControllerTest {
 
     @BeforeTransaction
     void registerUser() {
-        User user = new User("testId", "testPassword", "testNickname", "http://placeimg.com/640/480/nature");
+        User user = new User("testId", passwordEncoder.encode("testPassword"), "testNickname", "http://placeimg.com/640/480/nature");
         userRepository.save(user);
     }
 
@@ -74,14 +78,14 @@ class UserApiControllerTest {
     @Test
     @DisplayName("회원가입")
     @Order(1)
-    public void signIn() throws Exception {
+    public void signUp() throws Exception {
 
         UserDto userDto = new UserDto();
         userDto.setUsername("testId2");
         userDto.setPassword("testPassword2");
 
         String jsonString = objectMapper.writeValueAsString(userDto);
-        mockMvc.perform(post("/login")
+        mockMvc.perform(post("/user/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isOk())
@@ -98,7 +102,7 @@ class UserApiControllerTest {
         userDto.setPassword("testPassword");
 
         String jsonString = objectMapper.writeValueAsString(userDto);
-        mockMvc.perform(post("/login")
+        mockMvc.perform(post("/user/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isOk())
@@ -113,7 +117,7 @@ class UserApiControllerTest {
         userDto.setUsername("testId");
 
         String jsonString = objectMapper.writeValueAsString(userDto);
-        mockMvc.perform(post("/signup/check")
+        mockMvc.perform(post("/user/signup/check")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isOk())
