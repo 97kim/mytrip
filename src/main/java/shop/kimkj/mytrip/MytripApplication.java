@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
-@OpenAPIDefinition(servers = {@Server(url = "/", description = "api.kimkj.shop")})
+@OpenAPIDefinition(servers = {@Server(url = "/", description = "api.mytrips.shop")})
 @EnableJpaAuditing
 @SpringBootApplication
 public class MytripApplication {
