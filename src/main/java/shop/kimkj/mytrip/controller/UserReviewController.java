@@ -67,8 +67,8 @@ public class UserReviewController {
     }
 
     @Operation(description = "좋아요 상태 체크", method = "GET")
-    @GetMapping("/reviews/{userReviewId}/like") // 좋아요 된 게시물은 나갔다 들어와도 좋아요 된 것으로 표시
-    public Map<String, Boolean> getLikeStatus(@PathVariable Long userReviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        return userReviewService.checkLikeStatus(userReviewId, nowUser.getId());
+    @GetMapping("/reviews/{reviewId}/like") // 좋아요 된 게시물은 나갔다 들어와도 좋아요 된 것으로 표시
+    public Map<String, Boolean> getLikeStatus(@PathVariable Long reviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        return userReviewService.checkLikeStatus(reviewId, nowUser.getId());
     }
 }
