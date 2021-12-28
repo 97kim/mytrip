@@ -48,6 +48,7 @@ public class ReviewServiceTest {
 
     @BeforeEach
     void beforeEach() throws IOException {
+        userReviewRepository.deleteAll();
         UserDto userDto = new UserDto("test1234", "test1234");
 
         User user = userService.registerUser(userDto);
@@ -57,7 +58,6 @@ public class ReviewServiceTest {
                 "testPhoto.png",
                 "image/png",
                 new FileInputStream(photo));
-        // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
     }
 
     @Test
@@ -87,7 +87,6 @@ public class ReviewServiceTest {
                 "testPhotoEdit.png",
                 "image/png",
                 new FileInputStream(photo2));
-        // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
 
         // when
         UserReview userReviewEdit = userReviewService.putUserReview(userReview.getId(), userReviewDtoEdit, multipartFileEdit, nowUser);
@@ -137,6 +136,7 @@ public class ReviewServiceTest {
         UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
         userReviewService.saveLike(userReview.getId(), nowUser);
         assertEquals("UserReview.getLikeCnt 값이 1이 되어야 한다.", 1, userReview.getLikeCnt());
+
         // when
         userReviewService.deleteLike(userReview.getId(), nowUser);
 

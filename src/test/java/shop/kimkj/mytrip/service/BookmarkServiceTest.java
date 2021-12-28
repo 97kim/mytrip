@@ -59,7 +59,6 @@ public class BookmarkServiceTest {
                 "testPhoto.png",
                 "image/png",
                 new FileInputStream(photo));
-        // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
         this.userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
 
         this.bookmarkDto = new BookmarkDto(userReview.getTitle(), userReview.getPlace(), userReview.getReviewImgUrl());
