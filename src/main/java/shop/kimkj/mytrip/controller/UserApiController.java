@@ -38,7 +38,7 @@ public class UserApiController {
     @Operation(description = "로그인", method = "POST")
     @PostMapping("/login")
     public ResponseEntity<?> createUser(@RequestBody UserDto userDto) throws Exception {
-        if (!userService.confirmPassword(userDto)) {
+        if (!userService.confirmPassword(userDto)) { // DB에 저장된 비밀번호와 입력받은 비밀번호를 확인
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
