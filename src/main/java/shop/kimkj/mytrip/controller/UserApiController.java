@@ -21,7 +21,6 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
-
 public class UserApiController {
 
     private final JwtTokenUtil jwtTokenUtil;
@@ -39,7 +38,7 @@ public class UserApiController {
     @PostMapping("/user/login")
     public ResponseEntity<?> loginUser(@RequestBody UserDto userDto) throws Exception {
         if (!userService.confirmPassword(userDto)) { // DB에 저장된 비밀번호와 입력받은 비밀번호를 확인
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
