@@ -3,6 +3,7 @@ package shop.kimkj.mytrip.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,11 +28,19 @@ public class UserApiController {
     private final UserDetailsService userDetailsService;
     private final UserService userService;
 
-    @Operation(description = "로그인, 회원가입", method = "POST")
+    @Operation(description = "회원가입", method = "POST")
+    @PostMapping("/create/user")
+    public String loginUser(@RequestBody UserDto userDto) throws Exception {
+        userService.registerUser(userDto); // 사용자 등록
+        return "회원가입을 축하드립니다!";
+    }
+
+    @Operation(description = "로그인", method = "POST")
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody UserDto userDto) throws Exception {
-        if (userDto.getLoginCheck().equals("signup")) {
-            userService.registerUser(userDto); // 사용자 등록
+    public ResponseEntity<?> createUser(@RequestBody UserDto userDto) throws Exception {
+        boolean checkPassword = userService.confirmPassword(userDto);
+        if (!checkPassword) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);

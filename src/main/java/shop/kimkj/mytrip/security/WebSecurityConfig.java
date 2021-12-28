@@ -49,6 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/create/user").permitAll()
+
                 .antMatchers("/signup/**").permitAll()
                 .antMatchers("/**.html").permitAll()
                 .antMatchers("/templates/**.html").permitAll()

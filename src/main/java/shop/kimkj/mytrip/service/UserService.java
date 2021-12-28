@@ -32,10 +32,18 @@ public class UserService {
         // 비밀번호 인코딩
         String password = passwordEncoder.encode(userDto.getPassword());
         String profileImgUrl = "https://dk9q1cr2zzfmc.cloudfront.net/profile/default_img.png";
-
         User user = new User(username, password, nickname, profileImgUrl);
         userRepository.save(user);
         return user;
+    }
+
+    public boolean confirmPassword(UserDto userDto) {
+        Optional<User> user = userRepository.findByUsername(userDto.getUsername());
+        boolean matches = passwordEncoder.matches(userDto.getPassword(), user.get().getPassword());
+        if (user == null || !matches) {
+            return false;
+        }
+        return true;
     }
 
     public void checkExist(UserDto userDto) {
