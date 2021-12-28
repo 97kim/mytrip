@@ -12,6 +12,7 @@ import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.util.S3Manager;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -35,6 +36,14 @@ public class UserService {
 
         User user = new User(username, password, nickname, profileImgUrl);
         userRepository.save(user);
+    }
+
+    public boolean confirmPassword(UserDto userDto) {
+        Optional<User> user = userRepository.findByUsername(userDto.getUsername());
+        if (Objects.equals(user, Optional.empty()) || !passwordEncoder.matches(userDto.getPassword(), user.get().getPassword())) {
+            return false;
+        }
+        return true;
     }
 
     public void checkExist(UserDto userDto) {
