@@ -42,40 +42,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 인증과정 필요
                 .antMatchers("/themes/**/bookmark").authenticated()
                 .antMatchers("/nearspots/**/bookmark").authenticated()
+                .antMatchers("/bookmarks").authenticated()
+                .antMatchers("/reviews/**/comment").authenticated()
+                .antMatchers("/reviews/**/comments/**").authenticated()
+                .antMatchers("/review").authenticated()
+                .antMatchers(HttpMethod.PUT, "/reviews/**").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/reviews/**").authenticated()
                 .antMatchers("/reviews/**/like").authenticated()
+                .antMatchers("/user").authenticated()
 
-                // 인증과정 필요 없이 모두 허용
-                .antMatchers("/css/**").permitAll()
-                .antMatchers("/js/**").permitAll()
-                .antMatchers("/user/login").permitAll()
-                .antMatchers("/user/signup").permitAll()
-                .antMatchers("/user/signup/check").permitAll()
-                .antMatchers("/**.html").permitAll()
-                .antMatchers("/img/favicon.ico").permitAll()
-                .antMatchers(HttpMethod.GET, "/nearspots/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/nearspots").permitAll()
-                .antMatchers(HttpMethod.GET, "/themes/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/themes").permitAll()
-                .antMatchers(HttpMethod.GET, "/reviews/**").permitAll()
-                .antMatchers("/weather").permitAll()
-                .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/swagger-ui/**").permitAll()
-                .antMatchers("/v3/api-docs/**").permitAll()
-                .antMatchers("/").permitAll()
-
-                // 그 외 모든 요청은 인증과정 필요
-                .anyRequest().authenticated()
+                // 그 외 모든 요청은 허용
+                .anyRequest().permitAll()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .formLogin()
-                .loginPage("/login.html").loginProcessingUrl("/login.html").defaultSuccessUrl("/").permitAll()
-                .and()
-                .logout().logoutUrl("/logout");
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
