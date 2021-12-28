@@ -65,8 +65,9 @@ class UserServiceTest {
     void confirmPassword() throws Exception {
         // given
         userService.registerUser(userDto);
-        String inputPW = "test1234";
         Optional<User> user = userRepository.findByUsername(userDto.getUsername());
+
+        String inputPW = "test1234";
 
         // when
         boolean matches = passwordEncoder.matches(inputPW, user.get().getPassword());
