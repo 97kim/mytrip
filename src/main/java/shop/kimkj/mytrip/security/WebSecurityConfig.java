@@ -47,9 +47,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 인증과정 필요 없이 모두 허용
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .antMatchers("user/login").permitAll()
-                .antMatchers("user/signup").permitAll()
-                .antMatchers("user/signup/check").permitAll()
+                .antMatchers("/user/login").permitAll()
+                .antMatchers("/user/signup").permitAll()
+                .antMatchers("/user/signup/check").permitAll()
                 .antMatchers("/**.html").permitAll()
                 .antMatchers("/img/favicon.ico").permitAll()
                 .antMatchers(HttpMethod.GET, "/nearspots/**").permitAll()
