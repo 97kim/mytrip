@@ -97,18 +97,18 @@ public class UserReviewService {
     }
 
     @Transactional
-    public void deleteLike(Long userReviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
-        UserReview userReview = userReviewRepository.findById(userReviewId).orElseThrow(
+    public void deleteLike(Long reviewId, @AuthenticationPrincipal UserDetailsImpl nowUser) {
+        UserReview userReview = userReviewRepository.findById(reviewId).orElseThrow(
                 () -> new NullPointerException("해당 리뷰 없음")
         );
 
         userReview.setLikeCnt(userReview.getLikeCnt() - 1);
-        userReviewLikeRepository.deleteByUserReviewIdAndUserId(userReviewId, nowUser.getId());
+        userReviewLikeRepository.deleteByUserReviewIdAndUserId(reviewId, nowUser.getId());
     }
 
     @Transactional
-    public void saveLike(Long userReviewId, UserDetailsImpl nowUser) {
-        UserReview userReview = userReviewRepository.findById(userReviewId).orElseThrow(
+    public void saveLike(Long reviewId, UserDetailsImpl nowUser) {
+        UserReview userReview = userReviewRepository.findById(reviewId).orElseThrow(
                 () -> new NullPointerException("해당 리뷰 없음")
         );
         UserReviewLikes userReviewLikes = new UserReviewLikes(userReview, nowUser.getUser());
@@ -116,9 +116,9 @@ public class UserReviewService {
         userReviewLikeRepository.save(userReviewLikes);
     }
 
-    public Map<String, Boolean> checkLikeStatus(Long userReviewId, Long userId) {
+    public Map<String, Boolean> checkLikeStatus(Long reviewId, Long userId) {
         Map<String, Boolean> response = new HashMap<>();
-        UserReviewLikes userReviewLikes = userReviewLikeRepository.findByUserReviewIdAndUserId(userReviewId, userId);
+        UserReviewLikes userReviewLikes = userReviewLikeRepository.findByUserReviewIdAndUserId(reviewId, userId);
         if (userReviewLikes == null) {
             response.put("likeStatus", Boolean.FALSE);
         } else {
