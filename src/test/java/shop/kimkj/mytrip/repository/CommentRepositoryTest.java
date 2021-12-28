@@ -1,6 +1,8 @@
 package shop.kimkj.mytrip.repository;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -21,15 +23,21 @@ class CommentRepositoryTest {
     UserReviewDto userReviewDto;
     UserReview userReview;
     User user = new User("testId", "testPassword", "testNickname", "http://placeimg.com/640/480/nature");
+    Comment comment;
 
-    @Test
-    @DisplayName("Comment 저장 테스트")
-    public void saveComment() {
-        //given
+    @BeforeEach
+    void setup() {
         commentDto = new CommentDto("testComment");
         userReviewDto = new UserReviewDto("testTitle", "testPlace", "testReview");
         userReview = new UserReview(userReviewDto, user);
-        Comment comment = new Comment(commentDto, userReview, user);
+        comment = new Comment(commentDto, userReview, user);
+    }
+
+    @Test
+    @DisplayName("Comment 저장 테스트")
+    @Order(1)
+    public void saveComment() {
+        //given
 
         //when
         Comment savedComment = commentRepository.save(comment);
@@ -44,11 +52,9 @@ class CommentRepositoryTest {
 
     @Test
     @DisplayName("Comment 조회 테스트")
+    @Order(2)
     public void findComment() {
         //given
-        commentDto = new CommentDto("Comment");
-        userReviewDto = new UserReviewDto("testTitle", "testPlace", "testReview");
-        userReview = new UserReview(userReviewDto, user);
         Comment savedComment = commentRepository.save(new Comment(commentDto, userReview, user));
 
         //when
@@ -62,11 +68,9 @@ class CommentRepositoryTest {
 
     @Test
     @DisplayName("Comment 수정 테스트")
+    @Order(3)
     public void updateComment() {
         //given
-        commentDto = new CommentDto("Comment");
-        userReviewDto = new UserReviewDto("testTitle", "testPlace", "testReview");
-        userReview = new UserReview(userReviewDto, user);
         Comment savedComment = commentRepository.save(new Comment(commentDto, userReview, user));
 
         //when
@@ -84,11 +88,9 @@ class CommentRepositoryTest {
 
     @Test
     @DisplayName("Comment 삭제 테스트")
+    @Order(4)
     public void deleteComment() {
         //given
-        commentDto = new CommentDto("Comment");
-        userReviewDto = new UserReviewDto("testTitle", "testPlace", "testReview");
-        userReview = new UserReview(userReviewDto, user);
         Comment savedComment = commentRepository.save(new Comment(commentDto, userReview, user));
 
         //when
