@@ -29,7 +29,7 @@ public class UserApiController {
     private final UserService userService;
 
     @Operation(description = "회원가입", method = "POST")
-    @PostMapping("/user/create")
+    @PostMapping("/user/signup")
     public String createUser(@RequestBody UserDto userDto) throws Exception {
         userService.registerUser(userDto); // 사용자 등록
         return "회원가입을 축하드립니다!";
