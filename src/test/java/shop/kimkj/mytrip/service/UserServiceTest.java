@@ -32,8 +32,11 @@ class UserServiceTest {
     PasswordEncoder passwordEncoder;
 
     UserDto userDto;
-    String photo = "";
-    String photo2 = "";
+
+    // 테스트 사진 1 - 사진 URL 입력해주세요.
+    String photo = "C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg";
+    // 테스트 사진 2 - 테스트 사진 1과 다른 비교할 사진의 URL 이 필요합니다.
+    String photo2 = "C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\22.jpg";
 
     @BeforeEach
     void beforeEach() {
@@ -77,13 +80,13 @@ class UserServiceTest {
     void updateProfile() throws IOException {
         // given
         User user = userService.registerUser(userDto);
-        user.setProfileImgUrl("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg");
+        user.setProfileImgUrl(photo);
         UserDetailsImpl nowUser = new UserDetailsImpl(user);
 
         MockMultipartFile multipartFileEdit = new MockMultipartFile("image",
                 "testEdit.png",
                 "image/png",
-                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\22.jpg"));
+                new FileInputStream(photo2));
 
         // when
         User userTest = userService.updateProfile("test1234-edit", multipartFileEdit, nowUser);

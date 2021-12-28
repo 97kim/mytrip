@@ -41,6 +41,11 @@ public class BookmarkServiceTest {
     UserReview userReview;
     BookmarkDto bookmarkDto;
 
+    // 테스트 사진 1 - 사진 URL 입력해주세요.
+    String photo = "C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg";
+    // 테스트 사진 2 - 테스트 사진 1과 다른 비교할 사진의 URL 이 필요합니다.
+    String photo2 = "C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\22.jpg";
+
     @BeforeEach
     void beforeEach() throws IOException {
         UserDto userDto = new UserDto("test1234", "test1234");
@@ -53,7 +58,7 @@ public class BookmarkServiceTest {
         MockMultipartFile multipartFile = new MockMultipartFile("image",
                 "testPhoto.png",
                 "image/png",
-                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg"));
+                new FileInputStream(photo));
         // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
         this.userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
 
