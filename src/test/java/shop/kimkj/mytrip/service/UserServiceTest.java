@@ -6,6 +6,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.dto.UserDto;
@@ -27,6 +28,8 @@ class UserServiceTest {
     UserService userService;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     UserDto userDto;
 
@@ -49,6 +52,20 @@ class UserServiceTest {
         );
 
         assertEquals("Id가 같은지 확인", user.getId(), userTest.getId());
+    }
+
+    @Test
+    @DisplayName("유저가 입력한 비밀번호 확인 성공")
+    void confirmPassword() throws Exception {
+        // given
+        String inputPW = "test1234";
+        Optional<User> user = userRepository.findByUsername(userDto.getUsername());
+
+        // when
+        boolean matches = passwordEncoder.matches(inputPW, user.get().getPassword());
+
+        // then
+        assertEquals("DB에 저장된 암호화 PW와 입력받은 PW 일치하는지 확인", matches, Boolean.TRUE);
     }
 
     @Test
