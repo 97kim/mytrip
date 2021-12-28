@@ -32,10 +32,13 @@ class UserServiceTest {
     PasswordEncoder passwordEncoder;
 
     UserDto userDto;
+    String photo = "";
+    String photo2 = "";
 
     @BeforeEach
     void beforeEach() {
         this.userDto = new UserDto("test1234", "test1234");
+        userRepository.deleteAll();
     }
 
     @Test
@@ -58,6 +61,7 @@ class UserServiceTest {
     @DisplayName("유저가 입력한 비밀번호 확인 성공")
     void confirmPassword() throws Exception {
         // given
+        userService.registerUser(userDto);
         String inputPW = "test1234";
         Optional<User> user = userRepository.findByUsername(userDto.getUsername());
 
@@ -79,7 +83,7 @@ class UserServiceTest {
         MockMultipartFile multipartFileEdit = new MockMultipartFile("image",
                 "testEdit.png",
                 "image/png",
-                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\로그인 수정.PNG"));
+                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\22.jpg"));
 
         // when
         User userTest = userService.updateProfile("test1234-edit", multipartFileEdit, nowUser);
@@ -94,7 +98,7 @@ class UserServiceTest {
     @DisplayName("유저 ID 중복 체크 성공")
     void checkExist() throws Exception {
         // given
-        User user = userService.registerUser(userDto);
+        userService.registerUser(userDto);
 
         // when
         try {

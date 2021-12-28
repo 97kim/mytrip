@@ -77,7 +77,6 @@ class UserApiControllerTest {
     public void signIn() throws Exception {
 
         UserDto userDto = new UserDto();
-        userDto.setLoginCheck("signup");
         userDto.setUsername("testId2");
         userDto.setPassword("testPassword2");
 
@@ -95,7 +94,6 @@ class UserApiControllerTest {
     public void logIn() throws Exception {
 
         UserDto userDto = new UserDto();
-        userDto.setLoginCheck("login");
         userDto.setUsername("testId");
         userDto.setPassword("testPassword");
 
