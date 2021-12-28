@@ -38,8 +38,7 @@ public class UserApiController {
     @Operation(description = "로그인", method = "POST")
     @PostMapping("/login")
     public ResponseEntity<?> createUser(@RequestBody UserDto userDto) throws Exception {
-        boolean checkPassword = userService.confirmPassword(userDto);
-        if (!checkPassword) {
+        if (!userService.confirmPassword(userDto)) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
