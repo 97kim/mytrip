@@ -62,7 +62,7 @@ https://www.mytrips.shop
 <br>
 
 ### 📌 아키텍처
-<img width="1914" alt="스크린샷 2021-12-08 오후 2 17 43" src="https://user-images.githubusercontent.com/64389162/145219488-2131e99d-626e-4a6b-98f2-d4ac8ad25e73.png">
+<img width="1410" alt="스크린샷 2021-12-28 오후 7 16 14" src="https://user-images.githubusercontent.com/64389162/147563438-340a83d6-5a12-46b9-a518-ca4f4a34b65f.png">
 
 <br>
 
