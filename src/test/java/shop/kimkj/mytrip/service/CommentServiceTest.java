@@ -43,7 +43,7 @@ public class CommentServiceTest {
 
     @BeforeEach
     void beforeEach() {
-        UserDto userDto = new UserDto("test", "test1234", "test1234");
+        UserDto userDto = new UserDto("test1234", "test1234");
         User user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
 

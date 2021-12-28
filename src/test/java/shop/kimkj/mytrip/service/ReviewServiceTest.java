@@ -28,7 +28,6 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 @ExtendWith(MockitoExtension.class)
 @Transactional
 public class ReviewServiceTest {
-
     @Autowired
     UserService userService;
     @Autowired
@@ -42,18 +41,23 @@ public class ReviewServiceTest {
     UserReviewDto userReviewDto;
     MockMultipartFile multipartFile;
 
+    // 테스트 사진 1 - 사진 URL 입력해주세요.
+    String photo = "C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg";
+    // 테스트 사진 2 - 테스트 사진 1과 다른 비교할 사진의 URL 이 필요합니다.
+    String photo2 = "C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\22.jpg";
+
     @BeforeEach
     void beforeEach() throws IOException {
-        UserDto userDto = new UserDto("test", "test1234", "test1234");
+        userReviewRepository.deleteAll();
+        UserDto userDto = new UserDto("test1234", "test1234");
 
         User user = userService.registerUser(userDto);
         this.nowUser = new UserDetailsImpl(user);
         this.userReviewDto = new UserReviewDto("title", "place", "review");
         this.multipartFile = new MockMultipartFile("image",
-                "testEdit.png",
+                "testPhoto.png",
                 "image/png",
-                new FileInputStream("/Users/twseo/Desktop/hawaii.jpeg"));
-        // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
+                new FileInputStream(photo));
     }
 
     @Test
@@ -80,10 +84,9 @@ public class ReviewServiceTest {
 
         UserReviewDto userReviewDtoEdit = new UserReviewDto("title-edit", "place-edit", "review-edit");
         MockMultipartFile multipartFileEdit = new MockMultipartFile("image",
-                "test.png",
+                "testPhotoEdit.png",
                 "image/png",
-                new FileInputStream("/Users/twseo/Desktop/jeonju2.jpeg"));
-        // 테스트 실행 시 new FileInputStream = 내 로컬에 저장된 이미지 url 변경
+                new FileInputStream(photo2));
 
         // when
         UserReview userReviewEdit = userReviewService.putUserReview(userReview.getId(), userReviewDtoEdit, multipartFileEdit, nowUser);
@@ -132,6 +135,7 @@ public class ReviewServiceTest {
         // given
         UserReview userReview = userReviewService.postUserReview(userReviewDto, multipartFile, nowUser);
         userReviewService.saveLike(userReview.getId(), nowUser);
+        assertEquals("UserReview.getLikeCnt 값이 1이 되어야 한다.", 1, userReview.getLikeCnt());
 
         // when
         userReviewService.deleteLike(userReview.getId(), nowUser);

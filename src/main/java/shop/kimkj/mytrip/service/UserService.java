@@ -1,7 +1,6 @@
 package shop.kimkj.mytrip.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +12,7 @@ import shop.kimkj.mytrip.security.UserDetailsImpl;
 import shop.kimkj.mytrip.util.S3Manager;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -33,10 +33,17 @@ public class UserService {
         // 비밀번호 인코딩
         String password = passwordEncoder.encode(userDto.getPassword());
         String profileImgUrl = "https://dk9q1cr2zzfmc.cloudfront.net/profile/default_img.png";
-
         User user = new User(username, password, nickname, profileImgUrl);
         userRepository.save(user);
         return user;
+    }
+
+    public boolean confirmPassword(UserDto userDto) {
+        Optional<User> user = userRepository.findByUsername(userDto.getUsername());
+        if (Objects.equals(user, Optional.empty()) || !passwordEncoder.matches(userDto.getPassword(), user.get().getPassword())) {
+            return false;
+        }
+        return true;
     }
 
     public void checkExist(UserDto userDto) {

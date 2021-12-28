@@ -1,11 +1,14 @@
 package shop.kimkj.mytrip.service;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import shop.kimkj.mytrip.domain.User;
 import shop.kimkj.mytrip.dto.UserDto;
@@ -27,12 +30,20 @@ class UserServiceTest {
     UserService userService;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     UserDto userDto;
 
+    // 테스트 사진 1 - 사진 URL 입력해주세요.
+    String photo = "C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg";
+    // 테스트 사진 2 - 테스트 사진 1과 다른 비교할 사진의 URL 이 필요합니다.
+    String photo2 = "C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\22.jpg";
+
     @BeforeEach
     void beforeEach() {
-        this.userDto = new UserDto("test", "test1234", "test1234");
+        this.userDto = new UserDto("test1234", "test1234");
+        userRepository.deleteAll();
     }
 
     @Test
@@ -52,17 +63,33 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("유저가 입력한 비밀번호 확인 성공")
+    void confirmPassword() throws Exception {
+        // given
+        userService.registerUser(userDto);
+        Optional<User> user = userRepository.findByUsername(userDto.getUsername());
+
+        String inputPW = "test1234";
+
+        // when
+        boolean matches = passwordEncoder.matches(inputPW, user.get().getPassword());
+
+        // then
+        assertEquals("DB에 저장된 암호화 PW와 입력받은 PW 일치하는지 확인", matches, Boolean.TRUE);
+    }
+
+    @Test
     @DisplayName("유저 정보 업데이트 성공")
     void updateProfile() throws IOException {
         // given
         User user = userService.registerUser(userDto);
-        user.setProfileImgUrl("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\Summer_beach.jpg");
+        user.setProfileImgUrl(photo);
         UserDetailsImpl nowUser = new UserDetailsImpl(user);
 
         MockMultipartFile multipartFileEdit = new MockMultipartFile("image",
                 "testEdit.png",
                 "image/png",
-                new FileInputStream("C:\\Users\\wkdgy\\OneDrive\\바탕 화면\\로그인 수정.PNG"));
+                new FileInputStream(photo2));
 
         // when
         User userTest = userService.updateProfile("test1234-edit", multipartFileEdit, nowUser);
@@ -77,7 +104,7 @@ class UserServiceTest {
     @DisplayName("유저 ID 중복 체크 성공")
     void checkExist() throws Exception {
         // given
-        User user = userService.registerUser(userDto);
+        userService.registerUser(userDto);
 
         // when
         try {
