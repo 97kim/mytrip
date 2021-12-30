@@ -24,11 +24,11 @@ public class Comment extends Timestamped {
     private String comment;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "USER_REVIEW_ID", nullable = false)
     private UserReview userReview;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
