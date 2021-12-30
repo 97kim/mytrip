@@ -34,7 +34,7 @@ public class UserReview extends Timestamped {
     @Column
     private int likeCnt;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
