@@ -67,12 +67,12 @@ https://www.mytrips.shop
 <br>
 
 ### 📌 ERD & API 설계
-[WIKI - ERD & API 설계](https://github.com/97kim/mytrip/wiki/API-%EC%84%A4%EA%B3%84)
+[WIKI - ERD & API 설계](https://github.com/97kim/mytrip/wiki/7.-ERD-&-API-%EC%84%A4%EA%B3%84)
 
 <br>
 
 ### 📌 API 문서 자동화 - SWAGGER
-https://api.kimkj.shop/swagger-ui.html
+https://api.mytrips.shop/swagger-ui.html
 
 <br>
 
@@ -82,7 +82,7 @@ https://api.kimkj.shop/swagger-ui.html
 <br>
 
 ### 📌 WIKI
-[WIKI로 이동](https://github.com/97kim/myTrip-spring-BE/wiki)
+[WIKI로 이동](https://github.com/97kim/mytrip/wiki)
 
 <br>
 
