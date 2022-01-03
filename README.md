@@ -30,7 +30,7 @@ https://www.mytrips.shop
 <br>
 
 ### 📌 기술 스택
-[WIKI - 기술 스택](https://github.com/97kim/mytrip/wiki/3.-%EA%B8%B0%EC%88%A0-%EC%84%A0%ED%83%9D-%EC%9D%B4%EC%9C%A0)
+[WIKI - 기술 스택](https://github.com/97kim/mytrip/wiki/3-%EA%B8%B0%EC%88%A0-%EC%84%A0%ED%83%9D-%EC%9D%B4%EC%9C%A0)
 
 <br>
 
@@ -67,7 +67,7 @@ https://www.mytrips.shop
 <br>
 
 ### 📌 ERD & API 설계
-[WIKI - ERD & API 설계](https://github.com/97kim/mytrip/wiki/7.-ERD-&-API-%EC%84%A4%EA%B3%84)
+[WIKI - ERD & API 설계](https://github.com/97kim/mytrip/wiki/7-ERD-&-API-%EC%84%A4%EA%B3%84)
 
 <br>
 
@@ -77,7 +77,7 @@ https://api.mytrips.shop/swagger-ui.html
 <br>
 
 ### 📌 문제를 이렇게 해결했어요!
-[WIKI - 트러블 슈팅](https://github.com/97kim/myTrip-spring-BE/wiki/4.-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85)
+[WIKI - 트러블 슈팅](https://github.com/97kim/myTrip-spring-BE/wiki/4-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85)
 
 <br>
 
