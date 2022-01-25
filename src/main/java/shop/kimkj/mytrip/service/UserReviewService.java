@@ -60,10 +60,11 @@ public class UserReviewService {
     }
 
     @Transactional
-    public ResponseEntity<?> postUserReview(UserReviewDto userReviewDto, MultipartFile multipartFile, UserDetailsImpl nowUser) throws IOException {
+    public UserReview postUserReview(UserReviewDto userReviewDto, MultipartFile multipartFile, UserDetailsImpl nowUser) throws IOException {
         User user = userRepository.findById(nowUser.getId()).orElseThrow(
                 () -> new NullPointerException("해당 User 없음")
         );
+
         UserReview userReview = new UserReview(userReviewDto, user);
 
         if (multipartFile == null) { // 처음 등록할 때 사진 선택하지 않으면 기본 이미지 저장
@@ -73,7 +74,7 @@ public class UserReviewService {
             userReview.setReviewImgUrl(reviewImgUrl);
         }
         userReviewRepository.save(userReview);
-        return ResponseEntity.ok(userReview);
+        return userReview;
     }
 
     public UserReview getUserReview(Long reviewId) {
