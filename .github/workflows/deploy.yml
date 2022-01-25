@@ -6,6 +6,21 @@ on:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_STACK_AUTO: ${{ secrets.AWS_STACK_AUTO }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_URL: ${{ secrets.DB_URL }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      SLACK_WEBHOOK_URI: ${{ secrets.SLACK_WEBHOOK_URI }}
+      TOUR_KEY: ${{ secrets.TOUR_KEY }}
+      WEATHER_KEY: ${{ secrets.WEATHER_KEY }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -19,8 +34,8 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew clean build -x test
-#        run: gradle build -x test
+        run: ./gradlew clean build
+#        run: ./gradlew clean build -x test
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
